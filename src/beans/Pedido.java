@@ -3,11 +3,11 @@ package beans;
 import java.util.Date;
 
 public class Pedido {
-	int idPedido;
-	int codCliente;
-	Date dtExpedicao;
-	int codContador;
-	double valorBruto;
+	private int idPedido;
+	private int codCliente;
+	private Date dtExpedicao;
+	private int codContador;
+	private double valorBruto;
 	
 	public Pedido(int idPedido , int codCliente, Date dtExpedicao, int codContador,
 			double valorBruto) {
