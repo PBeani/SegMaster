@@ -1,13 +1,13 @@
 package beans;
 
-public class ClienteJuridico {
+public class Cliente_Juridico {
 	
 	private String nome;
 	private String endereco;
 	private String cnpj;
 	private String nomeEmpresa;
 	
-	public ClienteJuridico(String nome, String endereco, String cnpj,
+	public Cliente_Juridico(String nome, String endereco, String cnpj,
 			String nomeEmpresa) {
 		super();
 		this.nome = nome;

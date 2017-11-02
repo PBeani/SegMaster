@@ -1,17 +1,16 @@
 package bancoDeDados;
 
-import beans.ClienteFisico;
-import beans.ClienteJuridico;
+import beans.*;
 
 public interface GerenciadorBancoDados {
 	
 	public void insereCliente();
-	public void insereClienteFisico(ClienteFisico cliente);
-	public void insereClienteJuridico(ClienteJuridico cliente);
+	public void insereClienteFisico(Cliente_Fisico cliente);
+	public void insereClienteJuridico(Cliente_Juridico cliente);
 	
 	
 	public void inserepedido();
-	
+		
 	public void insereContador();
 	
 	public void insereCertificado();
@@ -25,15 +24,15 @@ public interface GerenciadorBancoDados {
 	public void inserePais();	
 	
 	
-	public retornaCertificado();
+	public Certificado retornaCertificado();
 	
-	public retornaBairros();
+	public Bairro retornaBairro();
 	
-	public retornaCidades();
+	public Cidade retornaCidade();
 	
-	public retornaEstados();
+	public Estado retornaEstado();
 	
-	public retornaPais();
+	public Pais retornaPai();
 	
 	
 	
