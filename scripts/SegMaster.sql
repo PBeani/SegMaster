@@ -92,18 +92,11 @@ CREATE TABLE cliente (
 	id_cliente INT NOT NULL AUTO_INCREMENT,
 	nome_cliente VARCHAR(200),
 	id_tipo_cliente INT,
-	id_endereco INT,
 	PRIMARY KEY (id_cliente),
     
 	CONSTRAINT fk_id_tipo_cliente
 		FOREIGN KEY (id_tipo_cliente)
 		REFERENCES tipo_cliente(id_tipo_cliente)
-		ON DELETE NO ACTION
-		ON UPDATE CASCADE,
-        
-	CONSTRAINT fk_id_endereco_cliente
-		FOREIGN KEY (id_endereco)
-		REFERENCES endereco (id_endereco)
 		ON DELETE NO ACTION
 		ON UPDATE CASCADE);
 
