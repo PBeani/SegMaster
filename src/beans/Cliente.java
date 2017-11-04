@@ -2,17 +2,17 @@ package beans;
 
 public class Cliente {
 	
-	private int id_cliente;
-	private String nome_cliente;
-	private int cod_tipo_cliente;
-	private String endereco;
+	int id_cliente;
+	String nome_cliente;
+	int cod_tipo_cliente;
+	String cod_endereco;
 	
-	public Cliente(int id_cliente, String nome_cliente, int cod_tipo_cliente, String endereco) {
+	public Cliente(int id_cliente, String nome_cliente, int cod_tipo_cliente, String cod_endereco) {
 		super();
 		this.id_cliente = id_cliente;
 		this.nome_cliente = nome_cliente;
 		this.cod_tipo_cliente = cod_tipo_cliente;
-		this.endereco = endereco;
+		this.cod_endereco = cod_endereco;
 	}
 	public int getId_cliente() {
 		return id_cliente;
@@ -33,10 +33,10 @@ public class Cliente {
 		this.cod_tipo_cliente = cod_tipo_cliente;
 	}
 	public String getCod_endereco() {
-		return endereco;
+		return cod_endereco;
 	}
-	public void setCod_endereco(String endereco) {
-		this.endereco = endereco;
+	public void setCod_endereco(String cod_endereco) {
+		this.cod_endereco = cod_endereco;
 	}
 	
 	

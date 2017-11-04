@@ -1,6 +1,6 @@
 package beans;
 
-public class Cliente_Fisico extends Cliente {
+public class Cliente_Fisico extends Cliente{
 
 	private int id_cliente_fisico;
 	private int cod_cliente;

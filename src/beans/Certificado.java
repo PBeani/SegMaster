@@ -1,5 +1,6 @@
 package beans;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Certificado {
@@ -10,10 +11,10 @@ public class Certificado {
 	private int cod_hierarquia;
 	private int cod_pedido;
 	private String num_certificado;
-	private Date data_validade;
+	private LocalDate data_validade;
 	
 	public Certificado(int id_certificado, int cod_tipo_certificado, int cod_categoria_certificado, int cod_hardware,
-			int cod_hierarquia, int cod_pedido, String num_certificado, Date data_validade) {
+			int cod_hierarquia, int cod_pedido, String num_certificado, LocalDate data_validade) {
 		super();
 		this.id_certificado = id_certificado;
 		this.cod_tipo_certificado = cod_tipo_certificado;
@@ -81,11 +82,11 @@ public class Certificado {
 		this.num_certificado = num_certificado;
 	}
 
-	public Date getData_validade() {
+	public LocalDate getData_validade() {
 		return data_validade;
 	}
 
-	public void setData_validade(Date data_validade) {
+	public void setData_validade(LocalDate data_validade) {
 		this.data_validade = data_validade;
 	}
 	

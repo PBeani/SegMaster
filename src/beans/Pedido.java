@@ -1,15 +1,16 @@
 package beans;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Pedido {
 	private int idPedido;
 	private int codCliente;
-	private Date dtExpedicao;
+	private LocalDate dtExpedicao;
 	private int codContador;
 	private double valorBruto;
 	
-	public Pedido(int idPedido , int codCliente, Date dtExpedicao, int codContador,
+	public Pedido(int idPedido , int codCliente, LocalDate dtExpedicao, int codContador,
 			double valorBruto) {
 		super();
 		this.idPedido = idPedido;
@@ -36,10 +37,10 @@ public class Pedido {
 	public void setCodCliente(int codCliente) {
 		this.codCliente = codCliente;
 	}
-	public Date getDtExpedicao() {
+	public LocalDate getDtExpedicao() {
 		return dtExpedicao;
 	}
-	public void setDtExpedicao(Date dtExpedicao) {
+	public void setDtExpedicao(LocalDate dtExpedicao) {
 		this.dtExpedicao = dtExpedicao;
 	}
 	public int getCodContador() {

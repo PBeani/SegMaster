@@ -4,9 +4,9 @@ import beans.*;
 
 public interface GerenciadorBancoDados {
 	
-	public void insereCliente();
-	public void insereClienteFisico(Cliente_Fisico cliente);
-	public void insereClienteJuridico(Cliente_Juridico cliente);
+	public void insereCliente(Cliente cliente) throws BancoException;
+	public void insereClienteFisico(Cliente_Fisico cliente) throws BancoException;
+	public void insereClienteJuridico(Cliente_Juridico cliente) throws BancoException;
 	
 	
 	public void inserepedido();
@@ -15,24 +15,29 @@ public interface GerenciadorBancoDados {
 	
 	public void insereCertificado();
 	
-	public void insereBairro();
+	public void insereBairro(); // lembrar de adicionar tabela
 	
-	public void insereCidade();
+	public void insereCidade(); 
 	
 	public void insereEstado();
 	
-	public void inserePais();	
+	public void inserePais();	//lembrar de adicionar tabela
 	
 	
-	public Certificado retornaCertificado();
+	public Cliente_Fisico selecionaClienteFisico();
 	
-	public Bairro retornaBairro();
+	public Cliente_Juridico selecionaClienteJuridico();
+		
 	
-	public Cidade retornaCidade();
+	public Certificado selecionaCertificado();
 	
-	public Estado retornaEstado();
+	public Bairro selecionaBairro();
 	
-	public Pais retornaPai();
+	public Cidade selecionaCidade();
+	
+	public Estado selecionaEstado();
+	
+	public Pais selecionaPais();
 	
 	
 	
