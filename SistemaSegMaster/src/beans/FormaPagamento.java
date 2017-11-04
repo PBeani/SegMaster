@@ -1,12 +1,12 @@
 package beans;
 
-public class Forma_pagamento {
+public class FormaPagamento {
 	
 	
 	private int id_forma_pagamento;
 	private String desc_forma_pagamento;
 	
-	public Forma_pagamento(int id_forma_pagamento, String desc_forma_pagamento) {
+	public FormaPagamento(int id_forma_pagamento, String desc_forma_pagamento) {
 		super();
 		this.id_forma_pagamento = id_forma_pagamento;
 		this.desc_forma_pagamento = desc_forma_pagamento;

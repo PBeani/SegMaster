@@ -1,9 +1,9 @@
 package beans;
 
-public class Tipo_certificado {
+public class TipoCertificado {
 	private int id_tipo_certificado;
 	private String desc_tipo_certificado;
-	public Tipo_certificado(int id_tipo_certificado, String desc_tipo_certificado) {
+	public TipoCertificado(int id_tipo_certificado, String desc_tipo_certificado) {
 		super();
 		this.id_tipo_certificado = id_tipo_certificado;
 		this.desc_tipo_certificado = desc_tipo_certificado;
