@@ -6,6 +6,10 @@
 package interfaces;
 
 import interfaces.Administrativo.PainelAdministrativo;
+import interfaces.Contabilidade.AdicionarContabilidade;
+import interfaces.Contabilidade.ConsultaContabilidade;
+import interfaces.Contador.AdicionarContador;
+import interfaces.Contador.ConsultarContador;
 import javax.swing.JPanel;
 
 /**
@@ -33,18 +37,25 @@ public class HomeAdmin extends javax.swing.JFrame {
         paineldeconteudo = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         nav_administrativo = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        nav_consulta_contabilidade = new javax.swing.JMenuItem();
+        nav_add_contabilidade = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        nav_contador_consultar = new javax.swing.JMenuItem();
+        nav_add_contador = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         paineldeconteudo.setBackground(new java.awt.Color(255, 255, 255));
+        paineldeconteudo.setMaximumSize(new java.awt.Dimension(920, 560));
         paineldeconteudo.setMinimumSize(new java.awt.Dimension(920, 560));
 
         javax.swing.GroupLayout paineldeconteudoLayout = new javax.swing.GroupLayout(paineldeconteudo);
         paineldeconteudo.setLayout(paineldeconteudoLayout);
         paineldeconteudoLayout.setHorizontalGroup(
             paineldeconteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1031, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         paineldeconteudoLayout.setVerticalGroup(
             paineldeconteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -65,13 +76,64 @@ public class HomeAdmin extends javax.swing.JFrame {
         });
         jMenuBar1.add(nav_administrativo);
 
+        jMenu1.setText("Contabilidade");
+        jMenu1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+
+        nav_consulta_contabilidade.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nav_consulta_contabilidade.setText("Consultar Contabilidade");
+        nav_consulta_contabilidade.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nav_consulta_contabilidadeMouseClicked(evt);
+            }
+        });
+        nav_consulta_contabilidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nav_consulta_contabilidadeActionPerformed(evt);
+            }
+        });
+        jMenu1.add(nav_consulta_contabilidade);
+
+        nav_add_contabilidade.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nav_add_contabilidade.setText("Adicionar Contabilidade");
+        nav_add_contabilidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nav_add_contabilidadeActionPerformed(evt);
+            }
+        });
+        jMenu1.add(nav_add_contabilidade);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Contador");
+        jMenu2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+
+        nav_contador_consultar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nav_contador_consultar.setLabel("Consultar Contadores");
+        nav_contador_consultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nav_contador_consultarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(nav_contador_consultar);
+
+        nav_add_contador.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nav_add_contador.setText("Adicionar Contador");
+        nav_add_contador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nav_add_contadorActionPerformed(evt);
+            }
+        });
+        jMenu2.add(nav_add_contador);
+
+        jMenuBar1.add(jMenu2);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(paineldeconteudo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(paineldeconteudo, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,6 +161,81 @@ public class HomeAdmin extends javax.swing.JFrame {
         this.add(paineldeconteudo);
         setLastPanel(content);
     }//GEN-LAST:event_nav_administrativoMouseClicked
+
+    private void nav_consulta_contabilidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_consulta_contabilidadeActionPerformed
+        setTitle("Consultar Contabilidades");
+        if(lastPanel != null){
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        ConsultaContabilidade panel = new ConsultaContabilidade();
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_consulta_contabilidadeActionPerformed
+
+    private void nav_consulta_contabilidadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_consulta_contabilidadeMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nav_consulta_contabilidadeMouseClicked
+
+    private void nav_add_contabilidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_add_contabilidadeActionPerformed
+        setTitle("Adicionar Contabilidade");
+        if(lastPanel != null){
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        AdicionarContabilidade panel = new AdicionarContabilidade();
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_add_contabilidadeActionPerformed
+
+    private void nav_contador_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_contador_consultarActionPerformed
+        setTitle("Consultar Contadores");
+        if(lastPanel != null){
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        ConsultarContador panel = new ConsultarContador();
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_contador_consultarActionPerformed
+
+    private void nav_add_contadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_add_contadorActionPerformed
+        if(lastPanel != null){
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        AdicionarContador panel = new AdicionarContador();
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_add_contadorActionPerformed
 
     private JPanel lastPanel;
 
@@ -146,8 +283,14 @@ public class HomeAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem nav_add_contabilidade;
+    private javax.swing.JMenuItem nav_add_contador;
     private javax.swing.JMenu nav_administrativo;
+    private javax.swing.JMenuItem nav_consulta_contabilidade;
+    private javax.swing.JMenuItem nav_contador_consultar;
     private javax.swing.JPanel paineldeconteudo;
     // End of variables declaration//GEN-END:variables
 
