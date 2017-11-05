@@ -2,24 +2,25 @@ package regrasDeNegocio;
 
 import java.util.List;
 
+
 import javax.swing.JOptionPane;
 
 import bancoDeDados.BancoException;
-import bancoDeDados.GerenciadorBancoDados;
-import beans.Cliente_Juridico;
+import bancoDeDados.ClienteJuridicoDao;
+import beans.ClienteJuridico;
 
 public class Cliente_JuridicoRegrasNegocio {
-	private GerenciadorBancoDados gerenciadorBancoDados;
+	private ClienteJuridicoDao clienteJuridicoDao;
 	
-    public boolean cadastroCliente_Juridico(Cliente_Juridico cliente) throws Exception {
+    public boolean cadastroClienteJuridico(ClienteJuridico cliente) throws Exception {
         try {
         	//fazer funcao para listar clienteJuridico
-            List<Cliente_Juridico> listaClienteJuridico = gerenciadorBancoDados.buscaClienteJuridicoCNPJ(cliente.getCnpj());
+            List<ClienteJuridico> listaClienteJuridico = clienteJuridicoDao.buscaClienteJuridicoCNPJ(cliente.getCnpj());
             if (!listaClienteJuridico.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "CNPJ ja cadastrado");
                 return false;
             }
-            gerenciadorBancoDados.insereClienteJuridico(cliente);
+            clienteJuridicoDao.insereClienteJuridico(cliente);
             return true;
         } catch (BancoException e) {
 			throw new Exception("Cliente ja cadastrado.");

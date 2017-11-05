@@ -2,10 +2,11 @@ package regrasDeNegocio;
 
 import java.util.List;
 
+
 import javax.swing.JOptionPane;
 
 import bancoDeDados.BancoException;
-import bancoDeDados.GerenciadorBancoDados;
+import bancoDeDados.HardwareDao;
 import beans.Hardware;
 
 

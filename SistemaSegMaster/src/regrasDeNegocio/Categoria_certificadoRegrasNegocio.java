@@ -5,8 +5,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import bancoDeDados.BancoException;
-//import bancoDeDados.CategoriaCertificadoDao;
-//import beans.CategoriaCertificado;
+import bancoDeDados.CategoriaCertificadoDao;
+import beans.CategoriaCertificado;
 
 public class Categoria_certificadoRegrasNegocio {
 	private CategoriaCertificadoDao categoriaCertificadoDao;
