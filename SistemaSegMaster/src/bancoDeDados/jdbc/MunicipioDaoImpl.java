@@ -96,6 +96,34 @@ public class MunicipioDaoImpl extends ConectorJDBC implements MunicipioDao {
         fechaConexao();
         return lista;
     }
+    
+    @Override
+    public LinkedList<Municipio> listaMunicipioEstado(int cod) throws BancoException {
+        LinkedList<Municipio> lista = new LinkedList<>();
+
+        abreConexao();
+
+        preparaComandoSQL("select * from municipios where id_estado = ?");
+        try {
+            pstmt.setInt(1, cod);
+            
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt(1);
+                int codEstado = rs.getInt(2);
+                String nome = rs.getString(3);
+
+                Municipio item = new Municipio(codigo, codEstado, nome);
+                lista.add(item);
+            }
+        } catch (SQLException e) {
+            throw new BancoException("Problema na geração da lista de Municipios.");
+        }
+
+        fechaConexao();
+        return lista;
+    }
 
     @Override
     public void removeMunicipio(int cod) throws BancoException {
