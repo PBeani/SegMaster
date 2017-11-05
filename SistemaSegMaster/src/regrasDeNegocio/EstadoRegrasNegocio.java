@@ -1,5 +1,6 @@
 package regrasDeNegocio;
 
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -25,7 +26,39 @@ public class EstadoRegrasNegocio {
             estadoDao.insereEstado(estado);
             return true;
         } catch (BancoException e) {
-			throw new Exception("Estado ja cadastrado.");
+			throw new Exception("Falha ao cadastrar Estado");
+        }
+    }
+    
+    public Estado seleciona(int cod) throws Exception {
+        try {
+            return estadoDao.selecionaEstado(cod);
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public void altera(Estado estado) throws Exception {
+        try {
+        	estadoDao.alteraEstado(estado);
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public LinkedList<Estado> listaEstado() throws Exception {
+        try {
+            return estadoDao.listaEstado();
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public void remove(int cod) throws Exception {
+        try {
+        	estadoDao.removeEstado(cod);
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
     }
 }

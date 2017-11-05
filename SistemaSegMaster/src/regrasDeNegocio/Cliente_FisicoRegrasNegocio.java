@@ -26,4 +26,11 @@ public class Cliente_FisicoRegrasNegocio {
         }
     }
     
+    public ClienteFisico seleciona(int cod) throws Exception {
+        try {
+            return clienteFisicoDao.selecionaClienteFisico(cod);
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }  
 }

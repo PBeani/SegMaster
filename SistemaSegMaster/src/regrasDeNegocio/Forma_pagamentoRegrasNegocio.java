@@ -1,5 +1,6 @@
 package regrasDeNegocio;
 
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -26,6 +27,38 @@ public class Forma_pagamentoRegrasNegocio {
             return true;
         } catch (BancoException e) {
 			throw new Exception("Erro ao cadastrar Forma pagamento");
+        }
+    }
+    
+    public FormaPagamento seleciona(int cod) throws Exception {
+        try {
+            return formaPagamentoDao.selecionaFormaPagamento(cod);
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public void altera(FormaPagamento formaPagamento) throws Exception {
+        try {
+        	formaPagamentoDao.alteraFormaPagamento(formaPagamento);
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public LinkedList<FormaPagamento> listaFormaPagamento() throws Exception {
+        try {
+            return formaPagamentoDao.listaFormaPagamento();
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public void remove(int cod) throws Exception {
+        try {
+        	formaPagamentoDao.removeFormaPagamento(cod);
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
     }
 }

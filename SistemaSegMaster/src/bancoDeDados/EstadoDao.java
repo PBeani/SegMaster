@@ -1,6 +1,7 @@
 package bancoDeDados;
 
 import beans.Estado;
+
 import java.util.LinkedList;
 
 public interface EstadoDao {

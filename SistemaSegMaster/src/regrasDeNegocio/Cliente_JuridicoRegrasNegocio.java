@@ -23,7 +23,15 @@ public class Cliente_JuridicoRegrasNegocio {
             clienteJuridicoDao.insereClienteJuridico(cliente);
             return true;
         } catch (BancoException e) {
-			throw new Exception("Cliente ja cadastrado.");
+			throw new Exception("Falha ao cadastrar cliente juridico");
         }
     }
+    
+    public ClienteJuridico seleciona(int cod) throws Exception {
+        try {
+            return clienteJuridicoDao.selecionaClienteJuridico(cod);
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }  
 }

@@ -2,6 +2,7 @@ package bancoDeDados;
 
 import java.util.LinkedList;
 
+
 import beans.Cliente;
 
 public interface ClienteDao {
