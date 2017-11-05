@@ -12,6 +12,8 @@ public interface MunicipioDao {
     public Municipio selecionaMunicipio(int cod) throws BancoException;
 
     public LinkedList<Municipio> listaMunicipio() throws BancoException;
+    
+    public LinkedList<Municipio> listaMunicipioEstado(int cod) throws BancoException;
 
     public void removeMunicipio(int cod) throws BancoException;
 }
