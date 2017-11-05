@@ -5,6 +5,10 @@
  */
 package interfaces.Administrativo.Adicionar;
 
+import interfaces.Administrativo.Consultas.ConsultaStatusComissao;
+import interfaces.Administrativo.PainelAdministrativo;
+import javax.swing.JPanel;
+
 /**
  *
  * @author pedro
@@ -14,7 +18,9 @@ public class AdicionarStatusComissao extends javax.swing.JPanel {
     /**
      * Creates new form AdicionarStatusComissao
      */
-    public AdicionarStatusComissao() {
+    PainelAdministrativo parent;
+    public AdicionarStatusComissao(PainelAdministrativo p) {
+        parent = p;
         initComponents();
     }
 
@@ -30,8 +36,10 @@ public class AdicionarStatusComissao extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        cancelar = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
@@ -46,18 +54,25 @@ public class AdicionarStatusComissao extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setBackground(new java.awt.Color(204, 0, 0));
-        jLabel3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Cancelar");
-        jLabel3.setOpaque(true);
+        cancelar.setBackground(new java.awt.Color(204, 0, 0));
+        cancelar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        cancelar.setForeground(new java.awt.Color(255, 255, 255));
+        cancelar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        cancelar.setText("Cancelar");
+        cancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancelar.setOpaque(true);
+        cancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelarMouseClicked(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(0, 204, 0));
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Salvar");
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.setOpaque(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -73,7 +88,7 @@ public class AdicionarStatusComissao extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -90,7 +105,7 @@ public class AdicionarStatusComissao extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(316, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -99,13 +114,33 @@ public class AdicionarStatusComissao extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarMouseClicked
+        retornarLista();
+    }//GEN-LAST:event_cancelarMouseClicked
+    private void retornarLista() {
+        JPanel lastPanel = parent.getLastPanel();
+        JPanel painelConsultas = parent.getPainelConsulta();
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        ConsultaStatusComissao panelAdm = new ConsultaStatusComissao(parent);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        parent.add(painelConsultas);
+        parent.setLastPanel(content);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

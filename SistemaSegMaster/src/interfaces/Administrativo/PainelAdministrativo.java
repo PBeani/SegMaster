@@ -5,6 +5,7 @@
  */
 package interfaces.Administrativo;
 
+import interfaces.Administrativo.Consultas.*;
 import javax.swing.JPanel;
 
 /**
@@ -23,6 +24,7 @@ public class PainelAdministrativo extends javax.swing.JPanel {
     public JPanel getPanelUser() {
         return this;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,96 +37,151 @@ public class PainelAdministrativo extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        nav_adm_estado = new javax.swing.JLabel();
+        nav_adm_cidades = new javax.swing.JLabel();
+        nav_admin_categoria = new javax.swing.JLabel();
+        nav_adm_tipo_certificado = new javax.swing.JLabel();
+        nav_adm_cliente = new javax.swing.JLabel();
+        nav_adm_contato = new javax.swing.JLabel();
+        nav_adm_comissao = new javax.swing.JLabel();
+        nav_adm_pagamento = new javax.swing.JLabel();
+        nav_adm_hardware = new javax.swing.JLabel();
+        nav_adm_hierarquia = new javax.swing.JLabel();
+        painelConsultas = new javax.swing.JPanel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(900, 560));
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setText("Módulo Administrativo");
 
         jSeparator1.setForeground(new java.awt.Color(255, 153, 0));
+        jSeparator1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0)));
+        jSeparator1.setPreferredSize(new java.awt.Dimension(0, 1));
 
-        jPanel3.setBackground(new java.awt.Color(153, 255, 51));
-        jPanel3.setOpaque(false);
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel19.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel19.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("  Estados");
-        jLabel19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel19.setOpaque(true);
+        nav_adm_estado.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_estado.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        nav_adm_estado.setForeground(new java.awt.Color(255, 255, 255));
+        nav_adm_estado.setText("  Estados");
+        nav_adm_estado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_estado.setOpaque(true);
+        nav_adm_estado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nav_adm_estadoMouseClicked(evt);
+            }
+        });
 
-        jLabel20.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel20.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("  Cidades");
-        jLabel20.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel20.setOpaque(true);
+        nav_adm_cidades.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_cidades.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        nav_adm_cidades.setForeground(new java.awt.Color(255, 255, 255));
+        nav_adm_cidades.setText("  Municipios");
+        nav_adm_cidades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_cidades.setOpaque(true);
+        nav_adm_cidades.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nav_adm_cidadesMouseClicked(evt);
+            }
+        });
 
-        jLabel21.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel21.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("  Categoria de Certificado");
-        jLabel21.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel21.setOpaque(true);
+        nav_admin_categoria.setBackground(new java.awt.Color(255, 153, 0));
+        nav_admin_categoria.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        nav_admin_categoria.setForeground(new java.awt.Color(255, 255, 255));
+        nav_admin_categoria.setText("  Categoria de Certificado");
+        nav_admin_categoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_admin_categoria.setOpaque(true);
+        nav_admin_categoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nav_admin_categoriaMouseClicked(evt);
+            }
+        });
 
-        jLabel22.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel22.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel22.setText("  Tipo de Certificado");
-        jLabel22.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel22.setOpaque(true);
+        nav_adm_tipo_certificado.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_tipo_certificado.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        nav_adm_tipo_certificado.setForeground(new java.awt.Color(255, 255, 255));
+        nav_adm_tipo_certificado.setText("  Tipo de Certificado");
+        nav_adm_tipo_certificado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_tipo_certificado.setOpaque(true);
+        nav_adm_tipo_certificado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nav_adm_tipo_certificadoMouseClicked(evt);
+            }
+        });
 
-        jLabel23.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel23.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel23.setText("  Tipo de Cliente");
-        jLabel23.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel23.setOpaque(true);
+        nav_adm_cliente.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_cliente.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        nav_adm_cliente.setForeground(new java.awt.Color(255, 255, 255));
+        nav_adm_cliente.setText("  Tipo de Cliente");
+        nav_adm_cliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_cliente.setOpaque(true);
+        nav_adm_cliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nav_adm_clienteMouseClicked(evt);
+            }
+        });
 
-        jLabel24.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel24.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setText("  Tipo de Contato");
-        jLabel24.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel24.setOpaque(true);
+        nav_adm_contato.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_contato.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        nav_adm_contato.setForeground(new java.awt.Color(255, 255, 255));
+        nav_adm_contato.setText("  Tipo de Contato");
+        nav_adm_contato.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_contato.setOpaque(true);
+        nav_adm_contato.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nav_adm_contatoMouseClicked(evt);
+            }
+        });
 
-        jLabel25.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel25.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("  Status de Comissão");
-        jLabel25.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel25.setOpaque(true);
+        nav_adm_comissao.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_comissao.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        nav_adm_comissao.setForeground(new java.awt.Color(255, 255, 255));
+        nav_adm_comissao.setText("  Status de Comissão");
+        nav_adm_comissao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_comissao.setOpaque(true);
+        nav_adm_comissao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nav_adm_comissaoMouseClicked(evt);
+            }
+        });
 
-        jLabel26.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel26.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("  Forma de Pagamento");
-        jLabel26.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel26.setOpaque(true);
+        nav_adm_pagamento.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_pagamento.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        nav_adm_pagamento.setForeground(new java.awt.Color(255, 255, 255));
+        nav_adm_pagamento.setText("  Forma de Pagamento");
+        nav_adm_pagamento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_pagamento.setOpaque(true);
+        nav_adm_pagamento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nav_adm_pagamentoMouseClicked(evt);
+            }
+        });
 
-        jLabel27.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel27.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel27.setText("  Hardware");
-        jLabel27.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel27.setOpaque(true);
+        nav_adm_hardware.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_hardware.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        nav_adm_hardware.setForeground(new java.awt.Color(255, 255, 255));
+        nav_adm_hardware.setText("  Hardware");
+        nav_adm_hardware.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_hardware.setOpaque(true);
+        nav_adm_hardware.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nav_adm_hardwareMouseClicked(evt);
+            }
+        });
 
-        jLabel28.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel28.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel28.setText("  Hirearquia de Certificado");
-        jLabel28.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel28.setOpaque(true);
+        nav_adm_hierarquia.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_hierarquia.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        nav_adm_hierarquia.setForeground(new java.awt.Color(255, 255, 255));
+        nav_adm_hierarquia.setText("  Hirearquia de Certificado");
+        nav_adm_hierarquia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_hierarquia.setOpaque(true);
+        nav_adm_hierarquia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nav_adm_hierarquiaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -133,17 +190,17 @@ public class PainelAdministrativo extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nav_adm_estado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nav_adm_cidades, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nav_admin_categoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nav_adm_tipo_certificado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nav_adm_cliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nav_adm_contato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nav_adm_comissao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nav_adm_pagamento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nav_adm_hardware, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nav_adm_hierarquia, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -151,104 +208,272 @@ public class PainelAdministrativo extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nav_adm_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nav_adm_cidades, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nav_admin_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nav_adm_tipo_certificado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nav_adm_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nav_adm_contato, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nav_adm_comissao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nav_adm_pagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nav_adm_hardware, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nav_adm_hierarquia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        painelConsultas.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout painelConsultasLayout = new javax.swing.GroupLayout(painelConsultas);
+        painelConsultas.setLayout(painelConsultasLayout);
+        painelConsultasLayout.setHorizontalGroup(
+            painelConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 637, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 462, Short.MAX_VALUE)
+        painelConsultasLayout.setVerticalGroup(
+            painelConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 475, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
-                        .addComponent(jLabel1)
-                        .addGap(0, 598, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(painelConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(16, 16, 16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(63, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(painelConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void nav_adm_estadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_estadoMouseClicked
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        ConsultaEstados panelAdm = new ConsultaEstados(this);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        this.add(painelConsultas);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_adm_estadoMouseClicked
+
+    private void nav_adm_cidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_cidadesMouseClicked
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        ConsultaMunicipio panelAdm = new ConsultaMunicipio(this);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        this.add(painelConsultas);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_adm_cidadesMouseClicked
+
+    private void nav_admin_categoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_admin_categoriaMouseClicked
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        ConsultaCategoriaCertificado panelAdm = new ConsultaCategoriaCertificado(this);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        this.add(painelConsultas);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_admin_categoriaMouseClicked
+
+    private void nav_adm_tipo_certificadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_tipo_certificadoMouseClicked
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        ConsultaTipoCertificado panelAdm = new ConsultaTipoCertificado(this);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        this.add(painelConsultas);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_adm_tipo_certificadoMouseClicked
+
+    private void nav_adm_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_clienteMouseClicked
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        ConsultaTipoCliente panelAdm = new ConsultaTipoCliente(this);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        this.add(painelConsultas);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_adm_clienteMouseClicked
+
+    private void nav_adm_contatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_contatoMouseClicked
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        ConsultaTipoContato panelAdm = new ConsultaTipoContato(this);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        this.add(painelConsultas);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_adm_contatoMouseClicked
+
+    private void nav_adm_comissaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_comissaoMouseClicked
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        ConsultaStatusComissao panelAdm = new ConsultaStatusComissao(this);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        this.add(painelConsultas);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_adm_comissaoMouseClicked
+
+    private void nav_adm_pagamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_pagamentoMouseClicked
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        ConsultaFormaPagamento panelAdm = new ConsultaFormaPagamento(this);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        this.add(painelConsultas);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_adm_pagamentoMouseClicked
+
+    private void nav_adm_hardwareMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_hardwareMouseClicked
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        ConsultaHardware panelAdm = new ConsultaHardware(this);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        this.add(painelConsultas);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_adm_hardwareMouseClicked
+
+    private void nav_adm_hierarquiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_hierarquiaMouseClicked
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        ConsultaHierarquia panelAdm = new ConsultaHierarquia(this);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        this.add(painelConsultas);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_adm_hierarquiaMouseClicked
+
+    private JPanel lastPanel;
+
+    public JPanel getLastPanel() {
+        return lastPanel;
+    }
+
+    public void setLastPanel(JPanel last) {
+        lastPanel = last;
+    }
+
+    public JPanel getPainelConsulta() {
+        return painelConsultas;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel nav_adm_cidades;
+    private javax.swing.JLabel nav_adm_cliente;
+    private javax.swing.JLabel nav_adm_comissao;
+    private javax.swing.JLabel nav_adm_contato;
+    private javax.swing.JLabel nav_adm_estado;
+    private javax.swing.JLabel nav_adm_hardware;
+    private javax.swing.JLabel nav_adm_hierarquia;
+    private javax.swing.JLabel nav_adm_pagamento;
+    private javax.swing.JLabel nav_adm_tipo_certificado;
+    private javax.swing.JLabel nav_admin_categoria;
+    private javax.swing.JPanel painelConsultas;
     // End of variables declaration//GEN-END:variables
 
-    
 }

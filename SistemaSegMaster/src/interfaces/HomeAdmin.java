@@ -37,19 +37,23 @@ public class HomeAdmin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
+        paineldeconteudo.setBackground(new java.awt.Color(255, 255, 255));
+        paineldeconteudo.setMinimumSize(new java.awt.Dimension(920, 560));
+
         javax.swing.GroupLayout paineldeconteudoLayout = new javax.swing.GroupLayout(paineldeconteudo);
         paineldeconteudo.setLayout(paineldeconteudoLayout);
         paineldeconteudoLayout.setHorizontalGroup(
             paineldeconteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 920, Short.MAX_VALUE)
+            .addGap(0, 1031, Short.MAX_VALUE)
         );
         paineldeconteudoLayout.setVerticalGroup(
             paineldeconteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+            .addGap(0, 625, Short.MAX_VALUE)
         );
 
         jMenuBar1.setBorder(null);
         jMenuBar1.setMargin(new java.awt.Insets(20, 20, 20, 20));
+        jMenuBar1.setMinimumSize(new java.awt.Dimension(139, 37));
 
         nav_administrativo.setText("Administrativo");
         nav_administrativo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -71,16 +75,19 @@ public class HomeAdmin extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(paineldeconteudo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(paineldeconteudo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void nav_administrativoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_administrativoMouseClicked
         setTitle("Administrativo");
         if(lastPanel != null){
             lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
             paineldeconteudo.revalidate();
         }
         PainelAdministrativo panelAdm = new PainelAdministrativo();
@@ -90,7 +97,6 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         paineldeconteudo.add(content);
         this.add(paineldeconteudo);
-        this.pack();
         setLastPanel(content);
     }//GEN-LAST:event_nav_administrativoMouseClicked
 

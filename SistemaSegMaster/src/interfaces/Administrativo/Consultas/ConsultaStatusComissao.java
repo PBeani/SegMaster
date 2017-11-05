@@ -5,6 +5,10 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import interfaces.Administrativo.Adicionar.AdicionarStatusComissao;
+import interfaces.Administrativo.PainelAdministrativo;
+import javax.swing.JPanel;
+
 /**
  *
  * @author pedro
@@ -14,7 +18,9 @@ public class ConsultaStatusComissao extends javax.swing.JPanel {
     /**
      * Creates new form ConsultaStatusComissao
      */
-    public ConsultaStatusComissao() {
+    PainelAdministrativo parent;
+    public ConsultaStatusComissao(PainelAdministrativo p) {
+        parent = p;
         initComponents();
     }
 
@@ -29,8 +35,10 @@ public class ConsultaStatusComissao extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        addStatusComissao = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -50,12 +58,18 @@ public class ConsultaStatusComissao extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel2.setBackground(new java.awt.Color(0, 204, 255));
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Adicionar Status de Comissão");
-        jLabel2.setOpaque(true);
+        addStatusComissao.setBackground(new java.awt.Color(0, 204, 255));
+        addStatusComissao.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        addStatusComissao.setForeground(new java.awt.Color(255, 255, 255));
+        addStatusComissao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addStatusComissao.setText("Adicionar Status de Comissão");
+        addStatusComissao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addStatusComissao.setOpaque(true);
+        addStatusComissao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addStatusComissaoMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
@@ -72,7 +86,7 @@ public class ConsultaStatusComissao extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(addStatusComissao, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -84,17 +98,36 @@ public class ConsultaStatusComissao extends javax.swing.JPanel {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(addStatusComissao, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addStatusComissaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addStatusComissaoMouseClicked
+        JPanel lastPanel = parent.getLastPanel();
+        JPanel painelConsultas = parent.getPainelConsulta();
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        AdicionarStatusComissao panelAdm = new AdicionarStatusComissao(parent);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        parent.add(painelConsultas);
+        parent.setLastPanel(content);
+    }//GEN-LAST:event_addStatusComissaoMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel addStatusComissao;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

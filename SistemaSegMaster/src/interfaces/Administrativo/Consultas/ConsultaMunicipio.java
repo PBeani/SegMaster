@@ -5,6 +5,10 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import interfaces.Administrativo.Adicionar.AdicionarMunicipio;
+import interfaces.Administrativo.PainelAdministrativo;
+import javax.swing.JPanel;
+
 /**
  *
  * @author pedro
@@ -14,7 +18,10 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
     /**
      * Creates new form ConsultaMunicipio
      */
-    public ConsultaMunicipio() {
+    PainelAdministrativo parent;
+    
+    public ConsultaMunicipio(PainelAdministrativo p) {
+        parent = p;
         initComponents();
     }
 
@@ -29,7 +36,7 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        addMunicipio = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -54,12 +61,18 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel2.setBackground(new java.awt.Color(0, 204, 255));
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Adicionar Município");
-        jLabel2.setOpaque(true);
+        addMunicipio.setBackground(new java.awt.Color(0, 204, 255));
+        addMunicipio.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        addMunicipio.setForeground(new java.awt.Color(255, 255, 255));
+        addMunicipio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addMunicipio.setText("Adicionar Município");
+        addMunicipio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addMunicipio.setOpaque(true);
+        addMunicipio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addMunicipioMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
@@ -86,7 +99,7 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(addMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -96,7 +109,7 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(addMunicipio, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(jComboBox1)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
@@ -105,11 +118,30 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addMunicipioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMunicipioMouseClicked
+        JPanel lastPanel = parent.getLastPanel();
+        JPanel painelConsultas = parent.getPainelConsulta();
+        if(lastPanel != null){
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        AdicionarMunicipio panelAdm = new AdicionarMunicipio(parent);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        parent.add(painelConsultas);
+        parent.setLastPanel(content);
+    }//GEN-LAST:event_addMunicipioMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel addMunicipio;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

@@ -5,6 +5,11 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import interfaces.Administrativo.Adicionar.AdicionarMunicipio;
+import interfaces.Administrativo.Adicionar.AdicionarTipoCliente;
+import interfaces.Administrativo.PainelAdministrativo;
+import javax.swing.JPanel;
+
 /**
  *
  * @author pedro
@@ -14,7 +19,10 @@ public class ConsultaTipoCliente extends javax.swing.JPanel {
     /**
      * Creates new form ConsultaTipoCliente
      */
-    public ConsultaTipoCliente() {
+    PainelAdministrativo parent;
+    
+    public ConsultaTipoCliente(PainelAdministrativo p) {
+        parent = p;
         initComponents();
     }
 
@@ -29,8 +37,10 @@ public class ConsultaTipoCliente extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        addTipoCliente = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -50,12 +60,18 @@ public class ConsultaTipoCliente extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel2.setBackground(new java.awt.Color(0, 204, 255));
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Adicionar Tipo de Cliente");
-        jLabel2.setOpaque(true);
+        addTipoCliente.setBackground(new java.awt.Color(0, 204, 255));
+        addTipoCliente.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        addTipoCliente.setForeground(new java.awt.Color(255, 255, 255));
+        addTipoCliente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addTipoCliente.setText("Adicionar Tipo de Cliente");
+        addTipoCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addTipoCliente.setOpaque(true);
+        addTipoCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addTipoClienteMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
@@ -72,7 +88,7 @@ public class ConsultaTipoCliente extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(addTipoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -84,17 +100,36 @@ public class ConsultaTipoCliente extends javax.swing.JPanel {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(addTipoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addTipoClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addTipoClienteMouseClicked
+        JPanel lastPanel = parent.getLastPanel();
+        JPanel painelConsultas = parent.getPainelConsulta();
+        if(lastPanel != null){
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        AdicionarTipoCliente panelAdm = new AdicionarTipoCliente(parent);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        painelConsultas.add(content);
+        parent.add(painelConsultas);
+        parent.setLastPanel(content);
+    }//GEN-LAST:event_addTipoClienteMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel addTipoCliente;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
