@@ -20,7 +20,7 @@ public class Forma_pagamentoRegrasNegocio {
                 return false;
             }
             
-            //falta fazer a funcao de inserir Hardware
+            //falta fazer a funcao de inserir Forma pagamento
             gerenciadorBancoDados.insereFormaPagamento(formaPagamento);
             return true;
         } catch (BancoException e) {

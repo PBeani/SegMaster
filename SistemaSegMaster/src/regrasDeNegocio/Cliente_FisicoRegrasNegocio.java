@@ -2,24 +2,24 @@ package regrasDeNegocio;
 
 import java.util.List;
 
+
 import javax.swing.JOptionPane;
 
 import bancoDeDados.BancoException;
-import bancoDeDados.GerenciadorBancoDados;
-import beans.Cliente_Fisico;
+
 
 public class Cliente_FisicoRegrasNegocio {
-	private GerenciadorBancoDados gerenciadorBancoDados;
+	private ClienteFisicoDao clienteFisicoDao;
 	
-    public boolean cadastroCliente_Fisico(Cliente_Fisico cliente) throws Exception {
+    public boolean cadastroClienteFisico(ClienteFisico cliente) throws Exception {
         try {
         	//fazer funcao para listar clienteFisico
-            List<Cliente_Fisico> listaClienteFisico = gerenciadorBancoDados.buscaClienteFisicoCPF(cliente.getCpf());
+            List<ClienteFisico> listaClienteFisico = clienteFisicoDao.buscaClienteFisicoCPF(cliente.getCpf());
             if (!listaClienteFisico.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "CPF ja cadastrado");
                 return false;
             }
-            gerenciadorBancoDados.insereClienteFisico(cliente);
+            clienteFisicoDao.insereClienteFisico(cliente);
             return true;
         } catch (BancoException e) {
 			throw new Exception("Falha ao cadastrar cliente");
