@@ -5,6 +5,11 @@ public class FormaPagamento {
 	
 	private int id_forma_pagamento;
 	private String desc_forma_pagamento;
+        
+        public FormaPagamento(String desc_forma_pagamento){
+            super();
+            this.desc_forma_pagamento = desc_forma_pagamento;
+        }
 	
 	public FormaPagamento(int id_forma_pagamento, String desc_forma_pagamento) {
 		super();

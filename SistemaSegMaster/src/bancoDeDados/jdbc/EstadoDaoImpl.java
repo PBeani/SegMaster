@@ -18,10 +18,10 @@ public class EstadoDaoImpl extends ConectorJDBC implements EstadoDao {
     public void insereEstado(Estado estado) throws BancoException {
         abreConexao();
         
-        preparaComandoSQL("insert into estado (desc_estado, sigla) values (?,?) ");
+        preparaComandoSQL("insert into estados (desc_estado, sigla) values (?,?) ");
 
         try {
-            JOptionPane.showMessageDialog(null, "problema");
+            
             pstmt.setString(1, estado.getDesc_estado());
             pstmt.setString(2, estado.getSigla());
             pstmt.execute();

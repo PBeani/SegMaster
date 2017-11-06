@@ -54,6 +54,7 @@ public class AdicionarEstado extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setText("Adicionar Estado");
 
+        descricao.setEditable(false);
         descricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 descricaoActionPerformed(evt);
@@ -166,7 +167,7 @@ public class AdicionarEstado extends javax.swing.JPanel {
             Estado estado1  = new Estado(textoDescricao,textoSigla);
             if (e.cadastroEstado(estado1))
             JOptionPane.showMessageDialog(null, "Novo Estado salvo com sucesso");
-            else JOptionPane.showMessageDialog(null, "problema no cadastro");
+            
         
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");

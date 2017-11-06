@@ -5,14 +5,21 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import bancoDeDados.BancoException;
+import beans.Estado;
 import beans.Municipio;
 import interfaces.Administrativo.Adicionar.AdicionarMunicipio;
 import interfaces.Administrativo.PainelAdministrativo;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import regrasDeNegocio.EstadoRegrasNegocio;
+import regrasDeNegocio.MunicipioRegrasNegocio;
 
 /**
  *
@@ -28,6 +35,18 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
     public ConsultaMunicipio(PainelAdministrativo p) {
         parent = p;
         initComponents();
+        try {
+            EstadoRegrasNegocio m = new EstadoRegrasNegocio();            
+            for(Estado e : m.listaEstado()){          
+                estado.addItem(e);
+            }
+        } catch (BancoException ex) {
+            
+        } catch (Exception ex) {
+            
+        }
+        
+        
     }
 
     /**
@@ -44,7 +63,7 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
         addMunicipio = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        estado = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -86,7 +105,12 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel3.setText("Estado:");
 
-        jComboBox1.setBorder(null);
+        estado.setBorder(null);
+        estado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                estadoItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -102,7 +126,7 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -115,7 +139,7 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(addMunicipio, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jComboBox1)
+                    .addComponent(estado)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
@@ -130,9 +154,23 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
             model.addRow(new Object [] {municipio.getId_municipio(),municipio.getDescricao()});
             
         }
-        jTable1.setRowSorter(new TableRowSorter(model));
-        
+        jTable1.setRowSorter(new TableRowSorter(model));        
     }
+     public void montaTabelaMunicipioFiltrada(int idEstado,DefaultTableModel model){
+        try {            
+            model = (DefaultTableModel) jTable1.getModel();
+            MunicipioRegrasNegocio muni = new MunicipioRegrasNegocio();
+            LinkedList<Municipio> m = muni.listaMunicipioEstado(idEstado);
+                    for(Municipio municipio : m){
+                        model.addRow(new Object [] {municipio.getId_municipio(),municipio.getDescricao()});
+                        }
+                    jTable1.setRowSorter(new TableRowSorter(model));
+        } catch (BancoException ex) {
+            Logger.getLogger(ConsultaMunicipio.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ConsultaMunicipio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     }
     
     
     private void addMunicipioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMunicipioMouseClicked
@@ -154,10 +192,20 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
         parent.setLastPanel(content);
     }//GEN-LAST:event_addMunicipioMouseClicked
 
+    private void estadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_estadoItemStateChanged
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
+        Estado e = (Estado)estado.getSelectedItem();
+        
+        montaTabelaMunicipioFiltrada(e.getId_estado(),model);        
+        
+    }//GEN-LAST:event_estadoItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addMunicipio;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<Object> estado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

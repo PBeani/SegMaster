@@ -4,6 +4,11 @@ public class StatusComissao {
 	
 	private int id_status_comissao;
 	private String desc_status_comissao;
+        
+        public StatusComissao(String desc_status_comissao){
+        super();
+        this.desc_status_comissao = desc_status_comissao;
+        }
 	
 	public StatusComissao(int id_status_comissao, String desc_status_comissao) {
 		super();

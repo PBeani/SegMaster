@@ -4,6 +4,10 @@ public class Hardware {
 	
 	private int id_hardware;
 	private String desc_hardware;
+        public Hardware(String desc_hardware){
+            super();
+            this.desc_hardware=desc_hardware;
+        }
 	public Hardware(int id_hardware, String desc_hardware) {
 		super();
 		this.id_hardware = id_hardware;

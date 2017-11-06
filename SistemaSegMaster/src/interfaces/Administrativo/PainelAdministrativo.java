@@ -331,16 +331,7 @@ public class PainelAdministrativo extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
-        try{
-                MunicipioRegrasNegocio cidade = new MunicipioRegrasNegocio();
-                LinkedList<Municipio> listaMunicipio = cidade.listaMunicipio();
-                panelAdm.montaTabelaMunicipio(listaMunicipio);
-            }catch(BancoException e){
-                JOptionPane.showMessageDialog(null, "problema no banco de dados");
-            } catch (Exception ex) {
-            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        
         painelConsultas.add(content);
         this.add(painelConsultas);
         setLastPanel(content);

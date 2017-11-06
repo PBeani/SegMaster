@@ -5,9 +5,17 @@
  */
 package interfaces.Administrativo.Adicionar;
 
+import bancoDeDados.BancoException;
+import beans.Estado;
+import beans.Municipio;
 import interfaces.Administrativo.Consultas.ConsultaMunicipio;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import regrasDeNegocio.EstadoRegrasNegocio;
+import regrasDeNegocio.MunicipioRegrasNegocio;
 
 /**
  *
@@ -23,6 +31,18 @@ public class AdicionarMunicipio extends javax.swing.JPanel {
     public AdicionarMunicipio(PainelAdministrativo p) {
         parent = p;
         initComponents();
+        
+        try {
+            EstadoRegrasNegocio m = new EstadoRegrasNegocio();
+            for(Estado e : m.listaEstado()){
+                estado.addItem(e);
+            }
+        } catch (BancoException ex) {
+            Logger.getLogger(AdicionarMunicipio.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(AdicionarMunicipio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
@@ -36,11 +56,11 @@ public class AdicionarMunicipio extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        descricao = new javax.swing.JTextField();
         cancelar = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        salvar = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        estado = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -52,9 +72,9 @@ public class AdicionarMunicipio extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel4.setText("Descrição:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        descricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                descricaoActionPerformed(evt);
             }
         });
 
@@ -71,13 +91,18 @@ public class AdicionarMunicipio extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setBackground(new java.awt.Color(0, 204, 0));
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Salvar");
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel2.setOpaque(true);
+        salvar.setBackground(new java.awt.Color(0, 204, 0));
+        salvar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        salvar.setForeground(new java.awt.Color(255, 255, 255));
+        salvar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        salvar.setText("Salvar");
+        salvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        salvar.setOpaque(true);
+        salvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                salvarMouseClicked(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel5.setText("Estado:");
@@ -93,7 +118,7 @@ public class AdicionarMunicipio extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -103,8 +128,8 @@ public class AdicionarMunicipio extends javax.swing.JPanel {
                                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(10, 10, 10)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))))
+                            .addComponent(estado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(descricao, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -115,26 +140,41 @@ public class AdicionarMunicipio extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jComboBox1))
+                    .addComponent(estado))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
+                    .addComponent(descricao)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(263, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descricaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_descricaoActionPerformed
 
     private void cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarMouseClicked
         retornarLista();
     }//GEN-LAST:event_cancelarMouseClicked
+
+    private void salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salvarMouseClicked
+        try {
+            Estado e = (Estado)estado.getSelectedItem(); 
+            String descricao1 = descricao.getText();
+            MunicipioRegrasNegocio municipio = new MunicipioRegrasNegocio();
+            Municipio m = new Municipio(e.getId_estado(), descricao1);
+            if(municipio.cadastroMunicipio(m))
+                JOptionPane.showMessageDialog(null, "Novo Municipio salvo com sucesso");
+        } catch (Exception ex) {
+            Logger.getLogger(AdicionarMunicipio.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        
+    }//GEN-LAST:event_salvarMouseClicked
     
     private void retornarLista() {
         JPanel lastPanel = parent.getLastPanel();
@@ -157,11 +197,11 @@ public class AdicionarMunicipio extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cancelar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JTextField descricao;
+    private javax.swing.JComboBox<Object> estado;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel salvar;
     // End of variables declaration//GEN-END:variables
 }

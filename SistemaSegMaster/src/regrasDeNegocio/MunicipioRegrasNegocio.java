@@ -60,6 +60,9 @@ public class MunicipioRegrasNegocio {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
     }
+    public LinkedList<Municipio> listaMunicipioEstado(int idEstado) throws Exception{        
+            return municipioDaoImpl.listaMunicipioEstado(idEstado);       
+    }
     
     public void remove(int cod) throws Exception {
         try {

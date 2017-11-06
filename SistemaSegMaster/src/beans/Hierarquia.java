@@ -4,6 +4,11 @@ public class Hierarquia {
 	
 	private int id_hierarquia;
 	private String desc_hierarquia;
+        
+        public Hierarquia(String desc_hierarquia){
+            super();
+            this.desc_hierarquia = desc_hierarquia;      
+        }
 	public Hierarquia(int id_hierarquia, String desc_hierarquia) {
 		super();
 		this.id_hierarquia = id_hierarquia;

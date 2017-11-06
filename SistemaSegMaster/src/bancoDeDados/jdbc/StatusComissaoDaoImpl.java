@@ -107,5 +107,25 @@ public class StatusComissaoDaoImpl extends ConectorJDBC implements StatusComissa
 
         fechaConexao();
     }
+    
+    public boolean existeStatusComissao(String desc) throws BancoException{
+     boolean resp;
+        abreConexao();        
+        preparaComandoSQL("select * from status_comissao where desc_status_comissao = ?");
+        try {
+            pstmt.setString(1, desc);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {    
+                resp= true;
+            }
+            else resp = false;
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção de status da comissao.");
+        }
+        
+        fechaConexao();
+        return resp;
+    }
 
 }
