@@ -8,22 +8,28 @@ import javax.swing.JOptionPane;
 
 import bancoDeDados.BancoException;
 import bancoDeDados.MunicipioDao;
+import bancoDeDados.jdbc.MunicipioDaoImpl;
 import beans.Municipio;
 
 public class MunicipioRegrasNegocio {
-	private MunicipioDao municipioDao;
+   
+	private MunicipioDaoImpl municipioDaoImpl;
+
+    public MunicipioRegrasNegocio() throws BancoException {
+        this.municipioDaoImpl = new MunicipioDaoImpl();
+    }
 
     public boolean cadastroMunicipio(Municipio municipio) throws Exception {
         try {
         	//fazer funcao para listar Municipio
-            boolean existeMunicipio = municipioDao.existeMunicipio(municipio.getDescricao());
+            boolean existeMunicipio = municipioDaoImpl.existeMunicipio(municipio.getDescricao());
             if (existeMunicipio) {
                 JOptionPane.showMessageDialog(null, "Municipio ja cadastrado");
                 return false;
             }
             
             //alterar a funcao para ser INSEREMUNICIPIO
-            municipioDao.insereMunicipio(municipio);
+            municipioDaoImpl.insereMunicipio(municipio);
             return true;
         } catch (BancoException e) {
 			throw new Exception("Erro ao cadastrar municipio");
@@ -32,7 +38,7 @@ public class MunicipioRegrasNegocio {
     
     public Municipio seleciona(int cod) throws Exception {
         try {
-            return municipioDao.selecionaMunicipio(cod);
+            return municipioDaoImpl.selecionaMunicipio(cod);
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
@@ -40,7 +46,7 @@ public class MunicipioRegrasNegocio {
     
     public void altera(Municipio municipio) throws Exception {
         try {
-        	municipioDao.alteraMunicipio(municipio);
+        	municipioDaoImpl.alteraMunicipio(municipio);
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
@@ -48,7 +54,8 @@ public class MunicipioRegrasNegocio {
     
     public LinkedList<Municipio> listaMunicipio() throws Exception {
         try {
-            return municipioDao.listaMunicipio();
+           
+            return municipioDaoImpl.listaMunicipio();
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
@@ -56,7 +63,7 @@ public class MunicipioRegrasNegocio {
     
     public void remove(int cod) throws Exception {
         try {
-        	municipioDao.removeMunicipio(cod);
+        	municipioDaoImpl.removeMunicipio(cod);
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }

@@ -7,10 +7,15 @@ import javax.swing.JOptionPane;
 
 import bancoDeDados.BancoException;
 import bancoDeDados.CategoriaCertificadoDao;
+import bancoDeDados.jdbc.CategoriaCertificadoDaoImpl;
 import beans.CategoriaCertificado;
 
 public class Categoria_certificadoRegrasNegocio {
-	private CategoriaCertificadoDao categoriaCertificadoDao;
+	private CategoriaCertificadoDaoImpl categoriaCertificadoDao;
+
+    public Categoria_certificadoRegrasNegocio() throws BancoException {
+        this.categoriaCertificadoDao = new CategoriaCertificadoDaoImpl();
+    }
 
     public boolean cadastroCategoriaCertificado(CategoriaCertificado catCertificado) throws Exception {
         try {

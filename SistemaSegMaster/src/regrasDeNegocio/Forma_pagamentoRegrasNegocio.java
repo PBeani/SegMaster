@@ -7,11 +7,18 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import bancoDeDados.BancoException;
-import bancoDeDados.FormaPagamentoDao;
+import bancoDeDados.jdbc.FormaPagamentoDaoImpl;
 import beans.FormaPagamento;
 
 public class Forma_pagamentoRegrasNegocio {
-	private FormaPagamentoDao formaPagamentoDao;
+    
+private FormaPagamentoDaoImpl formaPagamentoDao;
+
+    public Forma_pagamentoRegrasNegocio() throws BancoException {
+        formaPagamentoDao = new FormaPagamentoDaoImpl();
+    }
+    
+	
 
     public boolean cadastroFormaPagamento(FormaPagamento formaPagamento) throws Exception {
         try {

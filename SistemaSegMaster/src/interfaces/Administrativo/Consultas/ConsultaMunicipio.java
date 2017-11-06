@@ -8,6 +8,7 @@ package interfaces.Administrativo.Consultas;
 import beans.Municipio;
 import interfaces.Administrativo.Adicionar.AdicionarMunicipio;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -122,7 +123,7 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-     public void montaTabelaMunicipio(List<Municipio> listaMunicipio){
+     public void montaTabelaMunicipio(LinkedList<Municipio> listaMunicipio){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         
         for(Municipio municipio : listaMunicipio){

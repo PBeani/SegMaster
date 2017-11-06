@@ -62,6 +62,30 @@ public class ClienteDaoImpl extends ConectorJDBC implements ClienteDao {
 
         return cliente;
     }
+    
+    @Override
+    public LinkedList<Cliente> listaCliente()throws BancoException{
+        LinkedList<Cliente> lista =  new LinkedList<>();
+        abreConexao();
+        Cliente cliente = null;
+        preparaComandoSQL("select * from cliente");
+        try{
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                int codigo = rs.getInt(1);
+                String nome=rs.getString(2);
+                int tipo = rs.getInt(3);
+                cliente = new Cliente(codigo, nome, tipo);
+                lista.add(cliente);
+            }
+        }catch(SQLException e){
+            fechaConexao();
+            throw new BancoException("Problemas ao gerar lista Clientes");
+        }
+        fechaConexao();
+        return lista;
+        
+    }
    
 
 }

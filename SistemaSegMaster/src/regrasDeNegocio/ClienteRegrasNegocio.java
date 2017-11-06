@@ -8,9 +8,15 @@ import javax.swing.JOptionPane;
 import beans.Cliente;
 import bancoDeDados.BancoException;
 import bancoDeDados.ClienteDao;
+import bancoDeDados.jdbc.ClienteDaoImpl;
+import java.util.LinkedList;
 
 public class ClienteRegrasNegocio {
-	private ClienteDao clienteDao;
+	private ClienteDaoImpl clienteDao;
+
+    public ClienteRegrasNegocio()throws BancoException{
+        this.clienteDao = new ClienteDaoImpl();
+    }
 
 	
     public boolean cadastroCliente(Cliente cliente) throws Exception {
@@ -34,6 +40,14 @@ public class ClienteRegrasNegocio {
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
-    }    
+    }
+
+    public LinkedList<Cliente> listaCliente() throws Exception{
+        try{
+            return clienteDao.listaCliente();
+        }catch (BancoException e){
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
 }
 

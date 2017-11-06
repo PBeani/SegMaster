@@ -11,4 +11,6 @@ public interface ClienteDao {
     
     public Cliente selecionaCliente(int cod) throws BancoException;
     
+    public LinkedList<Cliente> listaCliente()throws BancoException;
+    
 }

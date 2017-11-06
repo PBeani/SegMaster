@@ -7,12 +7,17 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import bancoDeDados.BancoException;
-import bancoDeDados.HardwareDao;
+import bancoDeDados.jdbc.HardwareDaoImpl;
 import beans.Hardware;
 
 
 public class HardwareRegrasNegocio {
-	private HardwareDao hardwareDao;
+	private HardwareDaoImpl hardwareDao;
+
+    public HardwareRegrasNegocio() throws BancoException {
+        hardwareDao = new HardwareDaoImpl();
+    }
+        
 
     public boolean cadastroHardware(Hardware hardware) throws Exception {
         try {

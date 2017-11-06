@@ -8,11 +8,16 @@ import javax.swing.JOptionPane;
 
 import bancoDeDados.BancoException;
 import bancoDeDados.EstadoDao;
+import bancoDeDados.jdbc.EstadoDaoImpl;
 import beans.Estado;
 
 public class EstadoRegrasNegocio {
-	private EstadoDao estadoDao;
-
+    private EstadoDaoImpl estadoDao;
+    
+    public EstadoRegrasNegocio() throws BancoException{
+        
+	estadoDao = new EstadoDaoImpl();
+}
     public boolean cadastroEstado(Estado estado) throws Exception {
         try {
         	//fazer funcao para listar Estado
@@ -47,7 +52,9 @@ public class EstadoRegrasNegocio {
     
     public LinkedList<Estado> listaEstado() throws Exception {
         try {
+            
             return estadoDao.listaEstado();
+            
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }

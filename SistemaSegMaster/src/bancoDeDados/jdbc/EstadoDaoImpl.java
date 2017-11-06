@@ -6,11 +6,12 @@ import java.util.LinkedList;
 
 import bancoDeDados.*;
 import beans.Estado;
+import javax.swing.JOptionPane;
 
 public class EstadoDaoImpl extends ConectorJDBC implements EstadoDao {
 
-    public EstadoDaoImpl() throws BancoException {
-        super();
+    public EstadoDaoImpl() throws BancoException  {
+        super();        
     }
 
     @Override
@@ -75,6 +76,7 @@ public class EstadoDaoImpl extends ConectorJDBC implements EstadoDao {
 
     @Override
     public LinkedList<Estado> listaEstado() throws BancoException {
+        
         LinkedList<Estado> lista = new LinkedList<>();
 
         abreConexao();

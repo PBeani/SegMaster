@@ -7,11 +7,16 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import bancoDeDados.BancoException;
-import bancoDeDados.HierarquiaDao;
+import bancoDeDados.jdbc.HierarquiaDaoImpl;
 import beans.Hierarquia;
 
 public class HierarquiaRegrasNegocio {
-	private HierarquiaDao hierarquiaDao;
+	private HierarquiaDaoImpl hierarquiaDao;
+
+    public HierarquiaRegrasNegocio() throws BancoException {
+        hierarquiaDao = new HierarquiaDaoImpl();
+    }
+        
 
     public boolean cadastroHardware(Hierarquia hierarquia) throws Exception {
         try {
