@@ -113,4 +113,23 @@ public class EstadoDaoImpl extends ConectorJDBC implements EstadoDao {
 
         fechaConexao();
     }
+    public boolean existeEstado(String sigla)throws BancoException{
+        boolean resp;
+        abreConexao();
+        preparaComandoSQL("select * from estados where sigla = ?");
+        try {
+            pstmt.setString(1, sigla);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                resp = true;
+            }
+            else resp = false;
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção do estado.");
+        }
+        
+        fechaConexao();
+        return resp;
+    }
 }

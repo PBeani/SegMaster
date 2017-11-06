@@ -62,4 +62,6 @@ public class ClienteDaoImpl extends ConectorJDBC implements ClienteDao {
 
         return cliente;
     }
+   
+
 }

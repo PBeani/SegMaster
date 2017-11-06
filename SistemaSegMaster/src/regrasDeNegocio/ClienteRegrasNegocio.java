@@ -6,9 +6,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import beans.Cliente;
-import dto.Usuario;
-import regrasNegocio.NegocioException;
-import utilidades.Log;
 import bancoDeDados.BancoException;
 import bancoDeDados.ClienteDao;
 
@@ -19,8 +16,8 @@ public class ClienteRegrasNegocio {
     public boolean cadastroCliente(Cliente cliente) throws Exception {
         try {
         	//fazer funcao para listar clientes
-            List<Cliente> listaCliente = clienteDao.buscaClienteId(cliente.getId_cliente());
-            if (!listaCliente.isEmpty()) {
+            Cliente clienteID = clienteDao.selecionaCliente(cliente.getId_cliente());
+            if (clienteID!=null) {
                 JOptionPane.showMessageDialog(null, "Cliente ja cadastrado");
                 return false;
             }

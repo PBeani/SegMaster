@@ -5,9 +5,13 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import beans.Hierarquia;
 import interfaces.Administrativo.Adicionar.AdicionarHierarquia;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -107,6 +111,17 @@ public class ConsultaHierarquia extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+     public void montaTabelaHierarquia(List<Hierarquia> listaHierarquia){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        for(Hierarquia hierarquia: listaHierarquia){
+            model.addRow(new Object [] {hierarquia.getId_hierarquia(),hierarquia.getDesc_hierarquia()});
+            
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+        
+    }
+    
     private void addHierarquiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addHierarquiaMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();

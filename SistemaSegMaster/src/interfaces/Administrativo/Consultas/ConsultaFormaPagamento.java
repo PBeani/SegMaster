@@ -5,9 +5,13 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import beans.FormaPagamento;
 import interfaces.Administrativo.Adicionar.AdicionarFormaPagamento;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -105,6 +109,17 @@ public class ConsultaFormaPagamento extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+     public void montaTabelaFormaPagamento(List<FormaPagamento> listaFormaPagamento){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        for(FormaPagamento formaPagamento : listaFormaPagamento){
+            model.addRow(new Object [] {formaPagamento.getId_forma_pagamento(),formaPagamento.getDesc_forma_pagamento()});
+            
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+        
+    }
+    
     private void addFormaPagamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addFormaPagamentoMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();

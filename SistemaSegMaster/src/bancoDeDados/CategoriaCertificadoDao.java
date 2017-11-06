@@ -11,6 +11,8 @@ public interface CategoriaCertificadoDao {
     public void alteraCategoriaCertificado(CategoriaCertificado c) throws BancoException;
 
     public CategoriaCertificado selecionaCategoriaCertificado(int cod) throws BancoException;
+    
+    public boolean existeCategoriaCertificado(String desc) throws BancoException;
 
     public LinkedList<CategoriaCertificado> listaCategoriaCertificado() throws BancoException;
 

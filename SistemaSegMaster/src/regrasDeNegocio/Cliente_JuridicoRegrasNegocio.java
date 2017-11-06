@@ -15,8 +15,8 @@ public class Cliente_JuridicoRegrasNegocio {
     public boolean cadastroClienteJuridico(ClienteJuridico cliente) throws Exception {
         try {
         	//fazer funcao para listar clienteJuridico
-            List<ClienteJuridico> listaClienteJuridico = clienteJuridicoDao.buscaClienteJuridicoCNPJ(cliente.getCnpj());
-            if (!listaClienteJuridico.isEmpty()) {
+            ClienteJuridico clienteJuridico = clienteJuridicoDao.selecionaClienteJuridicoCNPJ(cliente.getCnpj());
+            if (clienteJuridico!=null) {
                 JOptionPane.showMessageDialog(null, "CNPJ ja cadastrado");
                 return false;
             }

@@ -14,4 +14,6 @@ public interface HardwareDao {
     public LinkedList<Hardware> listaHardware() throws BancoException;
 
     public void removeHardware(int cod) throws BancoException;
+    
+    public boolean existeHardware (String desc_hardware)throws BancoException;
 }

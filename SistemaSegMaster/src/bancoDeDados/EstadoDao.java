@@ -15,4 +15,6 @@ public interface EstadoDao {
     public LinkedList<Estado> listaEstado() throws BancoException;
 
     public void removeEstado(int cod) throws BancoException;
+    
+    public boolean existeEstado(String sigla)throws BancoException;
 }

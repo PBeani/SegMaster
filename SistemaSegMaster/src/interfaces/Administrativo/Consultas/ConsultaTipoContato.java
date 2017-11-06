@@ -5,9 +5,14 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import beans.CategoriaCertificado;
+import beans.TipoContato;
 import interfaces.Administrativo.Adicionar.AdicionarTipoContato;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -105,7 +110,16 @@ public class ConsultaTipoContato extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
+ public void montaTabelaTipoContato(List<TipoContato> listaTipoContato){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        for(TipoContato contato : listaTipoContato){
+            model.addRow(new Object [] {contato.getId_tipo_contato(),contato.getDesc_tipo_contato()});
+            
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+        
+    }
     private void addTipoContatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addTipoContatoMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();

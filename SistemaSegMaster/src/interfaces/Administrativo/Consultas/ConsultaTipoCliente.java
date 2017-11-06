@@ -5,10 +5,15 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import beans.CategoriaCertificado;
+import beans.TipoCliente;
 import interfaces.Administrativo.Adicionar.AdicionarMunicipio;
 import interfaces.Administrativo.Adicionar.AdicionarTipoCliente;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -107,6 +112,18 @@ public class ConsultaTipoCliente extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    
+     public void montaTabelaTipoCliente(List<TipoCliente> listaTipoCliente){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        for(TipoCliente tipoCliente : listaTipoCliente){
+            model.addRow(new Object [] {tipoCliente.getId_tipo_cliente(),tipoCliente.getDesc_tipo_cliente()});
+            
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+        
+    }
+     
     private void addTipoClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addTipoClienteMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();

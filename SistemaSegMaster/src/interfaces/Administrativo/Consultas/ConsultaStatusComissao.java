@@ -5,9 +5,13 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import beans.StatusComissao;
 import interfaces.Administrativo.Adicionar.AdicionarStatusComissao;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -105,6 +109,17 @@ public class ConsultaStatusComissao extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+     public void montaTabelaStatusComissao(List<StatusComissao> listaStatusComissao){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        for(StatusComissao status : listaStatusComissao){
+            model.addRow(new Object [] {status.getId_status_comissao(),status.getDesc_status_comissao()});
+            
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+        
+    }
+    
     private void addStatusComissaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addStatusComissaoMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();

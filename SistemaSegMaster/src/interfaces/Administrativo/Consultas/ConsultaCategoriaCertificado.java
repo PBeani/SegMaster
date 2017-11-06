@@ -5,10 +5,14 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import beans.CategoriaCertificado;
 import interfaces.Administrativo.Adicionar.AdicionarCategoriaCertificado;
 import interfaces.Administrativo.Adicionar.AdicionarMunicipio;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -107,6 +111,16 @@ public class ConsultaCategoriaCertificado extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void montaTabelaCertificado(List<CategoriaCertificado> listaCategoriaCertificado){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        for(CategoriaCertificado categoria : listaCategoriaCertificado){
+            model.addRow(new Object [] {categoria.getId_tipo_certificado(),categoria.getDesc_categoria_certificado()});
+            
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+        
+    }
     private void addCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addCategoriaMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();

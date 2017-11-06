@@ -8,9 +8,6 @@ import javax.swing.JOptionPane;
 import bancoDeDados.BancoException;
 import bancoDeDados.CategoriaCertificadoDao;
 import beans.CategoriaCertificado;
-import dto.Usuario;
-import regrasNegocio.NegocioException;
-import utilidades.Log;
 
 public class Categoria_certificadoRegrasNegocio {
 	private CategoriaCertificadoDao categoriaCertificadoDao;
@@ -18,8 +15,8 @@ public class Categoria_certificadoRegrasNegocio {
     public boolean cadastroCategoriaCertificado(CategoriaCertificado catCertificado) throws Exception {
         try {
         	//fazer funcao para buscar categoria certificado
-            List<CategoriaCertificado> listaCategoriaCertificado = categoriaCertificadoDao.buscaCategoriaCertificadoDesc(catCertificado.getDesc_categoria_certificado());
-            if (!listaCategoriaCertificado.isEmpty()) {
+            boolean existeCategoria = categoriaCertificadoDao.existeCategoriaCertificado(catCertificado.getDesc_categoria_certificado());
+            if (existeCategoria) {
                 JOptionPane.showMessageDialog(null, "Categoria certificado ja cadastrado");
                 return false;
             }

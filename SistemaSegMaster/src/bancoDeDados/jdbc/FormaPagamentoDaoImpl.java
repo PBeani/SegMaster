@@ -107,5 +107,27 @@ public class FormaPagamentoDaoImpl extends ConectorJDBC implements FormaPagament
 
         fechaConexao();
     }
+    public boolean existeFormaPagamento(String desc_forma_pagamento) throws BancoException{
+        boolean resp;
+        abreConexao();
+        
+        preparaComandoSQL("select * from forma_pagamento where desc_forma_pagamento = ?");
+        try {
+            pstmt.setString(1, desc_forma_pagamento);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                resp=true;
+            }
+            else resp=false;
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção de categoria do certificado.");
+        }
+        
+        fechaConexao();
+        
+        return resp;
+    }
 
 }

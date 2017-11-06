@@ -62,4 +62,38 @@ public class ClienteFisicoDaoImpl extends ClienteDaoImpl implements ClienteFisic
         return clienteFisico;
 
     }
+    
+    @Override
+    public ClienteFisico selecionaClienteFisicoCPF(String cpf)throws BancoException{
+        ClienteFisico clientefisico = null;
+        abreConexao();
+        
+        int codFisico=0;
+        int codCliente=0;
+        preparaComandoSQL("select * from cliente_fisico where cpf = ? ");
+        try {
+            pstmt.setString(1, cpf);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                codFisico = rs.getInt(1);
+                codCliente= rs.getInt(2);                
+            }
+            preparaComandoSQL("select * from cliente where id_cliente = ?");
+            
+            pstmt.setInt(1,codFisico);
+            rs= pstmt.executeQuery();
+            if(rs.next()){
+                String nome = rs.getString(2);
+                int tipoCliente = rs.getInt(3);
+                                               
+                clientefisico = new ClienteFisico(codCliente, nome, cpf, tipoCliente, codFisico);
+            }
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção do Cliente Fisico");
+        }
+        fechaConexao();
+        return clientefisico;
+        
+    }
 }

@@ -17,8 +17,8 @@ public class HardwareRegrasNegocio {
     public boolean cadastroHardware(Hardware hardware) throws Exception {
         try {
         	//fazer funcao para buscar Hardware
-            List<Hardware> listaHardware = hardwareDao.buscaHardwareDesc(hardware.getDesc_hardware());
-            if (!listaHardware.isEmpty()) {
+            boolean existeHardware = hardwareDao.existeHardware(hardware.getDesc_hardware());
+            if (existeHardware) {
                 JOptionPane.showMessageDialog(null, "Hardware ja cadastrado");
                 return false;
             }

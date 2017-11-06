@@ -139,4 +139,26 @@ public class MunicipioDaoImpl extends ConectorJDBC implements MunicipioDao {
 
         fechaConexao();
     }
+    public boolean existeMunicipio(String descricao) throws BancoException{
+        boolean resp;
+        abreConexao();
+
+        Municipio municipio = null;
+        preparaComandoSQL("select * from municipios where descricao = ?");
+        try {
+            pstmt.setString(1, descricao);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                resp=true;
+            }
+            else resp=false;
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção de Municipio.");
+        }
+        
+        fechaConexao();
+        return resp;
+    }
 }

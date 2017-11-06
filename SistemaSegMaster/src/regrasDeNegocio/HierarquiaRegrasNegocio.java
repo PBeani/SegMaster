@@ -16,8 +16,8 @@ public class HierarquiaRegrasNegocio {
     public boolean cadastroHardware(Hierarquia hierarquia) throws Exception {
         try {
         	//fazer funcao para buscar Hierarquia
-            List<Hierarquia> listaHierarquia = hierarquiaDao.buscaHierarquiaDesc(hierarquia.getDesc_hierarquia());
-            if (!listaHierarquia.isEmpty()) {
+            boolean existeHierarquia = hierarquiaDao.existeHierarquia(hierarquia.getDesc_hierarquia());
+            if (existeHierarquia) {
                 JOptionPane.showMessageDialog(null, "Hierarquia ja cadastrado");
                 return false;
             }

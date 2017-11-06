@@ -64,4 +64,37 @@ public class ClienteJuridicoDaoImpl extends ClienteDaoImpl implements ClienteJur
         return clienteJuridico;
 
     }
+    public ClienteJuridico selecionaClienteJuridicoCNPJ (String cnpj) throws BancoException{
+        ClienteJuridico clientejuridico = null;
+        abreConexao();
+        
+        int codJuridico=0;
+        int codCliente=0;
+        String nomeEmpresa = null;
+        preparaComandoSQL("select * from cliente_juridico where cnpj = ? ");
+        try {
+            pstmt.setString(1, cnpj);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+               codJuridico= rs.getInt(1);
+               codCliente = rs.getInt(2);
+               nomeEmpresa = rs.getString(4);
+            }
+            preparaComandoSQL("select * from cliente where id_cliente = ?");
+            
+            pstmt.setInt(1,codJuridico);
+            rs= pstmt.executeQuery();
+            if(rs.next()){
+                String nome = rs.getString(2);
+                int tipoCliente = rs.getInt(3);
+                                               
+                clientejuridico = new ClienteJuridico(codCliente,codJuridico, cnpj, nomeEmpresa,nome, tipoCliente);
+            }
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção do Cliente Fisico");
+        }
+        fechaConexao();
+        return clientejuridico;
+    }
 }

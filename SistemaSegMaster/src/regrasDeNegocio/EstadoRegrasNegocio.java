@@ -16,12 +16,11 @@ public class EstadoRegrasNegocio {
     public boolean cadastroEstado(Estado estado) throws Exception {
         try {
         	//fazer funcao para listar Estado
-            List<Estado> listaEstado = estadoDao.buscaEstadoSigla(estado.getSigla());
-            if (!listaEstado.isEmpty()) {
+            boolean existeEstado = estadoDao.existeEstado(estado.getSigla());
+            if (existeEstado) {
                 JOptionPane.showMessageDialog(null, "Estado ja cadastrado");
                 return false;
-            }
-            
+            }            
             //falta fazer a funcao de inserir estado
             estadoDao.insereEstado(estado);
             return true;

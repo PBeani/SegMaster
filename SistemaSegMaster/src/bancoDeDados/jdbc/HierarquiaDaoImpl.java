@@ -107,5 +107,24 @@ public class HierarquiaDaoImpl extends ConectorJDBC implements HierarquiaDao {
 
         fechaConexao();
     }
+    public boolean existeHierarquia (String desc_hierarquia) throws BancoException{
+        boolean resp;
+        abreConexao();
+        preparaComandoSQL("select * from hierarquia where desc_hierarquia = ?");
+        try {
+            pstmt.setString(1, desc_hierarquia);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                resp = true;
+            }
+            else resp=false;
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção de hierarquia.");
+        }        
+        fechaConexao();
+        return resp;
+    }
 
 }

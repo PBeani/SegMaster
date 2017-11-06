@@ -5,9 +5,13 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import beans.Hardware;
 import interfaces.Administrativo.Adicionar.AdicionarHardware;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -106,6 +110,14 @@ public class ConsultaHardware extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+     public void montaTabelaHardware (List<Hardware> listaHardware){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();        
+        for(Hardware hardware  : listaHardware){
+            model.addRow(new Object [] {hardware.getId_hardware(), hardware.getDesc_hardware()});
+            }
+        jTable1.setRowSorter(new TableRowSorter(model));        
+    }
+    
     private void addHardwareMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addHardwareMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();

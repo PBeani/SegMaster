@@ -5,9 +5,13 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import beans.Municipio;
 import interfaces.Administrativo.Adicionar.AdicionarMunicipio;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -118,6 +122,18 @@ public class ConsultaMunicipio extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+     public void montaTabelaMunicipio(List<Municipio> listaMunicipio){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        for(Municipio municipio : listaMunicipio){
+            model.addRow(new Object [] {municipio.getId_municipio(),municipio.getDescricao()});
+            
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+        
+    }
+    
+    
     private void addMunicipioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMunicipioMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();

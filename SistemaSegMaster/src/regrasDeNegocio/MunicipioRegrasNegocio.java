@@ -16,8 +16,8 @@ public class MunicipioRegrasNegocio {
     public boolean cadastroMunicipio(Municipio municipio) throws Exception {
         try {
         	//fazer funcao para listar Municipio
-            List<Municipio> listaMunicipio = municipioDao.buscaMunicipioDesc(municipio.getDescricao());
-            if (!listaMunicipio.isEmpty()) {
+            boolean existeMunicipio = municipioDao.existeMunicipio(municipio.getDescricao());
+            if (existeMunicipio) {
                 JOptionPane.showMessageDialog(null, "Municipio ja cadastrado");
                 return false;
             }

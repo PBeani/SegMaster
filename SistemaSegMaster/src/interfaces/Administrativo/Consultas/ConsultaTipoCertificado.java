@@ -5,10 +5,15 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import beans.CategoriaCertificado;
+import beans.TipoCertificado;
 import interfaces.Administrativo.Adicionar.AdicionarMunicipio;
 import interfaces.Administrativo.Adicionar.AdicionarTipoCertificado;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -105,6 +110,17 @@ public class ConsultaTipoCertificado extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+     public void montaTabelaTipoCertificado(List<TipoCertificado> listaTipoCertificado){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        for(TipoCertificado certificado : listaTipoCertificado){
+            model.addRow(new Object [] {certificado.getId_tipo_certificado(),certificado.getDesc_tipo_certificado()});
+            
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+        
+    }
+    
     private void addTipoCertificadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addTipoCertificadoMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();

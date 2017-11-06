@@ -14,4 +14,6 @@ public interface FormaPagamentoDao {
     public LinkedList<FormaPagamento> listaFormaPagamento() throws BancoException;
 
     public void removeFormaPagamento(int cod) throws BancoException;
+    
+    public boolean existeFormaPagamento(String desc_forma_pagamento) throws BancoException;
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import bancoDeDados.BancoException;
+import bancoDeDados.ClienteFisicoDao;
+import beans.ClienteFisico;
 
 
 public class Cliente_FisicoRegrasNegocio {
@@ -14,8 +16,8 @@ public class Cliente_FisicoRegrasNegocio {
     public boolean cadastroClienteFisico(ClienteFisico cliente) throws Exception {
         try {
         	//fazer funcao para listar clienteFisico
-            List<ClienteFisico> listaClienteFisico = clienteFisicoDao.buscaClienteFisicoCPF(cliente.getCpf());
-            if (!listaClienteFisico.isEmpty()) {
+            ClienteFisico clienteFisico = clienteFisicoDao.selecionaClienteFisicoCPF(cliente.getCpf());
+            if (clienteFisico!=null) {
                 JOptionPane.showMessageDialog(null, "CPF ja cadastrado");
                 return false;
             }

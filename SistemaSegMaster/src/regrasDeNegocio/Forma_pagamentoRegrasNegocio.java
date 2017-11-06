@@ -16,8 +16,8 @@ public class Forma_pagamentoRegrasNegocio {
     public boolean cadastroFormaPagamento(FormaPagamento formaPagamento) throws Exception {
         try {
         	//fazer funcao para buscar Forma_pagamento
-            List<FormaPagamento> listaForma_pagamento = formaPagamentoDao.buscaFormaPagamentoDesc(formaPagamento.getDesc_forma_pagamento());
-            if (!FormaPagamento.isEmpty()) {
+            boolean existeFormaPagamento = formaPagamentoDao.existeFormaPagamento(formaPagamento.getDesc_forma_pagamento());
+            if (existeFormaPagamento) {
                 JOptionPane.showMessageDialog(null, "Forma pagamento ja cadastrado");
                 return false;
             }
