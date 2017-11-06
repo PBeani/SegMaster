@@ -33,7 +33,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="cancelar" min="-2" pref="305" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" pref="305" max="-2" attributes="0"/>
+                      <Component id="salvar" min="-2" pref="305" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -52,7 +52,7 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel2" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="salvar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="cancelar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="316" max="32767" attributes="0"/>
@@ -72,7 +72,7 @@
         <Property name="text" type="java.lang.String" value="Adicionar Categoria de Certificado"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="salvar">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="cc" red="0" type="rgb"/>
@@ -90,6 +90,10 @@
         </Property>
         <Property name="opaque" type="boolean" value="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="salvarAncestorAdded"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="salvarMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="cancelar">
       <Properties>

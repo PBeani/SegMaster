@@ -5,6 +5,11 @@ public class CategoriaCertificado {
     private int id_tipo_certificado;
     private String desc_categoria_certificado;
 
+    public CategoriaCertificado(String desc_categoria_certificado){
+    super();
+    this.desc_categoria_certificado=desc_categoria_certificado;
+    }
+    
     public CategoriaCertificado(int id_tipo_certificado, String desc_categoria_certificado) {
         super();
         this.id_tipo_certificado = id_tipo_certificado;

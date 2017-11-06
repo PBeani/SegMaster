@@ -5,6 +5,12 @@ public class Estado{
 	private int id_estado;
 	private String desc_estado;
 	private String sigla;
+        
+        public Estado(String desc_estado,String sigla){
+            super();
+            this.desc_estado = desc_estado;
+		this.sigla = sigla;
+        }
 	
 	public Estado(int id_estado, String desc_estado, String sigla) {
 		super();
