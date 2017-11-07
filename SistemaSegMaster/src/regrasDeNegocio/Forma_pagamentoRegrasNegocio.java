@@ -45,9 +45,10 @@ private FormaPagamentoDaoImpl formaPagamentoDao;
         }
     }
     
-    public void altera(FormaPagamento formaPagamento) throws Exception {
+    public boolean altera(FormaPagamento formaPagamento) throws Exception {
         try {
         	formaPagamentoDao.alteraFormaPagamento(formaPagamento);
+                return true;
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }

@@ -42,9 +42,10 @@ public class Categoria_certificadoRegrasNegocio {
         }
     }
     
-    public void altera(CategoriaCertificado catCertificado) throws Exception {
+    public boolean altera(CategoriaCertificado catCertificado) throws Exception {
         try {
         	categoriaCertificadoDao.alteraCategoriaCertificado(catCertificado);
+                return true;
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }

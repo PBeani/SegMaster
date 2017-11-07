@@ -54,7 +54,6 @@ public class AdicionarEstado extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setText("Adicionar Estado");
 
-        descricao.setEditable(false);
         descricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 descricaoActionPerformed(evt);

@@ -93,17 +93,12 @@ public class PainelAdministrativo extends javax.swing.JPanel {
             }
         });
 
-        nav_adm_cidades.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_cidades.setBackground(new java.awt.Color(153, 153, 153));
         nav_adm_cidades.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         nav_adm_cidades.setForeground(new java.awt.Color(255, 255, 255));
         nav_adm_cidades.setText("  Municipios");
-        nav_adm_cidades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_cidades.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         nav_adm_cidades.setOpaque(true);
-        nav_adm_cidades.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                nav_adm_cidadesMouseClicked(evt);
-            }
-        });
 
         nav_admin_categoria.setBackground(new java.awt.Color(255, 153, 0));
         nav_admin_categoria.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
@@ -117,11 +112,11 @@ public class PainelAdministrativo extends javax.swing.JPanel {
             }
         });
 
-        nav_adm_tipo_certificado.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_tipo_certificado.setBackground(new java.awt.Color(153, 153, 153));
         nav_adm_tipo_certificado.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         nav_adm_tipo_certificado.setForeground(new java.awt.Color(255, 255, 255));
         nav_adm_tipo_certificado.setText("  Tipo de Certificado");
-        nav_adm_tipo_certificado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_tipo_certificado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         nav_adm_tipo_certificado.setOpaque(true);
         nav_adm_tipo_certificado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -129,11 +124,11 @@ public class PainelAdministrativo extends javax.swing.JPanel {
             }
         });
 
-        nav_adm_cliente.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_cliente.setBackground(new java.awt.Color(153, 153, 153));
         nav_adm_cliente.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         nav_adm_cliente.setForeground(new java.awt.Color(255, 255, 255));
         nav_adm_cliente.setText("  Tipo de Cliente");
-        nav_adm_cliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_cliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         nav_adm_cliente.setOpaque(true);
         nav_adm_cliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -141,11 +136,11 @@ public class PainelAdministrativo extends javax.swing.JPanel {
             }
         });
 
-        nav_adm_contato.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_contato.setBackground(new java.awt.Color(153, 153, 153));
         nav_adm_contato.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         nav_adm_contato.setForeground(new java.awt.Color(255, 255, 255));
         nav_adm_contato.setText("  Tipo de Contato");
-        nav_adm_contato.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_contato.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         nav_adm_contato.setOpaque(true);
         nav_adm_contato.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -320,23 +315,6 @@ public class PainelAdministrativo extends javax.swing.JPanel {
         setLastPanel(content);
     }//GEN-LAST:event_nav_adm_estadoMouseClicked
 
-    private void nav_adm_cidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_cidadesMouseClicked
-        if (lastPanel != null) {
-            lastPanel.setVisible(false);
-            painelConsultas.revalidate();
-        } else {
-            painelConsultas.revalidate();
-        }
-        ConsultaMunicipio panelAdm = new ConsultaMunicipio(this);
-        JPanel content = panelAdm;
-        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
-        content.setVisible(true);
-        
-        painelConsultas.add(content);
-        this.add(painelConsultas);
-        setLastPanel(content);
-    }//GEN-LAST:event_nav_adm_cidadesMouseClicked
-
     private void nav_admin_categoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_admin_categoriaMouseClicked
        
             if (lastPanel != null) {
@@ -367,78 +345,78 @@ public class PainelAdministrativo extends javax.swing.JPanel {
     }//GEN-LAST:event_nav_admin_categoriaMouseClicked
 
     private void nav_adm_tipo_certificadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_tipo_certificadoMouseClicked
-        if (lastPanel != null) {
-            lastPanel.setVisible(false);
-            painelConsultas.revalidate();
-        } else {
-            painelConsultas.revalidate();
-        }
-        ConsultaTipoCertificado panelAdm = new ConsultaTipoCertificado(this);
-        JPanel content = panelAdm;
-        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
-        content.setVisible(true);
-        try{
-                TipoCertificadoRegrasNegocio certificado = new TipoCertificadoRegrasNegocio();
-                LinkedList<TipoCertificado> listaCertificado = certificado.listaTipoCertificado();
-                panelAdm.montaTabelaTipoCertificado(listaCertificado);
-            }catch(BancoException e){
-                JOptionPane.showMessageDialog(null, "problema no banco de dados");
-            } catch (Exception ex) {
-            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        painelConsultas.add(content);
-        this.add(painelConsultas);
-        setLastPanel(content);
+//        if (lastPanel != null) {
+//            lastPanel.setVisible(false);
+//            painelConsultas.revalidate();
+//        } else {
+//            painelConsultas.revalidate();
+//        }
+//        ConsultaTipoCertificado panelAdm = new ConsultaTipoCertificado(this);
+//        JPanel content = panelAdm;
+//        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+//        content.setVisible(true);
+//        try{
+//                TipoCertificadoRegrasNegocio certificado = new TipoCertificadoRegrasNegocio();
+//                LinkedList<TipoCertificado> listaCertificado = certificado.listaTipoCertificado();
+//                panelAdm.montaTabelaTipoCertificado(listaCertificado);
+//            }catch(BancoException e){
+//                JOptionPane.showMessageDialog(null, "problema no banco de dados");
+//            } catch (Exception ex) {
+//            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        painelConsultas.add(content);
+//        this.add(painelConsultas);
+//        setLastPanel(content);
     }//GEN-LAST:event_nav_adm_tipo_certificadoMouseClicked
 
     private void nav_adm_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_clienteMouseClicked
-        if (lastPanel != null) {
-            lastPanel.setVisible(false);
-            painelConsultas.revalidate();
-        } else {
-            painelConsultas.revalidate();
-        }
-        ConsultaTipoCliente panelAdm = new ConsultaTipoCliente(this);
-        JPanel content = panelAdm;
-        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
-        content.setVisible(true);
-        try{
-                TipoClienteRegrasNegocio tipoCliente = new TipoClienteRegrasNegocio();
-                LinkedList<TipoCliente> listaTipoCliente = tipoCliente.listaTipoCliente();
-                panelAdm.montaTabelaTipoCliente(listaTipoCliente);
-            }catch(BancoException e){
-                JOptionPane.showMessageDialog(null, "problema no banco de dados");
-            } catch (Exception ex) {
-            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        painelConsultas.add(content);
-        this.add(painelConsultas);
-        setLastPanel(content);
+//        if (lastPanel != null) {
+//            lastPanel.setVisible(false);
+//            painelConsultas.revalidate();
+//        } else {
+//            painelConsultas.revalidate();
+//        }
+//        ConsultaTipoCliente panelAdm = new ConsultaTipoCliente(this);
+//        JPanel content = panelAdm;
+//        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+//        content.setVisible(true);
+//        try{
+//                TipoClienteRegrasNegocio tipoCliente = new TipoClienteRegrasNegocio();
+//                LinkedList<TipoCliente> listaTipoCliente = tipoCliente.listaTipoCliente();
+//                panelAdm.montaTabelaTipoCliente(listaTipoCliente);
+//            }catch(BancoException e){
+//                JOptionPane.showMessageDialog(null, "problema no banco de dados");
+//            } catch (Exception ex) {
+//            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        painelConsultas.add(content);
+//        this.add(painelConsultas);
+//        setLastPanel(content);
     }//GEN-LAST:event_nav_adm_clienteMouseClicked
 
     private void nav_adm_contatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_contatoMouseClicked
-        if (lastPanel != null) {
-            lastPanel.setVisible(false);
-            painelConsultas.revalidate();
-        } else {
-            painelConsultas.revalidate();
-        }
-        ConsultaTipoContato panelAdm = new ConsultaTipoContato(this);
-        JPanel content = panelAdm;
-        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
-        content.setVisible(true);
-        try{
-            TipoContatoRegrasNegocio tipoContato = new TipoContatoRegrasNegocio();
-            LinkedList<TipoContato> listaTipoCertificado = tipoContato.listaTipoContato();
-            panelAdm.montaTabelaTipoContato(listaTipoCertificado);
-            }catch(BancoException e){
-                JOptionPane.showMessageDialog(null, "problema no banco de dados");
-            }catch (Exception ex) {
-                Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        painelConsultas.add(content);
-        this.add(painelConsultas);
-        setLastPanel(content);
+//        if (lastPanel != null) {
+//            lastPanel.setVisible(false);
+//            painelConsultas.revalidate();
+//        } else {
+//            painelConsultas.revalidate();
+//        }
+//        ConsultaTipoContato panelAdm = new ConsultaTipoContato(this);
+//        JPanel content = panelAdm;
+//        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+//        content.setVisible(true);
+//        try{
+//            TipoContatoRegrasNegocio tipoContato = new TipoContatoRegrasNegocio();
+//            LinkedList<TipoContato> listaTipoCertificado = tipoContato.listaTipoContato();
+//            panelAdm.montaTabelaTipoContato(listaTipoCertificado);
+//            }catch(BancoException e){
+//                JOptionPane.showMessageDialog(null, "problema no banco de dados");
+//            }catch (Exception ex) {
+//                Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        painelConsultas.add(content);
+//        this.add(painelConsultas);
+//        setLastPanel(content);
     }//GEN-LAST:event_nav_adm_contatoMouseClicked
 
     private void nav_adm_comissaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_comissaoMouseClicked

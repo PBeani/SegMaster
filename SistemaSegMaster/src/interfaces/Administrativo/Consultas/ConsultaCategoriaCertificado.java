@@ -8,11 +8,18 @@ package interfaces.Administrativo.Consultas;
 import beans.CategoriaCertificado;
 import interfaces.Administrativo.Adicionar.AdicionarCategoriaCertificado;
 import interfaces.Administrativo.Adicionar.AdicionarMunicipio;
+import interfaces.Administrativo.Editar.EditarCategoriaCertificado;
 import interfaces.Administrativo.PainelAdministrativo;
+import interfaces.ItemSelecionado;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import regrasDeNegocio.Categoria_certificadoRegrasNegocio;
+import regrasDeNegocio.EstadoRegrasNegocio;
 
 /**
  *
@@ -28,6 +35,49 @@ public class ConsultaCategoriaCertificado extends javax.swing.JPanel {
     public ConsultaCategoriaCertificado(PainelAdministrativo p) {
         parent = p;
         initComponents();
+        jTable1.addMouseListener(new MouseAdapter() {
+            private int linha;
+            private String opcoes[] = new String[]{"Alterar", "Excluir"};
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int i = JOptionPane.showOptionDialog(null, "O que deseja fazer?", "Alerta", -1, -1, null, opcoes, 0);
+                    linha = jTable1.getSelectedRow();
+                    int cod = Integer.parseInt(String.valueOf(jTable1.getValueAt(linha, 0)));
+                    if (i == 0) { // Atualizar
+                        ItemSelecionado.getInstance().setID(cod);
+                        JPanel lastPanel = parent.getLastPanel();
+                        JPanel painelConsultas = parent.getPainelConsulta();
+                        if (lastPanel != null) {
+                            lastPanel.setVisible(false);
+                            painelConsultas.revalidate();
+                        } else {
+                            painelConsultas.revalidate();
+                        }
+                        EditarCategoriaCertificado editar = new EditarCategoriaCertificado(parent);
+                        editar.dados(cod);
+                        JPanel content = editar;
+                        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+                        content.setVisible(true);
+
+                        painelConsultas.add(content);
+                        parent.add(painelConsultas);
+                        parent.setLastPanel(content);
+                    }
+                    if (i == 1) {
+                        try {
+                            Categoria_certificadoRegrasNegocio regras = new Categoria_certificadoRegrasNegocio();
+                            regras.remove(cod);
+                            JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
+                }
+            }
+        });
     }
 
     /**

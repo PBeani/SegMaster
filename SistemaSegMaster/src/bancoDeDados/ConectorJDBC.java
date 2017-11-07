@@ -11,7 +11,7 @@ public abstract class ConectorJDBC {
     protected enum DB {
         MYSQL;
     }
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "200298";
     private static final String USER = "root";
     private static final String HOST = "localhost";
     private static final String DB_NAME = "segmaster";

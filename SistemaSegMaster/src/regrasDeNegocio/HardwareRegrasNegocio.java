@@ -44,9 +44,10 @@ public class HardwareRegrasNegocio {
         }
     } 
     
-    public void altera(Hardware hardware) throws Exception {
+    public boolean altera(Hardware hardware) throws Exception {
         try {
         	hardwareDao.alteraHardware(hardware);
+                return true;
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }

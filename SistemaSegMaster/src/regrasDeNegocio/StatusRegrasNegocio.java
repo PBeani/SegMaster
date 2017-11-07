@@ -7,6 +7,7 @@ package regrasDeNegocio;
 
 import bancoDeDados.BancoException;
 import bancoDeDados.jdbc.StatusComissaoDaoImpl;
+import beans.Estado;
 import beans.StatusComissao;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
@@ -43,5 +44,29 @@ public class StatusRegrasNegocio {
         }
     }
     
+    public StatusComissao seleciona(int cod) throws Exception {
+        try {
+            return statusDaoImpl.selecionaStatusComissao(cod);
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public boolean altera(StatusComissao status) throws Exception {
+        try {
+            statusDaoImpl.alteraStatusComissao(status);
+            return true;
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public void remove(int cod) throws Exception {
+        try {
+            statusDaoImpl.removeStatusComissao(cod);
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
     
 }

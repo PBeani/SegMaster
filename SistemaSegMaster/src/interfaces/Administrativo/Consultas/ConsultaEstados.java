@@ -5,14 +5,21 @@
  */
 package interfaces.Administrativo.Consultas;
 
-
 import beans.Estado;
 import interfaces.Administrativo.Adicionar.AdicionarEstado;
+import interfaces.Administrativo.Editar.EditarEstado;
 import interfaces.Administrativo.PainelAdministrativo;
+import interfaces.ItemSelecionado;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import regrasDeNegocio.EstadoRegrasNegocio;
 
 /**
  *
@@ -24,10 +31,53 @@ public class ConsultaEstados extends javax.swing.JPanel {
      * Creates new form ConsultaEstados
      */
     PainelAdministrativo parent;
-    
+
     public ConsultaEstados(PainelAdministrativo p) {
         parent = p;
         initComponents();
+        jTable1.addMouseListener(new MouseAdapter() {
+            private int linha;
+            private String opcoes[] = new String[]{"Alterar", "Excluir"};
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int i = JOptionPane.showOptionDialog(null, "O que deseja fazer?", "Alerta", -1, -1, null, opcoes, 0);
+                    linha = jTable1.getSelectedRow();
+                    int cod = Integer.parseInt(String.valueOf(jTable1.getValueAt(linha, 0)));
+                    if (i == 0) { // Atualizar
+                        ItemSelecionado.getInstance().setID(cod);
+                        JPanel lastPanel = parent.getLastPanel();
+                        JPanel painelConsultas = parent.getPainelConsulta();
+                        if (lastPanel != null) {
+                            lastPanel.setVisible(false);
+                            painelConsultas.revalidate();
+                        } else {
+                            painelConsultas.revalidate();
+                        }
+                        EditarEstado editar = new EditarEstado(parent);
+                        editar.dados(cod);
+                        JPanel content = editar;
+                        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+                        content.setVisible(true);
+
+                        painelConsultas.add(content);
+                        parent.add(painelConsultas);
+                        parent.setLastPanel(content);
+                    }
+                    if (i == 1) {
+                        try {
+                            EstadoRegrasNegocio regras = new EstadoRegrasNegocio();
+                            regras.remove(cod);
+                            JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
+                }
+            }
+        });
     }
 
     /**
@@ -114,20 +164,20 @@ public class ConsultaEstados extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-     public void montaTabelaEstado(List<Estado> listaEstados){
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();        
-        for(Estado estado : listaEstados){
-            model.addRow(new Object [] {estado.getId_estado(),estado.getDesc_estado(),estado.getSigla()});
-            
+    public void montaTabelaEstado(List<Estado> listaEstados) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        for (Estado estado : listaEstados) {
+            model.addRow(new Object[]{estado.getId_estado(), estado.getDesc_estado(), estado.getSigla()});
+
         }
         jTable1.setRowSorter(new TableRowSorter(model));
-        
+
     }
-    
+
     private void add_estadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_estadoMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();
-        if(lastPanel != null){
+        if (lastPanel != null) {
             lastPanel.setVisible(false);
             painelConsultas.revalidate();
         } else {

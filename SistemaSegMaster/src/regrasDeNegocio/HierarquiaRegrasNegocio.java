@@ -43,9 +43,10 @@ public class HierarquiaRegrasNegocio {
         }
     }
     
-    public void altera(Hierarquia hierarquia) throws Exception {
+    public boolean altera(Hierarquia hierarquia) throws Exception {
         try {
         	hierarquiaDao.alteraHierarquia(hierarquia);
+                return true;
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
