@@ -9,6 +9,9 @@ import bancoDeDados.BancoException;
 import beans.Estado;
 import interfaces.Administrativo.Consultas.ConsultaEstados;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import regrasDeNegocio.EstadoRegrasNegocio;
@@ -22,10 +25,10 @@ public class EditarEstado extends javax.swing.JPanel {
     /**
      * Creates new form AdicionarEstado
      */
-    
     int cod;
-    
+
     PainelAdministrativo parent;
+
     public EditarEstado(PainelAdministrativo p) {
         parent = p;
         initComponents();
@@ -158,12 +161,14 @@ public class EditarEstado extends javax.swing.JPanel {
 
     private void salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salvarMouseClicked
         try {
-            String textoDescricao = descricao.getText(); 
+            String textoDescricao = descricao.getText();
             String textoSigla = sigla.getText();
             EstadoRegrasNegocio e = new EstadoRegrasNegocio();
-            Estado estado1  = new Estado(cod, textoDescricao, textoSigla);
-            if (e.altera(estado1))
-            JOptionPane.showMessageDialog(null, "Editado com sucesso");
+            Estado estado1 = new Estado(cod, textoDescricao, textoSigla);
+            if (e.altera(estado1)) {
+                JOptionPane.showMessageDialog(null, "Editado com sucesso");
+                retornarLista();
+            }
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
         } catch (Exception ex) {
@@ -174,8 +179,7 @@ public class EditarEstado extends javax.swing.JPanel {
         retornarLista();
     }//GEN-LAST:event_cancelarMouseClicked
 
-    
-    public Estado dados(int codigo){        
+    public Estado dados(int codigo) {
         try {
             EstadoRegrasNegocio regra = new EstadoRegrasNegocio();
             Estado estado = regra.seleciona(codigo);
@@ -183,12 +187,12 @@ public class EditarEstado extends javax.swing.JPanel {
             sigla.setText(estado.getSigla());
             cod = codigo;
             return estado;
-        } catch (Exception ex) {                
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return null;                
+        return null;
     }
-    
+
     private void retornarLista() {
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();
@@ -202,7 +206,17 @@ public class EditarEstado extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
-
+        
+        try {
+            EstadoRegrasNegocio estado = new EstadoRegrasNegocio();
+            LinkedList<Estado> listaEstado = estado.listaEstado();
+            panelAdm.montaTabelaEstado(listaEstado);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         painelConsultas.add(content);
         parent.add(painelConsultas);
         parent.setLastPanel(content);

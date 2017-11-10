@@ -10,6 +10,9 @@ import beans.CategoriaCertificado;
 import beans.Estado;
 import interfaces.Administrativo.Consultas.ConsultaEstados;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import regrasDeNegocio.Categoria_certificadoRegrasNegocio;
@@ -160,20 +163,21 @@ public class AdicionarEstado extends javax.swing.JPanel {
     private void salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salvarMouseClicked
         // TODO add your handling code here:
         try {
-            String textoDescricao = descricao.getText(); 
+            String textoDescricao = descricao.getText();
             String textoSigla = sigla.getText();
             EstadoRegrasNegocio e = new EstadoRegrasNegocio();
-            Estado estado1  = new Estado(textoDescricao,textoSigla);
-            if (e.cadastroEstado(estado1))
-            JOptionPane.showMessageDialog(null, "Novo Estado salvo com sucesso");
-            
-        
+            Estado estado1 = new Estado(textoDescricao, textoSigla);
+            if (e.cadastroEstado(estado1)) {
+                JOptionPane.showMessageDialog(null, "Novo Estado salvo com sucesso");
+                retornarLista();
+            }
+
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_salvarMouseClicked
-    
+
     private void retornarLista() {
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();
@@ -187,7 +191,15 @@ public class AdicionarEstado extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
-
+        try {
+            EstadoRegrasNegocio estado = new EstadoRegrasNegocio();
+            LinkedList<Estado> listaEstado = estado.listaEstado();
+            panelAdm.montaTabelaEstado(listaEstado);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         painelConsultas.add(content);
         parent.add(painelConsultas);
         parent.setLastPanel(content);

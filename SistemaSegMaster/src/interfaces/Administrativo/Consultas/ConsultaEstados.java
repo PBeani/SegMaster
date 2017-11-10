@@ -5,6 +5,7 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import bancoDeDados.BancoException;
 import beans.Estado;
 import interfaces.Administrativo.Adicionar.AdicionarEstado;
 import interfaces.Administrativo.Editar.EditarEstado;
@@ -12,6 +13,7 @@ import interfaces.Administrativo.PainelAdministrativo;
 import interfaces.ItemSelecionado;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,6 +72,13 @@ public class ConsultaEstados extends javax.swing.JPanel {
                             EstadoRegrasNegocio regras = new EstadoRegrasNegocio();
                             regras.remove(cod);
                             JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                            try {
+                                EstadoRegrasNegocio estado = new EstadoRegrasNegocio();
+                                LinkedList<Estado> listaEstado = estado.listaEstado();
+                                montaTabelaEstado(listaEstado);
+                            } catch (Exception ex) {
+                                Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -166,6 +175,7 @@ public class ConsultaEstados extends javax.swing.JPanel {
 
     public void montaTabelaEstado(List<Estado> listaEstados) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
         for (Estado estado : listaEstados) {
             model.addRow(new Object[]{estado.getId_estado(), estado.getDesc_estado(), estado.getSigla()});
 

@@ -9,6 +9,9 @@ import bancoDeDados.BancoException;
 import beans.StatusComissao;
 import interfaces.Administrativo.Consultas.ConsultaStatusComissao;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import regrasDeNegocio.StatusRegrasNegocio;
@@ -134,8 +137,10 @@ public class AdicionarStatusComissao extends javax.swing.JPanel {
             String textoDescricao = descricao.getText();            
             StatusRegrasNegocio e = new StatusRegrasNegocio();
             StatusComissao statusComissao  = new StatusComissao(textoDescricao);
-            if (e.cadastraStatusComissao(statusComissao))
-            JOptionPane.showMessageDialog(null, "Novo Status da comissao salvo com sucesso");           
+            if (e.cadastraStatusComissao(statusComissao)) {
+                JOptionPane.showMessageDialog(null, "Novo Status da comissao salvo com sucesso");    
+                retornarLista();
+            }
         
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
@@ -156,6 +161,16 @@ public class AdicionarStatusComissao extends javax.swing.JPanel {
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
 
+        try {
+            StatusRegrasNegocio status = new StatusRegrasNegocio();
+            LinkedList<StatusComissao> listaStatus = status.listaStatusComissao();
+            panelAdm.montaTabelaStatusComissao(listaStatus);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         painelConsultas.add(content);
         parent.add(painelConsultas);
         parent.setLastPanel(content);

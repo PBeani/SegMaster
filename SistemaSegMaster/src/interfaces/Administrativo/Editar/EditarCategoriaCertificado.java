@@ -10,6 +10,9 @@ import beans.CategoriaCertificado;
 import beans.Estado;
 import interfaces.Administrativo.Consultas.ConsultaCategoriaCertificado;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import regrasDeNegocio.Categoria_certificadoRegrasNegocio;
@@ -26,6 +29,7 @@ public class EditarCategoriaCertificado extends javax.swing.JPanel {
      */
     PainelAdministrativo parent;
     int cod;
+
     public EditarCategoriaCertificado(PainelAdministrativo p) {
         parent = p;
         initComponents();
@@ -57,6 +61,7 @@ public class EditarCategoriaCertificado extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Salvar");
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.setOpaque(true);
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -69,6 +74,7 @@ public class EditarCategoriaCertificado extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Cancelar");
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel3.setOpaque(true);
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -130,29 +136,31 @@ public class EditarCategoriaCertificado extends javax.swing.JPanel {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         try {
-            String textoDescricao = descricao.getText(); 
+            String textoDescricao = descricao.getText();
             Categoria_certificadoRegrasNegocio e = new Categoria_certificadoRegrasNegocio();
-            CategoriaCertificado cat  = new CategoriaCertificado(cod, textoDescricao);
-            if (e.altera(cat))
-            JOptionPane.showMessageDialog(null, "Editado com sucesso");
+            CategoriaCertificado cat = new CategoriaCertificado(cod, textoDescricao);
+            if (e.altera(cat)) {
+                JOptionPane.showMessageDialog(null, "Editado com sucesso");
+                retornarLista();
+            }
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jLabel2MouseClicked
-  public CategoriaCertificado dados(int codigo){        
+    public CategoriaCertificado dados(int codigo) {
         try {
             Categoria_certificadoRegrasNegocio regra = new Categoria_certificadoRegrasNegocio();
             CategoriaCertificado categoria = regra.seleciona(codigo);
             descricao.setText(categoria.getDesc_categoria_certificado());
             cod = codigo;
             return categoria;
-        } catch (Exception ex) {                
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return null;                
+        return null;
     }
-    
+
     private void retornarLista() {
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();
@@ -166,6 +174,16 @@ public class EditarCategoriaCertificado extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
+
+        try {
+            Categoria_certificadoRegrasNegocio categoria = new Categoria_certificadoRegrasNegocio();
+            LinkedList<CategoriaCertificado> listaCategoria = categoria.listaCategoriaCertificado();
+            panelAdm.montaTabelaCertificado(listaCategoria);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "erro ao acessar banco");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         painelConsultas.add(content);
         parent.add(painelConsultas);

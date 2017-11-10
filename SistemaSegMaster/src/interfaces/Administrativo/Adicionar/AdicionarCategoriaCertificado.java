@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 import regrasDeNegocio.Categoria_certificadoRegrasNegocio;
 import beans.CategoriaCertificado;
+import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 /**
@@ -153,6 +154,7 @@ public class AdicionarCategoriaCertificado extends javax.swing.JPanel {
             CategoriaCertificado cat = new CategoriaCertificado(texto);
             categoria.cadastroCategoriaCertificado(cat);
             JOptionPane.showMessageDialog(null, "Categoria salva com sucesso");
+            retornarLista();
         
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
@@ -173,7 +175,17 @@ public class AdicionarCategoriaCertificado extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
-
+        
+        try {
+            Categoria_certificadoRegrasNegocio categoria = new Categoria_certificadoRegrasNegocio();
+            LinkedList<CategoriaCertificado> listaCategoria = categoria.listaCategoriaCertificado();
+            panelAdm.montaTabelaCertificado(listaCategoria);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "erro ao acessar banco");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         painelConsultas.add(content);
         parent.add(painelConsultas);
         parent.setLastPanel(content);

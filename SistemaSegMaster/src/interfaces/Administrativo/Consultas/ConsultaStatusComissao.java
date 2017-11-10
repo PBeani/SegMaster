@@ -5,6 +5,7 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import bancoDeDados.BancoException;
 import beans.StatusComissao;
 import interfaces.Administrativo.Adicionar.AdicionarStatusComissao;
 import interfaces.Administrativo.Editar.EditarFormaPagamento;
@@ -13,7 +14,10 @@ import interfaces.Administrativo.PainelAdministrativo;
 import interfaces.ItemSelecionado;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -31,10 +35,11 @@ public class ConsultaStatusComissao extends javax.swing.JPanel {
      * Creates new form ConsultaStatusComissao
      */
     PainelAdministrativo parent;
+
     public ConsultaStatusComissao(PainelAdministrativo p) {
         parent = p;
         initComponents();
-        
+
         jTable1.addMouseListener(new MouseAdapter() {
             private int linha;
             private String opcoes[] = new String[]{"Alterar", "Excluir"};
@@ -70,6 +75,13 @@ public class ConsultaStatusComissao extends javax.swing.JPanel {
                             StatusRegrasNegocio regras = new StatusRegrasNegocio();
                             regras.remove(cod);
                             JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                            try {
+                                StatusRegrasNegocio status = new StatusRegrasNegocio();
+                                LinkedList<StatusComissao> listaStatus = status.listaStatusComissao();
+                                montaTabelaStatusComissao(listaStatus);
+                            } catch (Exception ex) {
+                                Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -161,17 +173,18 @@ public class ConsultaStatusComissao extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-     public void montaTabelaStatusComissao(List<StatusComissao> listaStatusComissao){
+    public void montaTabelaStatusComissao(List<StatusComissao> listaStatusComissao) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
         
-        for(StatusComissao status : listaStatusComissao){
-            model.addRow(new Object [] {status.getId_status_comissao(),status.getDesc_status_comissao()});
-            
+        for (StatusComissao status : listaStatusComissao) {
+            model.addRow(new Object[]{status.getId_status_comissao(), status.getDesc_status_comissao()});
+
         }
         jTable1.setRowSorter(new TableRowSorter(model));
-        
+
     }
-    
+
     private void addStatusComissaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addStatusComissaoMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();

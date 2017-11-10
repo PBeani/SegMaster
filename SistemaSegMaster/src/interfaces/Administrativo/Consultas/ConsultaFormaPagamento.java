@@ -5,6 +5,7 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import bancoDeDados.BancoException;
 import beans.FormaPagamento;
 import interfaces.Administrativo.Adicionar.AdicionarFormaPagamento;
 import interfaces.Administrativo.Editar.EditarEstado;
@@ -13,7 +14,10 @@ import interfaces.Administrativo.PainelAdministrativo;
 import interfaces.ItemSelecionado;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -70,6 +74,13 @@ public class ConsultaFormaPagamento extends javax.swing.JPanel {
                             Forma_pagamentoRegrasNegocio regras = new Forma_pagamentoRegrasNegocio();
                             regras.remove(cod);
                             JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                            try {
+                                Forma_pagamentoRegrasNegocio formaPagamente = new Forma_pagamentoRegrasNegocio();
+                                LinkedList<FormaPagamento> listaFormaPagamento = formaPagamente.listaFormaPagamento();
+                                montaTabelaFormaPagamento(listaFormaPagamento);
+                            } catch (Exception ex) {
+                                Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -163,7 +174,7 @@ public class ConsultaFormaPagamento extends javax.swing.JPanel {
 
     public void montaTabelaFormaPagamento(List<FormaPagamento> listaFormaPagamento) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-
+        model.setRowCount(0);
         for (FormaPagamento formaPagamento : listaFormaPagamento) {
             model.addRow(new Object[]{formaPagamento.getId_forma_pagamento(), formaPagamento.getDesc_forma_pagamento()});
 

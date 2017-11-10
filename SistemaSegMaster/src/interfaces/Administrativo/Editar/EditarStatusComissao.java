@@ -11,6 +11,9 @@ import beans.StatusComissao;
 import interfaces.Administrativo.Consultas.ConsultaFormaPagamento;
 import interfaces.Administrativo.Consultas.ConsultaStatusComissao;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import regrasDeNegocio.Forma_pagamentoRegrasNegocio;
@@ -137,8 +140,10 @@ public class EditarStatusComissao extends javax.swing.JPanel {
             String textoDescricao = descricao.getText(); 
             StatusRegrasNegocio e = new StatusRegrasNegocio();
             StatusComissao status  = new StatusComissao(cod, textoDescricao);
-            if (e.altera(status))
-            JOptionPane.showMessageDialog(null, "Editado com sucesso");
+            if (e.altera(status)) {
+                JOptionPane.showMessageDialog(null, "Editado com sucesso");
+                retornarLista();
+            }
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
         } catch (Exception ex) {
@@ -170,6 +175,16 @@ public class EditarStatusComissao extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
+        
+        try {
+            StatusRegrasNegocio status = new StatusRegrasNegocio();
+            LinkedList<StatusComissao> listaStatus = status.listaStatusComissao();
+            panelAdm.montaTabelaStatusComissao(listaStatus);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         painelConsultas.add(content);
         parent.add(painelConsultas);

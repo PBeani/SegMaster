@@ -10,6 +10,9 @@ import beans.Estado;
 import beans.Hierarquia;
 import interfaces.Administrativo.Consultas.ConsultaHierarquia;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import regrasDeNegocio.EstadoRegrasNegocio;
@@ -24,9 +27,8 @@ public class AdicionarHierarquia extends javax.swing.JPanel {
     /**
      * Creates new form AdicionarHierarquiaCertificado
      */
-    
     PainelAdministrativo parent;
-    
+
     public AdicionarHierarquia(PainelAdministrativo p) {
         parent = p;
         initComponents();
@@ -134,13 +136,14 @@ public class AdicionarHierarquia extends javax.swing.JPanel {
     private void salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salvarMouseClicked
         // TODO add your handling code here:
         try {
-            String textoDescricao = jTextField1.getText();            
+            String textoDescricao = jTextField1.getText();
             HierarquiaRegrasNegocio e = new HierarquiaRegrasNegocio();
-            Hierarquia hierarquia  = new Hierarquia(textoDescricao);
-            if (e.cadastroHardware(hierarquia))
-            JOptionPane.showMessageDialog(null, "Nova Hierarquia salva com sucesso");
-            
-        
+            Hierarquia hierarquia = new Hierarquia(textoDescricao);
+            if (e.cadastroHardware(hierarquia)) {
+                JOptionPane.showMessageDialog(null, "Nova Hierarquia salva com sucesso");
+                retornarLista();
+            }
+
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
         } catch (Exception ex) {
@@ -160,6 +163,16 @@ public class AdicionarHierarquia extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
+
+        try {
+            HierarquiaRegrasNegocio hierarquia = new HierarquiaRegrasNegocio();
+            LinkedList<Hierarquia> listaHierarquia = hierarquia.listaHierarquia();
+            panelAdm.montaTabelaHierarquia(listaHierarquia);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         painelConsultas.add(content);
         parent.add(painelConsultas);

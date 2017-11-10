@@ -11,6 +11,9 @@ import beans.Hierarquia;
 import interfaces.Administrativo.Consultas.ConsultaFormaPagamento;
 import interfaces.Administrativo.Consultas.ConsultaHierarquia;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import regrasDeNegocio.Forma_pagamentoRegrasNegocio;
@@ -137,8 +140,10 @@ public class EditarHierarquia extends javax.swing.JPanel {
             String textoDescricao = descricao.getText(); 
             HierarquiaRegrasNegocio e = new HierarquiaRegrasNegocio();
             Hierarquia hierarquia  = new Hierarquia(cod, textoDescricao);
-            if (e.altera(hierarquia))
-            JOptionPane.showMessageDialog(null, "Editado com sucesso");
+            if (e.altera(hierarquia)) {
+                JOptionPane.showMessageDialog(null, "Editado com sucesso");
+                retornarLista();
+            }
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
         } catch (Exception ex) {
@@ -171,6 +176,16 @@ public class EditarHierarquia extends javax.swing.JPanel {
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
 
+        try {
+            HierarquiaRegrasNegocio hierarquia = new HierarquiaRegrasNegocio();
+            LinkedList<Hierarquia> listaHierarquia = hierarquia.listaHierarquia();
+            panelAdm.montaTabelaHierarquia(listaHierarquia);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         painelConsultas.add(content);
         parent.add(painelConsultas);
         parent.setLastPanel(content);

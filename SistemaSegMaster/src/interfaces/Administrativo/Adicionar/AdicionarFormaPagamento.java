@@ -10,6 +10,9 @@ import beans.Estado;
 import beans.FormaPagamento;
 import interfaces.Administrativo.Consultas.ConsultaFormaPagamento;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import regrasDeNegocio.EstadoRegrasNegocio;
@@ -25,7 +28,7 @@ public class AdicionarFormaPagamento extends javax.swing.JPanel {
      * Creates new form AdicionarFormaPagamento
      */
     PainelAdministrativo parent;
-    
+
     public AdicionarFormaPagamento(PainelAdministrativo p) {
         parent = p;
         initComponents();
@@ -133,19 +136,20 @@ public class AdicionarFormaPagamento extends javax.swing.JPanel {
     private void salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salvarMouseClicked
         // TODO add your handling code here:
         try {
-            String textoDescricao = jTextField3.getText(); 
-            
+            String textoDescricao = jTextField3.getText();
+
             Forma_pagamentoRegrasNegocio e = new Forma_pagamentoRegrasNegocio();
-            FormaPagamento pagamento  = new FormaPagamento(textoDescricao);
-            if (e.cadastroFormaPagamento(pagamento))
-            JOptionPane.showMessageDialog(null, "Nova Forma de pagamento salva com sucesso");
-            
-        
+            FormaPagamento pagamento = new FormaPagamento(textoDescricao);
+            if (e.cadastroFormaPagamento(pagamento)) {
+                JOptionPane.showMessageDialog(null, "Nova Forma de pagamento salva com sucesso");
+                retornarLista();
+            }
+
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
         } catch (Exception ex) {
         }
-        
+
     }//GEN-LAST:event_salvarMouseClicked
 
     private void retornarLista() {
@@ -161,6 +165,16 @@ public class AdicionarFormaPagamento extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
+
+        try {
+            Forma_pagamentoRegrasNegocio formaPagamente = new Forma_pagamentoRegrasNegocio();
+            LinkedList<FormaPagamento> listaFormaPagamento = formaPagamente.listaFormaPagamento();
+            panelAdm.montaTabelaFormaPagamento(listaFormaPagamento);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         painelConsultas.add(content);
         parent.add(painelConsultas);

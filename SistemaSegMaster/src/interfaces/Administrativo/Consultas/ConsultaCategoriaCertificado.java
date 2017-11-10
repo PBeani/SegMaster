@@ -5,6 +5,7 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import bancoDeDados.BancoException;
 import beans.CategoriaCertificado;
 import interfaces.Administrativo.Adicionar.AdicionarCategoriaCertificado;
 import interfaces.Administrativo.Adicionar.AdicionarMunicipio;
@@ -13,7 +14,10 @@ import interfaces.Administrativo.PainelAdministrativo;
 import interfaces.ItemSelecionado;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +35,7 @@ public class ConsultaCategoriaCertificado extends javax.swing.JPanel {
      * Creates new form ConsultaCategoriaCertificado
      */
     PainelAdministrativo parent;
-    
+
     public ConsultaCategoriaCertificado(PainelAdministrativo p) {
         parent = p;
         initComponents();
@@ -70,6 +74,13 @@ public class ConsultaCategoriaCertificado extends javax.swing.JPanel {
                             Categoria_certificadoRegrasNegocio regras = new Categoria_certificadoRegrasNegocio();
                             regras.remove(cod);
                             JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                            try {
+                                Categoria_certificadoRegrasNegocio categoria = new Categoria_certificadoRegrasNegocio();
+                                LinkedList<CategoriaCertificado> listaCategoria = categoria.listaCategoriaCertificado();
+                                montaTabelaCertificado(listaCategoria);
+                            } catch (Exception ex) {
+                                Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -161,20 +172,20 @@ public class ConsultaCategoriaCertificado extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void montaTabelaCertificado(List<CategoriaCertificado> listaCategoriaCertificado){
+    public void montaTabelaCertificado(List<CategoriaCertificado> listaCategoriaCertificado) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        
-        for(CategoriaCertificado categoria : listaCategoriaCertificado){
-            model.addRow(new Object [] {categoria.getId_tipo_certificado(),categoria.getDesc_categoria_certificado()});
-            
+        model.setRowCount(0);
+        for (CategoriaCertificado categoria : listaCategoriaCertificado) {
+            model.addRow(new Object[]{categoria.getId_tipo_certificado(), categoria.getDesc_categoria_certificado()});
+
         }
         jTable1.setRowSorter(new TableRowSorter(model));
-        
+
     }
     private void addCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addCategoriaMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();
-        if(lastPanel != null){
+        if (lastPanel != null) {
             lastPanel.setVisible(false);
             painelConsultas.revalidate();
         } else {

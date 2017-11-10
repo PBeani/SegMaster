@@ -10,6 +10,9 @@ import beans.Estado;
 import beans.FormaPagamento;
 import interfaces.Administrativo.Consultas.ConsultaFormaPagamento;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import regrasDeNegocio.EstadoRegrasNegocio;
@@ -136,8 +139,10 @@ public class EditarFormaPagamento extends javax.swing.JPanel {
             String textoDescricao = descricao.getText(); 
             Forma_pagamentoRegrasNegocio e = new Forma_pagamentoRegrasNegocio();
             FormaPagamento forma  = new FormaPagamento(cod, textoDescricao);
-            if (e.altera(forma))
-            JOptionPane.showMessageDialog(null, "Editado com sucesso");
+            if (e.altera(forma)) {
+                JOptionPane.showMessageDialog(null, "Editado com sucesso");
+                retornarLista();
+            }
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
         } catch (Exception ex) {
@@ -170,6 +175,16 @@ public FormaPagamento dados(int codigo){
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
+        
+        try {
+            Forma_pagamentoRegrasNegocio formaPagamente = new Forma_pagamentoRegrasNegocio();
+            LinkedList<FormaPagamento> listaFormaPagamento = formaPagamente.listaFormaPagamento();
+            panelAdm.montaTabelaFormaPagamento(listaFormaPagamento);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         painelConsultas.add(content);
         parent.add(painelConsultas);

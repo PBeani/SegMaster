@@ -5,6 +5,7 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import bancoDeDados.BancoException;
 import beans.Hardware;
 import interfaces.Administrativo.Adicionar.AdicionarHardware;
 import interfaces.Administrativo.Editar.EditarFormaPagamento;
@@ -13,7 +14,10 @@ import interfaces.Administrativo.PainelAdministrativo;
 import interfaces.ItemSelecionado;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -31,11 +35,11 @@ public class ConsultaHardware extends javax.swing.JPanel {
      * Creates new form ConsultaHardware
      */
     PainelAdministrativo parent;
-    
+
     public ConsultaHardware(PainelAdministrativo p) {
         parent = p;
         initComponents();
-        
+
         jTable1.addMouseListener(new MouseAdapter() {
             private int linha;
             private String opcoes[] = new String[]{"Alterar", "Excluir"};
@@ -71,6 +75,13 @@ public class ConsultaHardware extends javax.swing.JPanel {
                             HardwareRegrasNegocio regras = new HardwareRegrasNegocio();
                             regras.remove(cod);
                             JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                            try {
+                                HardwareRegrasNegocio hardware = new HardwareRegrasNegocio();
+                                LinkedList<Hardware> listaHardware = hardware.listaHardware();
+                                montaTabelaHardware(listaHardware);
+                            } catch (Exception ex) {
+                                Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -162,18 +173,19 @@ public class ConsultaHardware extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-     public void montaTabelaHardware (List<Hardware> listaHardware){
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();        
-        for(Hardware hardware  : listaHardware){
-            model.addRow(new Object [] {hardware.getId_hardware(), hardware.getDesc_hardware()});
-            }
-        jTable1.setRowSorter(new TableRowSorter(model));        
+    public void montaTabelaHardware(List<Hardware> listaHardware) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        for (Hardware hardware : listaHardware) {
+            model.addRow(new Object[]{hardware.getId_hardware(), hardware.getDesc_hardware()});
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
     }
-    
+
     private void addHardwareMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addHardwareMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();
-        if(lastPanel != null){
+        if (lastPanel != null) {
             lastPanel.setVisible(false);
             painelConsultas.revalidate();
         } else {

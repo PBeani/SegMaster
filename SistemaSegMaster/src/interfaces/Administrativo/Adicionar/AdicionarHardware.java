@@ -10,6 +10,9 @@ import beans.Estado;
 import beans.Hardware;
 import interfaces.Administrativo.Consultas.ConsultaHardware;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import regrasDeNegocio.EstadoRegrasNegocio;
@@ -138,9 +141,10 @@ public class AdicionarHardware extends javax.swing.JPanel {
             
             HardwareRegrasNegocio e = new HardwareRegrasNegocio();
             Hardware hardware  = new Hardware(textoDescricao);
-            if (e.cadastroHardware(hardware))
-            JOptionPane.showMessageDialog(null, "Novo Hardware salvo com sucesso");
-            
+            if (e.cadastroHardware(hardware)) {
+                JOptionPane.showMessageDialog(null, "Novo Hardware salvo com sucesso");
+                retornarLista();
+            }
         
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
@@ -160,6 +164,16 @@ public class AdicionarHardware extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
+        
+        try {
+            HardwareRegrasNegocio hardware = new HardwareRegrasNegocio();
+            LinkedList<Hardware> listaHardware = hardware.listaHardware();
+            panelAdm.montaTabelaHardware(listaHardware);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         painelConsultas.add(content);
         parent.add(painelConsultas);
