@@ -5,9 +5,16 @@
  */
 package interfaces.Administrativo.Adicionar;
 
+import bancoDeDados.BancoException;
+import beans.TipoContato;
 import interfaces.Administrativo.Consultas.ConsultaTipoContato;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import regrasDeNegocio.TipoContatoRegrasNegocio;
 
 /**
  *
@@ -74,6 +81,11 @@ public class AdicionarTipoContato extends javax.swing.JPanel {
         jLabel2.setText("Salvar");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.setOpaque(true);
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -118,6 +130,23 @@ public class AdicionarTipoContato extends javax.swing.JPanel {
         retornarLista();
     }//GEN-LAST:event_cancelarMouseClicked
 
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        try {
+            String textoDescricao = jTextField1.getText(); 
+            
+            TipoContatoRegrasNegocio e = new TipoContatoRegrasNegocio();
+            TipoContato tipo = new TipoContato(textoDescricao);
+            if (e.cadastro(tipo)) {
+                JOptionPane.showMessageDialog(null, "Novo Tipo de contato salvo com sucesso");
+                retornarLista();
+            }
+        
+        } catch (BancoException ex) {
+            JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
+        } catch (Exception ex) {
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
+
     private void retornarLista() {
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();
@@ -131,6 +160,16 @@ public class AdicionarTipoContato extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
+        
+        try {
+            TipoContatoRegrasNegocio tipo = new TipoContatoRegrasNegocio();
+            LinkedList<TipoContato> lista = tipo.listaTipoContato();
+            panelAdm.montaTabelaTipoContato(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         painelConsultas.add(content);
         parent.add(painelConsultas);

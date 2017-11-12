@@ -10,6 +10,10 @@ public class TipoCliente {
         this.id_tipo_cliente = id_tipo_cliente;
         this.desc_tipo_cliente = desc_tipo_cliente;
     }
+    
+    public TipoCliente(String desc_tipo_cliente) {
+        this.desc_tipo_cliente = desc_tipo_cliente;
+    }
 
     public int getId_tipo_cliente() {
         return id_tipo_cliente;

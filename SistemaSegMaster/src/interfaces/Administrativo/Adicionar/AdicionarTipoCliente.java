@@ -5,9 +5,16 @@
  */
 package interfaces.Administrativo.Adicionar;
 
+import bancoDeDados.BancoException;
+import beans.TipoCliente;
 import interfaces.Administrativo.Consultas.ConsultaTipoCliente;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import regrasDeNegocio.TipoClienteRegrasNegocio;
 
 /**
  *
@@ -75,6 +82,11 @@ public class AdicionarTipoCliente extends javax.swing.JPanel {
         jLabel2.setText("Salvar");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.setOpaque(true);
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -118,6 +130,24 @@ public class AdicionarTipoCliente extends javax.swing.JPanel {
     private void cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarMouseClicked
         retornarLista();
     }//GEN-LAST:event_cancelarMouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        try {
+            String textoDescricao = jTextField1.getText(); 
+            
+            TipoClienteRegrasNegocio e = new TipoClienteRegrasNegocio();
+            TipoCliente tipo = new TipoCliente(textoDescricao);
+            if (e.cadastro(tipo)) {
+                JOptionPane.showMessageDialog(null, "Novo Tipo de cliente salvo com sucesso");
+                retornarLista();
+            }
+        
+        } catch (BancoException ex) {
+            JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
+        } catch (Exception ex) {
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
+    
     private void retornarLista() {
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();
@@ -131,7 +161,17 @@ public class AdicionarTipoCliente extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
-
+        
+        try {
+            TipoClienteRegrasNegocio tipo = new TipoClienteRegrasNegocio();
+            LinkedList<TipoCliente> lista = tipo.listaTipoCliente();
+            panelAdm.montaTabelaTipoCliente(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         painelConsultas.add(content);
         parent.add(painelConsultas);
         parent.setLastPanel(content);

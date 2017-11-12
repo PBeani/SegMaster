@@ -107,5 +107,27 @@ public class TipoContatoDaoImpl extends ConectorJDBC implements TipoContatoDao {
 
         fechaConexao();
     }
+    
+    @Override
+    public boolean existe (String desc)throws BancoException{
+        boolean resp;
+        abreConexao();
+        
+        preparaComandoSQL("select * from tipo_contato where desc_tipo_contato = ?");
+        try {
+            pstmt.setString(1, desc);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                resp = true;
+            }
+            else resp=false;
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção de Tipo de contato.");
+        }        
+        fechaConexao();        
+        return resp;
+    }
 
 }
