@@ -107,5 +107,25 @@ public class CategoriaCertificadoDaoImpl extends ConectorJDBC implements Categor
 
         fechaConexao();
     }
+    
+    public boolean existeCategoriaCertificado(String desc) throws BancoException{
+        boolean resp;
+        abreConexao();        
+        preparaComandoSQL("select * from categoria_certificado where desc_categoria_certificado = ?");
+        try {
+            pstmt.setString(1, desc);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {    
+                resp= true;
+            }
+            else resp = false;
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção de categoria do certificado.");
+        }
+        
+        fechaConexao();
+        return resp;
+    }
 
 }

@@ -14,4 +14,6 @@ public interface HierarquiaDao {
     public LinkedList<Hierarquia> listaHierarquia() throws BancoException;
 
     public void removeHierarquia(int cod) throws BancoException;
+    
+    public boolean existeHierarquia (String desc_hierarquia) throws BancoException;
 }

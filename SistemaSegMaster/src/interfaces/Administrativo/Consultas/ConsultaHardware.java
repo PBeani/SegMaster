@@ -5,9 +5,25 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import bancoDeDados.BancoException;
+import beans.Hardware;
 import interfaces.Administrativo.Adicionar.AdicionarHardware;
+import interfaces.Administrativo.Editar.EditarFormaPagamento;
+import interfaces.Administrativo.Editar.EditarHardware;
 import interfaces.Administrativo.PainelAdministrativo;
+import interfaces.ItemSelecionado;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import regrasDeNegocio.Forma_pagamentoRegrasNegocio;
+import regrasDeNegocio.HardwareRegrasNegocio;
 
 /**
  *
@@ -19,10 +35,61 @@ public class ConsultaHardware extends javax.swing.JPanel {
      * Creates new form ConsultaHardware
      */
     PainelAdministrativo parent;
-    
+
     public ConsultaHardware(PainelAdministrativo p) {
         parent = p;
         initComponents();
+
+        jTable1.addMouseListener(new MouseAdapter() {
+            private int linha;
+            private String opcoes[] = new String[]{"Alterar", "Excluir"};
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int i = JOptionPane.showOptionDialog(null, "O que deseja fazer?", "Alerta", -1, -1, null, opcoes, 0);
+                    linha = jTable1.getSelectedRow();
+                    int cod = Integer.parseInt(String.valueOf(jTable1.getValueAt(linha, 0)));
+                    if (i == 0) { // Atualizar
+                        ItemSelecionado.getInstance().setID(cod);
+                        JPanel lastPanel = parent.getLastPanel();
+                        JPanel painelConsultas = parent.getPainelConsulta();
+                        if (lastPanel != null) {
+                            lastPanel.setVisible(false);
+                            painelConsultas.revalidate();
+                        } else {
+                            painelConsultas.revalidate();
+                        }
+                        EditarHardware editar = new EditarHardware(parent);
+                        editar.dados(cod);
+                        JPanel content = editar;
+                        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+                        content.setVisible(true);
+
+                        painelConsultas.add(content);
+                        parent.add(painelConsultas);
+                        parent.setLastPanel(content);
+                    }
+                    if (i == 1) {
+                        try {
+                            HardwareRegrasNegocio regras = new HardwareRegrasNegocio();
+                            regras.remove(cod);
+                            JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                            try {
+                                HardwareRegrasNegocio hardware = new HardwareRegrasNegocio();
+                                LinkedList<Hardware> listaHardware = hardware.listaHardware();
+                                montaTabelaHardware(listaHardware);
+                            } catch (Exception ex) {
+                                Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
+                }
+            }
+        });
     }
 
     /**
@@ -106,10 +173,19 @@ public class ConsultaHardware extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void montaTabelaHardware(List<Hardware> listaHardware) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        for (Hardware hardware : listaHardware) {
+            model.addRow(new Object[]{hardware.getId_hardware(), hardware.getDesc_hardware()});
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+    }
+
     private void addHardwareMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addHardwareMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();
-        if(lastPanel != null){
+        if (lastPanel != null) {
             lastPanel.setVisible(false);
             painelConsultas.revalidate();
         } else {

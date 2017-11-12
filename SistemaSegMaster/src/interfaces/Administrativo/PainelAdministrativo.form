@@ -175,7 +175,7 @@
         <Component class="javax.swing.JLabel" name="nav_adm_cidades">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="99" red="ff" type="rgb"/>
+              <Color blue="99" green="99" red="99" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="16" style="1"/>
@@ -185,13 +185,10 @@
             </Property>
             <Property name="text" type="java.lang.String" value="  Municipios"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor em Forma de M&#xe3;o"/>
+              <Color id="Cursor Padr&#xe3;o"/>
             </Property>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="nav_adm_cidadesMouseClicked"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="nav_admin_categoria">
           <Properties>

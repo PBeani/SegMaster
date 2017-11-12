@@ -14,4 +14,6 @@ public interface TipoCertificadoDao {
     public LinkedList<TipoCertificado> listaTipoCertificado() throws BancoException;
 
     public void removeTipoCertificado(int cod) throws BancoException;
+    
+    public boolean existe (String s)throws BancoException;
 }

@@ -5,9 +5,26 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import beans.CategoriaCertificado;
+import beans.Hardware;
+import beans.TipoContato;
 import interfaces.Administrativo.Adicionar.AdicionarTipoContato;
+import interfaces.Administrativo.Editar.EditarHardware;
+import interfaces.Administrativo.Editar.EditarTipoContato;
 import interfaces.Administrativo.PainelAdministrativo;
+import interfaces.ItemSelecionado;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import regrasDeNegocio.HardwareRegrasNegocio;
+import regrasDeNegocio.TipoContatoRegrasNegocio;
 
 /**
  *
@@ -23,6 +40,57 @@ public class ConsultaTipoContato extends javax.swing.JPanel {
     public ConsultaTipoContato(PainelAdministrativo p) {
         parent = p;
         initComponents();
+        
+        jTable1.addMouseListener(new MouseAdapter() {
+            private int linha;
+            private String opcoes[] = new String[]{"Alterar", "Excluir"};
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int i = JOptionPane.showOptionDialog(null, "O que deseja fazer?", "Alerta", -1, -1, null, opcoes, 0);
+                    linha = jTable1.getSelectedRow();
+                    int cod = Integer.parseInt(String.valueOf(jTable1.getValueAt(linha, 0)));
+                    if (i == 0) { // Atualizar
+                        ItemSelecionado.getInstance().setID(cod);
+                        JPanel lastPanel = parent.getLastPanel();
+                        JPanel painelConsultas = parent.getPainelConsulta();
+                        if (lastPanel != null) {
+                            lastPanel.setVisible(false);
+                            painelConsultas.revalidate();
+                        } else {
+                            painelConsultas.revalidate();
+                        }
+                        EditarTipoContato editar = new EditarTipoContato(parent);
+                        editar.dados(cod);
+                        JPanel content = editar;
+                        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+                        content.setVisible(true);
+
+                        painelConsultas.add(content);
+                        parent.add(painelConsultas);
+                        parent.setLastPanel(content);
+                    }
+                    if (i == 1) {
+                        try {
+                            TipoContatoRegrasNegocio regras = new TipoContatoRegrasNegocio();
+                            regras.remove(cod);
+                            JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                            try {
+                                TipoContatoRegrasNegocio regra = new TipoContatoRegrasNegocio();
+                                LinkedList<TipoContato> lista = regra.listaTipoContato();
+                                montaTabelaTipoContato(lista);
+                            } catch (Exception ex) {
+                                Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
+                }
+            }
+        });
     }
 
     /**
@@ -105,7 +173,17 @@ public class ConsultaTipoContato extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
+ public void montaTabelaTipoContato(List<TipoContato> listaTipoContato){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        for(TipoContato contato : listaTipoContato){
+            model.setRowCount(0);
+            model.addRow(new Object [] {contato.getId_tipo_contato(),contato.getDesc_tipo_contato()});
+            
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+        
+    }
     private void addTipoContatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addTipoContatoMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();

@@ -19,6 +19,7 @@ public class HomeAdmin extends javax.swing.JFrame {
      */
     public HomeAdmin() {
         initComponents();
+        setTitle("SegMaster");
     }
 
     /**

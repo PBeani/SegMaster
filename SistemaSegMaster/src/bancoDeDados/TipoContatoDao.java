@@ -14,4 +14,6 @@ public interface TipoContatoDao {
     public LinkedList<TipoContato> listaTipoContato() throws BancoException;
 
     public void removeTipoContato(int cod) throws BancoException;
+    
+    public boolean existe (String s)throws BancoException;
 }

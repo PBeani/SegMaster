@@ -11,6 +11,10 @@ public class TipoContato {
         this.desc_tipo_contato = desc_tipo_contato;
     }
 
+    public TipoContato(String s) {
+        desc_tipo_contato = s;
+    }
+
     public int getId_tipo_contato() {
         return id_tipo_contato;
     }

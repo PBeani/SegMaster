@@ -6,23 +6,26 @@ import java.util.LinkedList;
 
 import bancoDeDados.*;
 import beans.Estado;
+import javax.swing.JOptionPane;
 
 public class EstadoDaoImpl extends ConectorJDBC implements EstadoDao {
 
-    public EstadoDaoImpl() throws BancoException {
-        super();
+    public EstadoDaoImpl() throws BancoException  {
+        super();        
     }
 
     @Override
     public void insereEstado(Estado estado) throws BancoException {
-
         abreConexao();
-        preparaComandoSQL("insert into estado (desc_estado, sigla) values (?,?) ");
+        
+        preparaComandoSQL("insert into estados (desc_estado, sigla) values (?,?) ");
 
         try {
+            
             pstmt.setString(1, estado.getDesc_estado());
             pstmt.setString(2, estado.getSigla());
             pstmt.execute();
+            
         } catch (SQLException e) {
             throw new BancoException("Problema ao cadastrar estado");
         }
@@ -75,6 +78,7 @@ public class EstadoDaoImpl extends ConectorJDBC implements EstadoDao {
 
     @Override
     public LinkedList<Estado> listaEstado() throws BancoException {
+        
         LinkedList<Estado> lista = new LinkedList<>();
 
         abreConexao();
@@ -112,5 +116,24 @@ public class EstadoDaoImpl extends ConectorJDBC implements EstadoDao {
         }
 
         fechaConexao();
+    }
+    public boolean existeEstado(String sigla)throws BancoException{
+        boolean resp;
+        abreConexao();
+        preparaComandoSQL("select * from estados where sigla = ?");
+        try {
+            pstmt.setString(1, sigla);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                resp = true;
+            }
+            else resp = false;
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção do estado.");
+        }
+        
+        fechaConexao();
+        return resp;
     }
 }

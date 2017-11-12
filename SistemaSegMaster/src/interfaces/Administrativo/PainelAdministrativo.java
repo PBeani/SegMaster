@@ -5,8 +5,27 @@
  */
 package interfaces.Administrativo;
 
+import bancoDeDados.BancoException;
 import interfaces.Administrativo.Consultas.*;
 import javax.swing.JPanel;
+import bancoDeDados.jdbc.*;
+import beans.CategoriaCertificado;
+import beans.Cidade;
+import beans.Cliente;
+import beans.Estado;
+import beans.FormaPagamento;
+import beans.Hardware;
+import beans.Hierarquia;
+import beans.Municipio;
+import beans.StatusComissao;
+import beans.TipoCertificado;
+import beans.TipoCliente;
+import beans.TipoContato;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import regrasDeNegocio.*;
 
 /**
  *
@@ -75,17 +94,12 @@ public class PainelAdministrativo extends javax.swing.JPanel {
             }
         });
 
-        nav_adm_cidades.setBackground(new java.awt.Color(255, 153, 0));
+        nav_adm_cidades.setBackground(new java.awt.Color(153, 153, 153));
         nav_adm_cidades.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         nav_adm_cidades.setForeground(new java.awt.Color(255, 255, 255));
         nav_adm_cidades.setText("  Municipios");
-        nav_adm_cidades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nav_adm_cidades.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         nav_adm_cidades.setOpaque(true);
-        nav_adm_cidades.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                nav_adm_cidadesMouseClicked(evt);
-            }
-        });
 
         nav_admin_categoria.setBackground(new java.awt.Color(255, 153, 0));
         nav_admin_categoria.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
@@ -287,29 +301,23 @@ public class PainelAdministrativo extends javax.swing.JPanel {
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
 
+        try {
+            EstadoRegrasNegocio estado = new EstadoRegrasNegocio();
+            LinkedList<Estado> listaEstado = estado.listaEstado();
+            panelAdm.montaTabelaEstado(listaEstado);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         painelConsultas.add(content);
         this.add(painelConsultas);
         setLastPanel(content);
     }//GEN-LAST:event_nav_adm_estadoMouseClicked
 
-    private void nav_adm_cidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_cidadesMouseClicked
-        if (lastPanel != null) {
-            lastPanel.setVisible(false);
-            painelConsultas.revalidate();
-        } else {
-            painelConsultas.revalidate();
-        }
-        ConsultaMunicipio panelAdm = new ConsultaMunicipio(this);
-        JPanel content = panelAdm;
-        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
-        content.setVisible(true);
-
-        painelConsultas.add(content);
-        this.add(painelConsultas);
-        setLastPanel(content);
-    }//GEN-LAST:event_nav_adm_cidadesMouseClicked
-
     private void nav_admin_categoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_admin_categoriaMouseClicked
+
         if (lastPanel != null) {
             lastPanel.setVisible(false);
             painelConsultas.revalidate();
@@ -320,10 +328,20 @@ public class PainelAdministrativo extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
+        try {
+            Categoria_certificadoRegrasNegocio categoria = new Categoria_certificadoRegrasNegocio();
+            LinkedList<CategoriaCertificado> listaCategoria = categoria.listaCategoriaCertificado();
+            panelAdm.montaTabelaCertificado(listaCategoria);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "erro ao acessar banco");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         painelConsultas.add(content);
         this.add(painelConsultas);
         setLastPanel(content);
+
     }//GEN-LAST:event_nav_admin_categoriaMouseClicked
 
     private void nav_adm_tipo_certificadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_adm_tipo_certificadoMouseClicked
@@ -337,7 +355,15 @@ public class PainelAdministrativo extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
-
+        try {
+            TipoCertificadoRegrasNegocio certificado = new TipoCertificadoRegrasNegocio();
+            LinkedList<TipoCertificado> listaCertificado = certificado.listaTipoCertificado();
+            panelAdm.montaTabelaTipoCertificado(listaCertificado);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         painelConsultas.add(content);
         this.add(painelConsultas);
         setLastPanel(content);
@@ -354,7 +380,15 @@ public class PainelAdministrativo extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
-
+        try {
+            TipoClienteRegrasNegocio tipoCliente = new TipoClienteRegrasNegocio();
+            LinkedList<TipoCliente> listaTipoCliente = tipoCliente.listaTipoCliente();
+            panelAdm.montaTabelaTipoCliente(listaTipoCliente);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         painelConsultas.add(content);
         this.add(painelConsultas);
         setLastPanel(content);
@@ -371,7 +405,15 @@ public class PainelAdministrativo extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
-
+        try {
+            TipoContatoRegrasNegocio tipoContato = new TipoContatoRegrasNegocio();
+            LinkedList<TipoContato> listaTipoCertificado = tipoContato.listaTipoContato();
+            panelAdm.montaTabelaTipoContato(listaTipoCertificado);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         painelConsultas.add(content);
         this.add(painelConsultas);
         setLastPanel(content);
@@ -388,7 +430,15 @@ public class PainelAdministrativo extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
-
+        try {
+            StatusRegrasNegocio status = new StatusRegrasNegocio();
+            LinkedList<StatusComissao> listaStatus = status.listaStatusComissao();
+            panelAdm.montaTabelaStatusComissao(listaStatus);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         painelConsultas.add(content);
         this.add(painelConsultas);
         setLastPanel(content);
@@ -405,7 +455,15 @@ public class PainelAdministrativo extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
-
+        try {
+            Forma_pagamentoRegrasNegocio formaPagamente = new Forma_pagamentoRegrasNegocio();
+            LinkedList<FormaPagamento> listaFormaPagamento = formaPagamente.listaFormaPagamento();
+            panelAdm.montaTabelaFormaPagamento(listaFormaPagamento);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         painelConsultas.add(content);
         this.add(painelConsultas);
         setLastPanel(content);
@@ -422,7 +480,15 @@ public class PainelAdministrativo extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
-
+        try {
+            HardwareRegrasNegocio hardware = new HardwareRegrasNegocio();
+            LinkedList<Hardware> listaHardware = hardware.listaHardware();
+            panelAdm.montaTabelaHardware(listaHardware);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         painelConsultas.add(content);
         this.add(painelConsultas);
         setLastPanel(content);
@@ -439,7 +505,15 @@ public class PainelAdministrativo extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
-
+        try {
+            HierarquiaRegrasNegocio hierarquia = new HierarquiaRegrasNegocio();
+            LinkedList<Hierarquia> listaHierarquia = hierarquia.listaHierarquia();
+            panelAdm.montaTabelaHierarquia(listaHierarquia);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         painelConsultas.add(content);
         this.add(painelConsultas);
         setLastPanel(content);

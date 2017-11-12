@@ -1,6 +1,7 @@
 package bancoDeDados;
 
 import beans.Estado;
+
 import java.util.LinkedList;
 
 public interface EstadoDao {
@@ -14,4 +15,6 @@ public interface EstadoDao {
     public LinkedList<Estado> listaEstado() throws BancoException;
 
     public void removeEstado(int cod) throws BancoException;
+    
+    public boolean existeEstado(String sigla)throws BancoException;
 }

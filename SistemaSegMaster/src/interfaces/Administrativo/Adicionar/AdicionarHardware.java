@@ -5,9 +5,18 @@
  */
 package interfaces.Administrativo.Adicionar;
 
+import bancoDeDados.BancoException;
+import beans.Estado;
+import beans.Hardware;
 import interfaces.Administrativo.Consultas.ConsultaHardware;
 import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import regrasDeNegocio.EstadoRegrasNegocio;
+import regrasDeNegocio.HardwareRegrasNegocio;
 
 /**
  *
@@ -38,7 +47,7 @@ public class AdicionarHardware extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         cancelar = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        salvar = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -68,13 +77,18 @@ public class AdicionarHardware extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setBackground(new java.awt.Color(0, 204, 0));
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Salvar");
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel2.setOpaque(true);
+        salvar.setBackground(new java.awt.Color(0, 204, 0));
+        salvar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        salvar.setForeground(new java.awt.Color(255, 255, 255));
+        salvar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        salvar.setText("Salvar");
+        salvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        salvar.setOpaque(true);
+        salvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                salvarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -91,7 +105,7 @@ public class AdicionarHardware extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -105,7 +119,7 @@ public class AdicionarHardware extends javax.swing.JPanel {
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(316, Short.MAX_VALUE))
         );
@@ -118,6 +132,25 @@ public class AdicionarHardware extends javax.swing.JPanel {
     private void cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarMouseClicked
         retornarLista();
     }//GEN-LAST:event_cancelarMouseClicked
+
+    private void salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salvarMouseClicked
+        // TODO add your handling code here:
+        
+        try {
+            String textoDescricao = jTextField1.getText(); 
+            
+            HardwareRegrasNegocio e = new HardwareRegrasNegocio();
+            Hardware hardware  = new Hardware(textoDescricao);
+            if (e.cadastroHardware(hardware)) {
+                JOptionPane.showMessageDialog(null, "Novo Hardware salvo com sucesso");
+                retornarLista();
+            }
+        
+        } catch (BancoException ex) {
+            JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
+        } catch (Exception ex) {
+        }
+    }//GEN-LAST:event_salvarMouseClicked
     private void retornarLista() {
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();
@@ -131,6 +164,16 @@ public class AdicionarHardware extends javax.swing.JPanel {
         JPanel content = panelAdm;
         content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
         content.setVisible(true);
+        
+        try {
+            HardwareRegrasNegocio hardware = new HardwareRegrasNegocio();
+            LinkedList<Hardware> listaHardware = hardware.listaHardware();
+            panelAdm.montaTabelaHardware(listaHardware);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         painelConsultas.add(content);
         parent.add(painelConsultas);
@@ -140,8 +183,8 @@ public class AdicionarHardware extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cancelar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel salvar;
     // End of variables declaration//GEN-END:variables
 }

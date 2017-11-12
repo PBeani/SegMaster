@@ -5,10 +5,27 @@
  */
 package interfaces.Administrativo.Consultas;
 
+import beans.CategoriaCertificado;
+import beans.TipoCertificado;
+import beans.TipoCliente;
 import interfaces.Administrativo.Adicionar.AdicionarMunicipio;
 import interfaces.Administrativo.Adicionar.AdicionarTipoCertificado;
+import interfaces.Administrativo.Editar.EditarTipoCertificado;
+import interfaces.Administrativo.Editar.EditarTipoCliente;
 import interfaces.Administrativo.PainelAdministrativo;
+import interfaces.ItemSelecionado;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import regrasDeNegocio.TipoCertificadoRegrasNegocio;
+import regrasDeNegocio.TipoClienteRegrasNegocio;
 
 /**
  *
@@ -22,6 +39,57 @@ public class ConsultaTipoCertificado extends javax.swing.JPanel {
     public ConsultaTipoCertificado(PainelAdministrativo p) {
         parent = p;
         initComponents();
+        
+        jTable1.addMouseListener(new MouseAdapter() {
+            private int linha;
+            private String opcoes[] = new String[]{"Alterar", "Excluir"};
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int i = JOptionPane.showOptionDialog(null, "O que deseja fazer?", "Alerta", -1, -1, null, opcoes, 0);
+                    linha = jTable1.getSelectedRow();
+                    int cod = Integer.parseInt(String.valueOf(jTable1.getValueAt(linha, 0)));
+                    if (i == 0) { // Atualizar
+                        ItemSelecionado.getInstance().setID(cod);
+                        JPanel lastPanel = parent.getLastPanel();
+                        JPanel painelConsultas = parent.getPainelConsulta();
+                        if (lastPanel != null) {
+                            lastPanel.setVisible(false);
+                            painelConsultas.revalidate();
+                        } else {
+                            painelConsultas.revalidate();
+                        }
+                        EditarTipoCertificado editar = new EditarTipoCertificado(parent);
+                        editar.dados(cod);
+                        JPanel content = editar;
+                        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+                        content.setVisible(true);
+
+                        painelConsultas.add(content);
+                        parent.add(painelConsultas);
+                        parent.setLastPanel(content);
+                    }
+                    if (i == 1) {
+                        try {
+                            TipoCertificadoRegrasNegocio regras = new TipoCertificadoRegrasNegocio();
+                            regras.remove(cod);
+                            JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                            try {
+                                TipoCertificadoRegrasNegocio regra = new TipoCertificadoRegrasNegocio();
+                                LinkedList<TipoCertificado> lista = regra.listaTipoCertificado();
+                                montaTabelaTipoCertificado(lista);
+                            } catch (Exception ex) {
+                                Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
+                }
+            }
+        });
     }
 
     /**
@@ -105,6 +173,17 @@ public class ConsultaTipoCertificado extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+     public void montaTabelaTipoCertificado(List<TipoCertificado> listaTipoCertificado){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        for(TipoCertificado certificado : listaTipoCertificado){
+            model.addRow(new Object [] {certificado.getId_tipo_certificado(),certificado.getDesc_tipo_certificado()});
+            
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+        
+    }
+    
     private void addTipoCertificadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addTipoCertificadoMouseClicked
         JPanel lastPanel = parent.getLastPanel();
         JPanel painelConsultas = parent.getPainelConsulta();

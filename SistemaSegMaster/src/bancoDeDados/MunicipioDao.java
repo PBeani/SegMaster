@@ -16,4 +16,6 @@ public interface MunicipioDao {
     public LinkedList<Municipio> listaMunicipioEstado(int cod) throws BancoException;
 
     public void removeMunicipio(int cod) throws BancoException;
+    
+    public boolean existeMunicipio(String descricao) throws BancoException;
 }
