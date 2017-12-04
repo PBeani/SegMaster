@@ -5,6 +5,23 @@
  */
 package interfaces.Administrativo.Editar;
 
+import bancoDeDados.BancoException;
+import beans.Estado;
+import beans.Hierarquia;
+import beans.Municipio;
+import interfaces.Administrativo.Adicionar.AdicionarMunicipio;
+import interfaces.Administrativo.Consultas.ConsultaHierarquia;
+import interfaces.Administrativo.Consultas.ConsultaMunicipio;
+import interfaces.Administrativo.PainelAdministrativo;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import regrasDeNegocio.EstadoRegrasNegocio;
+import regrasDeNegocio.HierarquiaRegrasNegocio;
+import regrasDeNegocio.MunicipioRegrasNegocio;
+
 /**
  *
  * @author pedro
@@ -14,7 +31,11 @@ public class EditarMunicipio extends javax.swing.JPanel {
     /**
      * Creates new form AdicionarMunicipio
      */
-    public EditarMunicipio() {
+    PainelAdministrativo parent;
+    int cod;
+
+    public EditarMunicipio(PainelAdministrativo p) {
+        parent = p;
         initComponents();
     }
 
@@ -29,11 +50,13 @@ public class EditarMunicipio extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        descricao = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        estado = new javax.swing.JComboBox<>();
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
@@ -42,9 +65,9 @@ public class EditarMunicipio extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel4.setText("Descrição:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        descricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                descricaoActionPerformed(evt);
             }
         });
 
@@ -53,14 +76,26 @@ public class EditarMunicipio extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Cancelar");
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel3.setOpaque(true);
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(0, 204, 0));
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Salvar");
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.setOpaque(true);
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel5.setText("Estado:");
@@ -86,8 +121,8 @@ public class EditarMunicipio extends javax.swing.JPanel {
                                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(10, 10, 10)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))))
+                            .addComponent(estado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(descricao, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -98,10 +133,10 @@ public class EditarMunicipio extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jComboBox1))
+                    .addComponent(estado))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
+                    .addComponent(descricao)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -111,18 +146,96 @@ public class EditarMunicipio extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descricaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_descricaoActionPerformed
 
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        retornarLista();
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        try {
+            String textoDescricao = descricao.getText(); 
+            MunicipioRegrasNegocio e = new MunicipioRegrasNegocio();
+            Estado a = (Estado)estado.getSelectedItem(); 
+            Municipio municipio  = new Municipio(cod, a.getId_estado(), textoDescricao);
+            if (e.altera(municipio)) {
+                JOptionPane.showMessageDialog(null, "Editado com sucesso");
+                retornarLista();
+            }
+        } catch (BancoException ex) {
+            JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
+        } catch (Exception ex) {
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
+    public Municipio dados(int codigo) {
+        try {
+            MunicipioRegrasNegocio regra = new MunicipioRegrasNegocio();
+            Municipio municipio = regra.seleciona(codigo);
+            descricao.setText(municipio.getDescricao());
+            cod = codigo;
+            try {
+                EstadoRegrasNegocio m = new EstadoRegrasNegocio();
+                for (Estado e : m.listaEstado()) {
+                    estado.addItem(e);
+                }
+                Estado e;
+                for (int i = 0; i < estado.getItemCount(); i++) {
+                    e = (Estado)estado.getItemAt(i);
+                    if (e.getId_estado() == municipio.getCod_estado()) {
+                        estado.setSelectedIndex(i);
+                        break;
+                    }
+                }
+            } catch (BancoException ex) {
+                Logger.getLogger(AdicionarMunicipio.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(AdicionarMunicipio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return municipio;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    private void retornarLista() {
+        JPanel lastPanel = parent.getLastPanel();
+        JPanel painelConsultas = parent.getPainelConsulta();
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            painelConsultas.revalidate();
+        } else {
+            painelConsultas.revalidate();
+        }
+        ConsultaMunicipio panelAdm = new ConsultaMunicipio(parent);
+        JPanel content = panelAdm;
+        content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+        content.setVisible(true);
+
+        try {
+            MunicipioRegrasNegocio municipio = new MunicipioRegrasNegocio();
+            LinkedList<Municipio> listaMunicipio = municipio.listaMunicipio();
+            panelAdm.montaTabelaMunicipio(listaMunicipio);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        painelConsultas.add(content);
+        parent.add(painelConsultas);
+        parent.setLastPanel(content);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JTextField descricao;
+    private javax.swing.JComboBox<Object> estado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
