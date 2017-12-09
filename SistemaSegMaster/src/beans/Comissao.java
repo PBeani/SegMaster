@@ -24,6 +24,10 @@ public class Comissao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public Comissao(int cod, int id_status_comissao, int id_forma_pagamento, double valor1, double porcentagem1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 	public int getId_comissao() {
 		return id_comissao;
 	}

@@ -34,6 +34,10 @@ public class Certificado {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public Certificado(int cod, int id_tipo_certificado, int id_tipo_certificado0, int id_hardware, int id_hierarquia, String numero1, LocalDate validade1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 	public int getId_certificado() {
 		return id_certificado;
 	}
