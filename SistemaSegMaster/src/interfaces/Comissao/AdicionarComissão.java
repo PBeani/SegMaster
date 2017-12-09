@@ -11,6 +11,8 @@ import beans.Comissao;
 import beans.StatusComissao;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import regrasDeNegocio.ComissaoRegrasNegocio;
 import regrasDeNegocio.StatusRegrasNegocio;
 import regrasDeNegocio.Forma_pagamentoRegrasNegocio;
 /**
@@ -287,16 +289,16 @@ public class AdicionarComissão extends javax.swing.JPanel {
 
         private void salvarMouseClicked(java.awt.event.MouseEvent evt) {                                    
         try {
-            StatusComissao e = (StatusComissao)status.getSelectedItem();
-            FormaPagamento x = (FormaPagamento)formaPagamento.getSelectedItem(); 
+            StatusComissao sta = (StatusComissao)status.getSelectedItem();
+            FormaPagamento pag = (FormaPagamento)formaPagamento.getSelectedItem(); 
             double valor1 = valor.getText();
             double porcentagem1 = porcentagem.getText();
             ComissaoRegrasNegocio comissao = new ComissaoRegrasNegocio();
-            Comissao c = new Comissao(e.getId_status_comissao(), x.getId_forma_pagamento(), valor1, porcentagem1);
+            Comissao c = new Comissao(sta.getId_status_comissao(), pag.getId_forma_pagamento(), valor1, porcentagem1);
             if(comissao.cadastroComissao(c))
                 JOptionPane.showMessageDialog(null, "Nova Comissao salvo com sucesso");
         } catch (Exception ex) {
-            Logger.getLogger(AdicionarComissao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdicionarComissão.class.getName()).log(Level.SEVERE, null, ex);
         } 
         
         
