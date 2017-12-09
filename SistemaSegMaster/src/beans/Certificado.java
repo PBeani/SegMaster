@@ -26,6 +26,14 @@ public class Certificado {
 		this.data_validade = data_validade;
 	}
 
+    public Certificado(int codigo, int codTipoCertificado, int codCategoriaCertificado, int codHardware, int codHierarquia, int codPedido, String num, java.sql.Date data) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Certificado(int id_tipo_certificado, int id_tipo_certificado0, int id_hardware, int id_hierarquia, String numero1, LocalDate validade1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 	public int getId_certificado() {
 		return id_certificado;
 	}
