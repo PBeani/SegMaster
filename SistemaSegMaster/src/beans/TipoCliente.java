@@ -30,5 +30,9 @@ public class TipoCliente {
     public void setDesc_tipo_cliente(String desc_tipo_cliente) {
         this.desc_tipo_cliente = desc_tipo_cliente;
     }
-
+    
+    @Override
+    public String toString() {
+        return desc_tipo_cliente;
+    }
 }

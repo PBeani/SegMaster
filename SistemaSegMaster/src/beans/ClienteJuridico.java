@@ -12,6 +12,25 @@ public class ClienteJuridico extends Cliente {
         this.cnpj = cnpj;
         this.nomeEmpresa = nomeEmpresa;
     }
+    
+    public ClienteJuridico(int id_cliente, String cnpj, String nomeEmpresa, String nome, int tipo, int end) {
+        super(id_cliente, nome, tipo, end);
+        this.cnpj = cnpj;
+        this.nomeEmpresa = nomeEmpresa;
+    }
+    
+    public ClienteJuridico(String cnpj, String nomeEmpresa, String nome, int tipo, int endereco) {
+        super(nome, tipo, endereco);
+        this.cnpj = cnpj;
+        this.nomeEmpresa = nomeEmpresa;
+    }
+    
+    public ClienteJuridico(String cnpj, String nomeEmpresa) {
+        this.cnpj = cnpj;
+        this.nomeEmpresa = nomeEmpresa;
+    }
+
+
 
     public String getCnpj() {
         return cnpj;

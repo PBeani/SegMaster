@@ -15,7 +15,7 @@ public class ClienteFisicoDaoImpl extends ClienteDaoImpl implements ClienteFisic
     }
 
     @Override
-    public void insereClienteFisico(ClienteFisico cliente) throws BancoException {
+    public int insereClienteFisico(ClienteFisico cliente) throws BancoException {
         int chave = insereCliente(cliente);
         abreConexao();
 
@@ -27,6 +27,25 @@ public class ClienteFisicoDaoImpl extends ClienteDaoImpl implements ClienteFisic
             pstmt.execute();
         } catch (SQLException e) {
             throw new BancoException("Problema ao cadastrar Cliente Fisico.");
+        }
+        fechaConexao();
+        return chave;
+    }
+    
+    @Override
+    public void atualizaFisico(ClienteFisico cliente) throws BancoException {
+        atualizaCliente(cliente);
+        abreConexao();
+
+        preparaComandoSQL(
+                "update cliente_fisico set cpf = ? where id_cliente = ? ");
+        try {
+            pstmt.setString(1, cliente.getCpf());
+            pstmt.setInt(2, cliente.getId_cliente());
+            
+            pstmt.execute();
+        } catch (SQLException e) {
+            throw new BancoException("Problema ao atualizar Cliente Fisico.");
         }
         fechaConexao();
     }

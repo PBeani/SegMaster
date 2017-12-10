@@ -2,7 +2,6 @@ package bancoDeDados.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.LinkedList;
 
 import beans.Cliente;
 import beans.ClienteJuridico;
@@ -15,7 +14,7 @@ public class ClienteJuridicoDaoImpl extends ClienteDaoImpl implements ClienteJur
     }
 
     @Override
-    public void insereClienteJuridico(ClienteJuridico cliente) throws BancoException {
+    public int insereClienteJuridico(ClienteJuridico cliente) throws BancoException {
         int chave = insereCliente(cliente);
         abreConexao();
 
@@ -28,6 +27,26 @@ public class ClienteJuridicoDaoImpl extends ClienteDaoImpl implements ClienteJur
             pstmt.execute();
         } catch (SQLException e) {
             throw new BancoException("Problema ao cadastrar Cliente Juridico.");
+        }
+        fechaConexao();
+        return chave;
+    }
+    
+    @Override
+    public void atualizaClienteJuridico(ClienteJuridico cliente) throws BancoException {
+        atualizaCliente(cliente);
+        abreConexao();
+
+        preparaComandoSQL(
+                "update cliente_juridico set cnpj = ?, nome_empresa = ? where id_cliente = ? ");
+        try {
+            pstmt.setString(1, cliente.getCnpj());
+            pstmt.setString(2, cliente.getNomeEmpresa());
+            pstmt.setInt(3, cliente.getId_cliente());
+            
+            pstmt.execute();
+        } catch (SQLException e) {
+            throw new BancoException("Problema ao atualizar Cliente Juridico.");
         }
         fechaConexao();
     }
@@ -64,6 +83,8 @@ public class ClienteJuridicoDaoImpl extends ClienteDaoImpl implements ClienteJur
         return clienteJuridico;
 
     }
+    
+    @Override
     public ClienteJuridico selecionaClienteJuridicoCNPJ (String cnpj) throws BancoException{
         ClienteJuridico clientejuridico = null;
         abreConexao();

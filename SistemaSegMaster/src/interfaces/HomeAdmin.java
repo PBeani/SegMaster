@@ -5,12 +5,23 @@
  */
 package interfaces;
 
+import bancoDeDados.BancoException;
+import beans.ClientResult;
+import beans.Hierarquia;
 import interfaces.Administrativo.PainelAdministrativo;
+import interfaces.Cliente.AdicionarCliente;
+import interfaces.Cliente.ConsultaCliente;
 import interfaces.Contabilidade.AdicionarContabilidade;
 import interfaces.Contabilidade.ConsultaContabilidade;
 import interfaces.Contador.AdicionarContador;
 import interfaces.Contador.ConsultarContador;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import regrasDeNegocio.ClienteRegrasNegocio;
+import regrasDeNegocio.HierarquiaRegrasNegocio;
 
 /**
  *
@@ -44,6 +55,18 @@ public class HomeAdmin extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         nav_contador_consultar = new javax.swing.JMenuItem();
         nav_add_contador = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        nav_consulta_cliente = new javax.swing.JMenuItem();
+        nav_add_cliente = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -79,6 +102,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         jMenu1.setText("Contabilidade");
         jMenu1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jMenu1.setMargin(new java.awt.Insets(10, 20, 10, 20));
 
         nav_consulta_contabilidade.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         nav_consulta_contabilidade.setText("Consultar Contabilidade");
@@ -107,6 +131,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         jMenu2.setText("Contador");
         jMenu2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jMenu2.setMargin(new java.awt.Insets(10, 20, 10, 20));
 
         nav_contador_consultar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         nav_contador_consultar.setLabel("Consultar Contadores");
@@ -127,6 +152,87 @@ public class HomeAdmin extends javax.swing.JFrame {
         jMenu2.add(nav_add_contador);
 
         jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Cliente");
+        jMenu3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jMenu3.setMargin(new java.awt.Insets(10, 20, 10, 20));
+
+        nav_consulta_cliente.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nav_consulta_cliente.setText("Consulta Clientes");
+        nav_consulta_cliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nav_consulta_clienteMouseClicked(evt);
+            }
+        });
+        nav_consulta_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nav_consulta_clienteActionPerformed(evt);
+            }
+        });
+        jMenu3.add(nav_consulta_cliente);
+
+        nav_add_cliente.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nav_add_cliente.setText("Adicionar Cliente");
+        nav_add_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nav_add_clienteActionPerformed(evt);
+            }
+        });
+        jMenu3.add(nav_add_cliente);
+
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Pedido");
+        jMenu4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jMenu4.setMargin(new java.awt.Insets(10, 20, 10, 20));
+
+        jMenuItem3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jMenuItem3.setText("Consultar Pedidos");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem3);
+
+        jMenuItem4.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jMenuItem4.setText("Adicionar Pedido");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu4);
+
+        jMenu5.setText("Certificado");
+        jMenu5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jMenu5.setMargin(new java.awt.Insets(10, 20, 10, 20));
+
+        jMenuItem5.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jMenuItem5.setText("Consultar Certificados");
+        jMenu5.add(jMenuItem5);
+
+        jMenuItem6.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jMenuItem6.setText("Adicionar Certificado");
+        jMenu5.add(jMenuItem6);
+
+        jMenuBar1.add(jMenu5);
+
+        jMenu6.setText("Comissão");
+        jMenu6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jMenu6.setMargin(new java.awt.Insets(10, 20, 10, 20));
+
+        jMenuItem7.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jMenuItem7.setText("Consultar Comissões");
+        jMenu6.add(jMenuItem7);
+
+        jMenuItem8.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jMenuItem8.setText("Adicionar Comissão");
+        jMenu6.add(jMenuItem8);
+
+        jMenuBar1.add(jMenu6);
 
         setJMenuBar(jMenuBar1);
 
@@ -238,7 +344,65 @@ public class HomeAdmin extends javax.swing.JFrame {
         setLastPanel(content);
     }//GEN-LAST:event_nav_add_contadorActionPerformed
 
-    private JPanel lastPanel;
+    private void nav_add_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_add_clienteActionPerformed
+        setTitle("Adicionar Cliente");
+        if(lastPanel != null){
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        AdicionarCliente panel = new AdicionarCliente(this);
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_add_clienteActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void nav_consulta_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_consulta_clienteMouseClicked
+        
+    }//GEN-LAST:event_nav_consulta_clienteMouseClicked
+
+    private void nav_consulta_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_consulta_clienteActionPerformed
+        setTitle("Consultar Clientes");
+        if(lastPanel != null){
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        ConsultaCliente panel = new ConsultaCliente(this);
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+        
+        try {
+            ClienteRegrasNegocio clienteRegras = new ClienteRegrasNegocio();
+            LinkedList<ClientResult> lista = clienteRegras.listaClientes();
+            panel.montaTabelaCliente(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_consulta_clienteActionPerformed
+
+    public JPanel lastPanel;
 
     public JPanel getLastPanel() {
         return lastPanel;
@@ -286,13 +450,25 @@ public class HomeAdmin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem nav_add_cliente;
     private javax.swing.JMenuItem nav_add_contabilidade;
     private javax.swing.JMenuItem nav_add_contador;
     private javax.swing.JMenu nav_administrativo;
+    private javax.swing.JMenuItem nav_consulta_cliente;
     private javax.swing.JMenuItem nav_consulta_contabilidade;
     private javax.swing.JMenuItem nav_contador_consultar;
-    private javax.swing.JPanel paineldeconteudo;
+    public javax.swing.JPanel paineldeconteudo;
     // End of variables declaration//GEN-END:variables
 
 }
