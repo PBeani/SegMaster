@@ -12,6 +12,10 @@ public class Contador {
 		this.nomeContador = nomeContador;
 		this.cod_contabilidade = cod_contabilidade;
 	}
+
+    public Contador(int cod, String text) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	
 	public int getId_contador() {
 		return id_contador;

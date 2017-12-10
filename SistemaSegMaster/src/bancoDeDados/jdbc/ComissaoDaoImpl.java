@@ -1,0 +1,152 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bancoDeDados.jdbc;
+
+import bancoDeDados.BancoException;
+import bancoDeDados.ConectorJDBC;
+import beans.Comissao;
+import java.sql.SQLException;
+import java.util.LinkedList;
+
+/**
+ *
+ * @author amand_000
+ */
+public class ComissaoDaoImpl extends ConectorJDBC{
+    
+    public ComissaoDaoImpl() throws BancoException {
+        super();
+    }
+
+    public void insereComissao(Comissao comissao) throws BancoException, SQLException {
+        abreConexao();
+        preparaComandoSQL("insert into comissao (id_pedido, valor_comissao, id_status_comissao, id_forma_pagamento, prc_comissao) values (?,?,?,?,?) ");
+        try {
+            pstmt.setInt(1, comissao.getCod_pedido());
+            pstmt.setDouble(2, comissao.getValor_comissao());
+            pstmt.setInt(3, comissao.getCod_status_comissao());
+            pstmt.setInt(4, comissao.getCod_forma_pagamento());
+            pstmt.setDouble(5, comissao.getPorcentagem_comissao());
+            pstmt.execute();
+        } catch (SQLException e) {
+            throw new BancoException("Problema ao cadastrar comissao");
+        }
+        fechaConexao();
+    }
+    
+    public void alteraComissao(Comissao comissao) throws BancoException {
+        abreConexao();
+
+        preparaComandoSQL(
+                "update comissao set id_pedido = ?, valor_comissao = ?, id_status_comissao = ?, id_forma_pagamento = ?, prc_comissao = ? where id_comissao = ?");
+        try {
+            pstmt.setInt(1, comissao.getCod_pedido());
+            pstmt.setDouble(2, comissao.getValor_comissao());
+            pstmt.setInt(3, comissao.getCod_status_comissao());
+            pstmt.setInt(4, comissao.getCod_forma_pagamento());
+            pstmt.setDouble(5, comissao.getPorcentagem_comissao());
+            pstmt.setInt(6, comissao.getId_comissao());
+            pstmt.execute();
+        } catch (SQLException e) {
+            throw new BancoException("Problema ao realizar atualização de Comissao.");
+        }
+
+        fechaConexao();
+    }
+
+    public Comissao selecionaComissao(int cod) throws BancoException {
+        abreConexao();
+
+        Comissao comissao = null;
+        preparaComandoSQL("select * from comissao where id_comissao = ?");
+        try {
+            pstmt.setInt(1, cod);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int codigo = rs.getInt(1);
+                int codPedido = rs.getInt(2);
+                double codValor = rs.getInt(3);
+                int codStatus = rs.getInt(4);
+                int codPagamento = rs.getInt(5);
+                double codPorcentagem = rs.getInt(6);
+                
+                comissao = new Comissao(codigo, codPedido, codValor, codStatus, codPagamento, codPorcentagem);
+            }
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção de Comissao.");
+        }
+        
+        fechaConexao();
+        return comissao;
+    }
+
+    public LinkedList<Comissao> listaComissao() throws BancoException {
+        LinkedList<Comissao> lista = new LinkedList<>();
+
+        abreConexao();
+
+        preparaComandoSQL("select * from comissao");
+        try {
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt(1);
+                int codPedido = rs.getInt(2);
+                double codValor = rs.getInt(3);
+                int codStatus = rs.getInt(4);
+                int codPagamento = rs.getInt(5);
+                double codPorcentagem = rs.getInt(6);
+
+                Comissao item = new Comissao(codigo, codPedido, codValor, codStatus, codPagamento, codPorcentagem);
+                lista.add(item);
+            }
+        } catch (SQLException e) {
+            throw new BancoException("Problema na geração da lista de Comissoes.");
+        }
+
+        fechaConexao();
+        return lista;
+    }
+    
+    public void removeComissao(int cod) throws BancoException {
+        abreConexao();
+
+        preparaComandoSQL("delete from comissao where id_comissao = ?");
+        try {
+            pstmt.setInt(1, cod);
+            pstmt.execute();
+        } catch (SQLException e) {
+            throw new BancoException("Problema na remoção de Comissao.");
+        }
+
+        fechaConexao();
+    }
+    public boolean existeComissao(int cod) throws BancoException{
+        boolean resp;
+        abreConexao();
+
+        Comissao comissao = null;
+        preparaComandoSQL("select * from comissao where id_comissao = ?");
+        try {
+            pstmt.setInt(1, cod);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                resp=true;
+            }
+            else resp=false;
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção de Comissao.");
+        }
+        
+        fechaConexao();
+        return resp;
+    }
+    
+}

@@ -31,5 +31,9 @@ public class CategoriaCertificado {
     public void setDesc_categoria_certificado(String desc_categoria_certificado) {
         this.desc_categoria_certificado = desc_categoria_certificado;
     }
-
+    
+    @Override
+    public String toString() {
+        return getDesc_categoria_certificado();
+    }
 }

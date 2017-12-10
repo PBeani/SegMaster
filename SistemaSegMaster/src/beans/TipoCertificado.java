@@ -31,4 +31,8 @@ public class TipoCertificado {
         this.desc_tipo_certificado = desc_tipo_certificado;
     }
 
+    @Override
+    public String toString() {
+        return getDesc_tipo_certificado();
+    }
 }

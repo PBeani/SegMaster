@@ -19,7 +19,17 @@ public class Pedido {
 		this.codContador = codContador;
 		this.valorBruto = valorBruto;
 	}
-	
+
+    public Pedido(int codigo, int codCliente, java.sql.Date dtExpedicao, int codContador, double valorBruto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Pedido(int cod, String textoCliente, String textoContador, LocalDate textoData, double textoValor) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    public Pedido(int codCliente, int codContador,LocalDate textoData, double textoValor) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	
 	public int getIdPedido() {
 		return idPedido;

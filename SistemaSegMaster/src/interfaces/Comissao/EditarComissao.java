@@ -5,6 +5,17 @@
  */
 package interfaces.Comissao;
 
+import bancoDeDados.BancoException;
+import beans.FormaPagamento;
+import beans.Comissao;
+import beans.StatusComissao;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import regrasDeNegocio.ComissaoRegrasNegocio;
+import regrasDeNegocio.StatusRegrasNegocio;
+import regrasDeNegocio.Forma_pagamentoRegrasNegocio;
+
 /**
  *
  * @author pedro
@@ -14,6 +25,9 @@ public class EditarComissao extends javax.swing.JPanel {
     /**
      * Creates new form EditarComissao
      */
+    
+    int cod;
+    
     public EditarComissao() {
         initComponents();
     }
@@ -30,7 +44,7 @@ public class EditarComissao extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        valor = new javax.swing.JTextField<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -42,11 +56,11 @@ public class EditarComissao extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        porcentagem = new javax.swing.JTextField<>();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        status = new javax.swing.JComboBox<>();
+        pagamento = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMinimumSize(new java.awt.Dimension(900, 620));
@@ -60,9 +74,9 @@ public class EditarComissao extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setText("Editar Comissão");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        valor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                valorActionPerformed(evt);
             }
         });
 
@@ -120,9 +134,9 @@ public class EditarComissao extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel7.setText("Status:");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        porcentagem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                porcentagemActionPerformed(evt);
             }
         });
 
@@ -132,15 +146,15 @@ public class EditarComissao extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel9.setText("Forma de Pagamento:");
 
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                statusActionPerformed(evt);
             }
         });
 
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+        pagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
+                pagamentoActionPerformed(evt);
             }
         });
 
@@ -165,17 +179,17 @@ public class EditarComissao extends javax.swing.JPanel {
                         .addGap(12, 12, 12)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField1)
+                                .addComponent(valor)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(status, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(porcentagem, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, Short.MAX_VALUE)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(pagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -202,15 +216,15 @@ public class EditarComissao extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(valor, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(porcentagem, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -241,30 +255,89 @@ public class EditarComissao extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_valorActionPerformed
 
     private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField11ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void porcentagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_porcentagemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_porcentagemActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_statusActionPerformed
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+    private void pagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pagamentoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
+    }//GEN-LAST:event_pagamentoActionPerformed
 
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {                                     
+        try {
+            double valor1  = valor.getText(); 
+            double porcentagem1  = porcentagem.getText();
+            ComissaoRegrasNegocio c = new ComissaoRegrasNegocio();
+            StatusComissao s = (StatusComissao)status.getSelectedItem();
+            FormaPagamento p = (FormaPagamento)pagamento.getSelectedItem();
+            Comissao comissao  = new Comissao(cod, s.getId_status_comissao(), p.getId_forma_pagamento(), valor1, porcentagem1);
+            if (c.altera(comissao)) {
+                JOptionPane.showMessageDialog(null, "Editado com sucesso");
+                //retornarLista();
+            }
+        } catch (BancoException ex) {
+            JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
+        } catch (Exception ex) {
+        }
+    }                                    
+    public Comissao dados(int codigo) {
+        try {
+            ComissaoRegrasNegocio regra = new ComissaoRegrasNegocio();
+            Comissao comissao = regra.seleciona(codigo);
+            valor.setText(comissao.getValor_comissao());
+            porcentagem.setText(comissao.getPorcentagem_comissao());
+            cod = codigo;
+            try {
+                StatusRegrasNegocio st = new StatusRegrasNegocio();
+                for (StatusComissao s : st.listaStatusComissao()) {
+                    status.addItem(s);
+                }
+                StatusComissao s;
+                for (int i = 0; i < status.getItemCount(); i++) {
+                    s = (StatusComissao)status.getItemAt(i);
+                    if (s.getId_status_comissao() == comissao.getCod_status_comissao()) {
+                        status.setSelectedIndex(i);
+                        break;
+                    }
+                }
+                
+                Forma_pagamentoRegrasNegocio pg = new Forma_pagamentoRegrasNegocio();
+                for (FormaPagamento p : pg.listaFormaPagamento()) {
+                    pagamento.addItem(s);
+                }
+                FormaPagamento p;
+                for (int i = 0; i < pagamento.getItemCount(); i++) {
+                    p = (FormaPagamento)pagamento.getItemAt(i);
+                    if (p.getId_forma_pagamento() == comissao.getCod_forma_pagamento()) {
+                        pagamento.setSelectedIndex(i);
+                        break;
+                    }
+                }
+            } catch (BancoException ex) {
+                Logger.getLogger(AdicionarComissão.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(AdicionarComissão.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return comissao;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
@@ -280,8 +353,10 @@ public class EditarComissao extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JComboBox<Object> pagamento;
+    private javax.swing.JTextField<double> porcentagem;
+    private javax.swing.JComboBox<Object> status;
+    private javax.swing.JTextField<double> valor;
     // End of variables declaration//GEN-END:variables
 }
