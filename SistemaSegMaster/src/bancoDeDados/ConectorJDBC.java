@@ -44,7 +44,7 @@ public abstract class ConectorJDBC {
     protected ConectorJDBC(DB db) throws BancoException {
         this.db = db;
         String dbDriver = MYSQL_DRIVER;
-
+        
         try {
             Class.forName(dbDriver).newInstance();
         } catch (Exception e) {
