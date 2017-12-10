@@ -44,7 +44,7 @@ public class EditarComissao extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        valor = new javax.swing.JTextField<>();
+        valor = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -56,7 +56,7 @@ public class EditarComissao extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        porcentagem = new javax.swing.JTextField<>();
+        porcentagem = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         status = new javax.swing.JComboBox<>();
@@ -277,8 +277,8 @@ public class EditarComissao extends javax.swing.JPanel {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {                                     
         try {
-            double valor1  = valor.getText(); 
-            double porcentagem1  = porcentagem.getText();
+            double valor1  = Double.parseDouble(valor.getText()); 
+            double porcentagem1  =Double.parseDouble(porcentagem.getText());
             ComissaoRegrasNegocio c = new ComissaoRegrasNegocio();
             StatusComissao s = (StatusComissao)status.getSelectedItem();
             FormaPagamento p = (FormaPagamento)pagamento.getSelectedItem();
@@ -296,15 +296,15 @@ public class EditarComissao extends javax.swing.JPanel {
         try {
             ComissaoRegrasNegocio regra = new ComissaoRegrasNegocio();
             Comissao comissao = regra.seleciona(codigo);
-            valor.setText(comissao.getValor_comissao());
-            porcentagem.setText(comissao.getPorcentagem_comissao());
+            valor.setText(String.valueOf(comissao.getValor_comissao()));
+            porcentagem.setText(String.valueOf(comissao.getPorcentagem_comissao()));
             cod = codigo;
             try {
                 StatusRegrasNegocio st = new StatusRegrasNegocio();
                 for (StatusComissao s : st.listaStatusComissao()) {
                     status.addItem(s);
                 }
-                StatusComissao s;
+                StatusComissao s = null;
                 for (int i = 0; i < status.getItemCount(); i++) {
                     s = (StatusComissao)status.getItemAt(i);
                     if (s.getId_status_comissao() == comissao.getCod_status_comissao()) {
@@ -355,8 +355,8 @@ public class EditarComissao extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JComboBox<Object> pagamento;
-    private javax.swing.JTextField<double> porcentagem;
+    private javax.swing.JTextField porcentagem;
     private javax.swing.JComboBox<Object> status;
-    private javax.swing.JTextField<double> valor;
+    private javax.swing.JTextField valor;
     // End of variables declaration//GEN-END:variables
 }

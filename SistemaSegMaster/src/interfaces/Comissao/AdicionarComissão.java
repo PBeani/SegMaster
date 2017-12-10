@@ -56,7 +56,7 @@ public class AdicionarComissão extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        valor = new javax.swing.JTextField<>();
+        valor = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -68,7 +68,7 @@ public class AdicionarComissão extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        porcentagem = new javax.swing.JTextField<>();
+        porcentagem = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         status = new javax.swing.JComboBox<>();
@@ -322,8 +322,8 @@ public class AdicionarComissão extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField<double> porcentagem;
+    private javax.swing.JTextField porcentagem;
     private javax.swing.JComboBox<Object> status;
-    private javax.swing.JTextField<double> valor;
+    private javax.swing.JTextField valor;
     // End of variables declaration//GEN-END:variables
 }
