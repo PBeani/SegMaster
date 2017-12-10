@@ -18,7 +18,7 @@ public class EstadoRegrasNegocio {
 
         estadoDao = new EstadoDaoImpl();
     }
-
+    
     public boolean cadastroEstado(Estado estado) throws Exception {
         try {
             //fazer funcao para listar Estado
@@ -69,6 +69,13 @@ public class EstadoRegrasNegocio {
         try {
             estadoDao.removeEstado(cod);
         } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    public int selecionaCodEstado(String sigla) throws Exception{
+        try{
+            return estadoDao.selecionaCodEstado(sigla);
+        }catch(BancoException e){
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
     }

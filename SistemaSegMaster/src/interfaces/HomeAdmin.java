@@ -293,7 +293,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         } else {
             paineldeconteudo.revalidate();
         }
-        ConsultaContabilidade panel = new ConsultaContabilidade();
+        ConsultaContabilidade panel = new ConsultaContabilidade(this);
         JPanel content = panel;
         content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
         content.setVisible(true);

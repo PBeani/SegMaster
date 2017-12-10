@@ -16,6 +16,7 @@ public class EstadoDaoImpl extends ConectorJDBC implements EstadoDao {
 
     @Override
     public void insereEstado(Estado estado) throws BancoException {
+        
         abreConexao();
         
         preparaComandoSQL("insert into estados (desc_estado, sigla) values (?,?) ");
@@ -64,7 +65,6 @@ public class EstadoDaoImpl extends ConectorJDBC implements EstadoDao {
                 int codigo = rs.getInt(1);
                 String desc = rs.getString(2);
                 String sigla = rs.getString(3);
-
                 estado = new Estado(codigo, desc, sigla);
             }
         } catch (SQLException e) {
@@ -135,5 +135,29 @@ public class EstadoDaoImpl extends ConectorJDBC implements EstadoDao {
         
         fechaConexao();
         return resp;
+    }
+
+    @Override
+    public int selecionaCodEstado(String sigla) throws BancoException{
+        
+        abreConexao();
+        preparaComandoSQL("select id_estado from estados where desc_estado = ?");
+        try {
+            pstmt.setString(1, sigla);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                fechaConexao();
+                return rs.getInt(1);
+            }
+            
+            
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção do estado.");
+        }
+        
+        fechaConexao();  
+        return -1;
+        
     }
 }
