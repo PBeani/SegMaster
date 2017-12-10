@@ -25,9 +25,29 @@ public class Certificado {
 		this.num_certificado = num_certificado;
 		this.data_validade = data_validade;
 	}
+	
+        public Certificado(int cod_tipo_certificado, int cod_categoria_certificado, int cod_hardware,
+			int cod_hierarquia, String num_certificado, LocalDate data_validade, int cod_pedido) {
+		super();
+		this.id_certificado = id_certificado;
+		this.cod_tipo_certificado = cod_tipo_certificado;
+		this.cod_categoria_certificado = cod_categoria_certificado;
+		this.cod_hardware = cod_hardware;
+		this.cod_hierarquia = cod_hierarquia;
+		this.cod_pedido = cod_pedido;
+		this.num_certificado = num_certificado;
+		this.data_validade = data_validade;
+	}
 
     public Certificado(int codigo, int codTipoCertificado, int codCategoriaCertificado, int codHardware, int codHierarquia, int codPedido, String num, java.sql.Date data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.id_certificado = codigo;
+        this.cod_tipo_certificado = codTipoCertificado;
+        this.cod_categoria_certificado = codCategoriaCertificado;
+        this.cod_hardware = codHardware;
+        this.cod_hierarquia = codHierarquia;
+        this.cod_pedido = codPedido;
+        this.num_certificado = num;
+        this.data_validade = data.toLocalDate();
     }
 
     public Certificado(int id_tipo_certificado, int id_tipo_certificado0, int id_hardware, int id_hierarquia, String numero1, LocalDate validade1) {

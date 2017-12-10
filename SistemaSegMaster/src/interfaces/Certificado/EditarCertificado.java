@@ -11,6 +11,8 @@ import beans.Certificado;
 import beans.Hardware;
 import beans.Hierarquia;
 import beans.TipoCertificado;
+import interfaces.Converter;
+import interfaces.HomeAdmin;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -32,8 +34,9 @@ public class EditarCertificado extends javax.swing.JPanel {
      * Creates new form EditarCertificado
      */
     int cod;
-    
-    public EditarCertificado() {
+    HomeAdmin home;
+    public EditarCertificado(HomeAdmin h) {
+        home = h;
         initComponents();
     }
 
@@ -57,7 +60,7 @@ public class EditarCertificado extends javax.swing.JPanel {
         categoria = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        validade = new javax.swing.JTextField<>();
+        validade = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         tipo = new javax.swing.JComboBox<>();
@@ -70,7 +73,6 @@ public class EditarCertificado extends javax.swing.JPanel {
         jLabel21 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jComboBox8 = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMinimumSize(new java.awt.Dimension(900, 620));
@@ -166,7 +168,7 @@ public class EditarCertificado extends javax.swing.JPanel {
         });
 
         jLabel20.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel20.setText("Filtrar por:");
+        jLabel20.setText("Filtrar :");
 
         jLabel21.setBackground(new java.awt.Color(0, 204, 204));
         jLabel21.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -185,12 +187,6 @@ public class EditarCertificado extends javax.swing.JPanel {
             }
         ));
         jScrollPane1.setViewportView(jTable1);
-
-        jComboBox8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox8ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -243,10 +239,8 @@ public class EditarCertificado extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox8, 0, 191, Short.MAX_VALUE)
-                        .addGap(15, 15, 15)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator2))
@@ -294,8 +288,7 @@ public class EditarCertificado extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -355,14 +348,10 @@ public class EditarCertificado extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField11ActionPerformed
 
-    private void jComboBox8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox8ActionPerformed
-
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {                                     
         try {
             String numero1 = numero.getText(); 
-            LocalDate validade1 = validade.getTxt();
+            LocalDate validade1 = Converter.toLocalDate(validade.getText());
             CertificadoRegrasNegocio c = new CertificadoRegrasNegocio();
             CategoriaCertificado cat = (CategoriaCertificado)categoria.getSelectedItem();
             TipoCertificado tip = (TipoCertificado)tipo.getSelectedItem();
@@ -377,13 +366,14 @@ public class EditarCertificado extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
         } catch (Exception ex) {
         }
-    }                                    
+    }    
+    
     public Certificado dados(int codigo) throws BancoException {
         try{
             CertificadoRegrasNegocio regra = new CertificadoRegrasNegocio();
             Certificado certificado = regra.seleciona(codigo);
             numero.setText(certificado.getNum_certificado());
-            validade.setText(certificado.getData_validade());
+            validade.setText(certificado.getData_validade().toString());
             cod = codigo;
             try {
                 Categoria_certificadoRegrasNegocio cat = new Categoria_certificadoRegrasNegocio();
@@ -454,7 +444,6 @@ public class EditarCertificado extends javax.swing.JPanel {
     private javax.swing.JComboBox<Object> categoria;
     private javax.swing.JComboBox<Object> hardware;
     private javax.swing.JComboBox<Object> hierarquia;
-    private javax.swing.JComboBox<String> jComboBox8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -475,6 +464,6 @@ public class EditarCertificado extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField numero;
     private javax.swing.JComboBox<Object> tipo;
-    private javax.swing.JTextField<LocalDate> validade;
+    private javax.swing.JTextField validade;
     // End of variables declaration//GEN-END:variables
 }

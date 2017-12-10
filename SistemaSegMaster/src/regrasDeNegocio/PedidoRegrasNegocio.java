@@ -8,6 +8,7 @@ package regrasDeNegocio;
 import bancoDeDados.BancoException;
 import bancoDeDados.jdbc.PedidoDaoImpl;
 import beans.Pedido;
+import beans.PedidoResult;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
@@ -66,6 +67,22 @@ public class PedidoRegrasNegocio {
     public void remove(int cod) throws Exception {
         try {
         	pedidoDao.removePedido(cod);
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public LinkedList<PedidoResult> listaPedidoMin() throws Exception {
+        try {
+            return pedidoDao.listaPedidoMin();
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public LinkedList<PedidoResult> listaPedidoMinFilter(String name) throws Exception {
+        try {
+            return pedidoDao.listaPedidoMinFilter(name);
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }

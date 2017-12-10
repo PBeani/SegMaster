@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import bancoDeDados.*;
 import beans.Pedido;
+import beans.PedidoResult;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -95,6 +96,73 @@ public class PedidoDaoImpl extends ConectorJDBC implements PedidoDao {
                 double valorBruto = rs.getDouble(5);
 
                 Pedido item = new Pedido(codigo, codCliente, dtExpedicao, codContador,valorBruto);
+                lista.add(item);
+            }
+        } catch (SQLException e) {
+            throw new BancoException("Problema na geração da lista de Pedidos.");
+        }
+
+        fechaConexao();
+        return lista;
+    }
+    
+    @Override
+    public LinkedList<PedidoResult> listaPedidoMin() throws BancoException {
+        LinkedList<PedidoResult> lista = new LinkedList<>();
+
+        abreConexao();
+        PedidoResult item = null;
+        preparaComandoSQL("select pedido.id_pedido, cliente.nome_cliente, contador.nome_contador"
+                + " from pedido"
+                + " left join cliente on pedido.id_cliente = cliente.id_cliente"
+                + " left join contador on pedido.id_contador = contador.id_contador");
+        try {
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt(1);
+                String cli = rs.getString(2);
+                String con = rs.getString(3);
+
+                item = new PedidoResult(codigo, cli, con);
+                lista.add(item);
+            }
+        } catch (SQLException e) {
+            throw new BancoException("Problema na geração da lista de Pedidos.");
+        }
+
+        fechaConexao();
+        return lista;
+    }
+    
+    @Override
+    public LinkedList<PedidoResult> listaPedidoMinFilter(String s) throws BancoException {
+        LinkedList<PedidoResult> lista = new LinkedList<>();
+
+        abreConexao();
+        PedidoResult item = null;
+        preparaComandoSQL("select pedido.id_pedido, cliente.nome_cliente, contador.nome_contador"
+                + " from pedido"
+                + " left join cliente on pedido.id_cliente = cliente.id_cliente"
+                + " left join contador on pedido.id_contador = contador.id_contador"
+                + " where cliente.nome_cliente LIKE ?"
+                + " UNION"
+                + " select pedido.id_pedido, cliente.nome_cliente, contador.nome_contador"
+                + " from pedido"
+                + " left join cliente on pedido.id_cliente = cliente.id_cliente"
+                + " left join contador on pedido.id_contador = contador.id_contador"
+                + " where contador.nome_contador LIKE ?");
+        try {
+            pstmt.setString(1, "%" + s + "%");
+            pstmt.setString(2, "%" + s + "%");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt(1);
+                String cli = rs.getString(2);
+                String con = rs.getString(3);
+
+                item = new PedidoResult(codigo, cli, con);
                 lista.add(item);
             }
         } catch (SQLException e) {

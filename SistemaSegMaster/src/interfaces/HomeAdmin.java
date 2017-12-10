@@ -6,9 +6,13 @@
 package interfaces;
 
 import bancoDeDados.BancoException;
+import beans.CertificadoResult;
 import beans.ClientResult;
 import beans.Hierarquia;
+import beans.PedidoResult;
 import interfaces.Administrativo.PainelAdministrativo;
+import interfaces.Certificado.AdicionarCertificado;
+import interfaces.Certificado.ConsultaCertificado;
 import interfaces.Cliente.AdicionarCliente;
 import interfaces.Cliente.ConsultaCliente;
 import interfaces.Contabilidade.AdicionarContabilidade;
@@ -20,8 +24,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import regrasDeNegocio.CertificadoRegrasNegocio;
 import regrasDeNegocio.ClienteRegrasNegocio;
 import regrasDeNegocio.HierarquiaRegrasNegocio;
+import regrasDeNegocio.PedidoRegrasNegocio;
 
 /**
  *
@@ -62,8 +68,8 @@ public class HomeAdmin extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        nav_consulta_certificado = new javax.swing.JMenuItem();
+        nav_add_certificado = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -210,13 +216,23 @@ public class HomeAdmin extends javax.swing.JFrame {
         jMenu5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jMenu5.setMargin(new java.awt.Insets(10, 20, 10, 20));
 
-        jMenuItem5.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jMenuItem5.setText("Consultar Certificados");
-        jMenu5.add(jMenuItem5);
+        nav_consulta_certificado.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nav_consulta_certificado.setText("Consultar Certificados");
+        nav_consulta_certificado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nav_consulta_certificadoActionPerformed(evt);
+            }
+        });
+        jMenu5.add(nav_consulta_certificado);
 
-        jMenuItem6.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jMenuItem6.setText("Adicionar Certificado");
-        jMenu5.add(jMenuItem6);
+        nav_add_certificado.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nav_add_certificado.setText("Adicionar Certificado");
+        nav_add_certificado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nav_add_certificadoActionPerformed(evt);
+            }
+        });
+        jMenu5.add(nav_add_certificado);
 
         jMenuBar1.add(jMenu5);
 
@@ -253,7 +269,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
     private void nav_administrativoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_administrativoMouseClicked
         setTitle("Administrativo");
-        if(lastPanel != null){
+        if (lastPanel != null) {
             lastPanel.setVisible(false);
             paineldeconteudo.revalidate();
         } else {
@@ -271,7 +287,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
     private void nav_consulta_contabilidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_consulta_contabilidadeActionPerformed
         setTitle("Consultar Contabilidades");
-        if(lastPanel != null){
+        if (lastPanel != null) {
             lastPanel.setVisible(false);
             paineldeconteudo.revalidate();
         } else {
@@ -293,7 +309,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
     private void nav_add_contabilidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_add_contabilidadeActionPerformed
         setTitle("Adicionar Contabilidade");
-        if(lastPanel != null){
+        if (lastPanel != null) {
             lastPanel.setVisible(false);
             paineldeconteudo.revalidate();
         } else {
@@ -311,7 +327,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
     private void nav_contador_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_contador_consultarActionPerformed
         setTitle("Consultar Contadores");
-        if(lastPanel != null){
+        if (lastPanel != null) {
             lastPanel.setVisible(false);
             paineldeconteudo.revalidate();
         } else {
@@ -328,7 +344,7 @@ public class HomeAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_nav_contador_consultarActionPerformed
 
     private void nav_add_contadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_add_contadorActionPerformed
-        if(lastPanel != null){
+        if (lastPanel != null) {
             lastPanel.setVisible(false);
             paineldeconteudo.revalidate();
         } else {
@@ -346,7 +362,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
     private void nav_add_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_add_clienteActionPerformed
         setTitle("Adicionar Cliente");
-        if(lastPanel != null){
+        if (lastPanel != null) {
             lastPanel.setVisible(false);
             paineldeconteudo.revalidate();
         } else {
@@ -371,12 +387,12 @@ public class HomeAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void nav_consulta_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_consulta_clienteMouseClicked
-        
+
     }//GEN-LAST:event_nav_consulta_clienteMouseClicked
 
     private void nav_consulta_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_consulta_clienteActionPerformed
         setTitle("Consultar Clientes");
-        if(lastPanel != null){
+        if (lastPanel != null) {
             lastPanel.setVisible(false);
             paineldeconteudo.revalidate();
         } else {
@@ -386,7 +402,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         JPanel content = panel;
         content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
         content.setVisible(true);
-        
+
         try {
             ClienteRegrasNegocio clienteRegras = new ClienteRegrasNegocio();
             LinkedList<ClientResult> lista = clienteRegras.listaClientes();
@@ -401,6 +417,62 @@ public class HomeAdmin extends javax.swing.JFrame {
         this.add(paineldeconteudo);
         setLastPanel(content);
     }//GEN-LAST:event_nav_consulta_clienteActionPerformed
+
+    private void nav_add_certificadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_add_certificadoActionPerformed
+        setTitle("Adicionar Certificado");
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        AdicionarCertificado panel = new AdicionarCertificado(this);
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+        
+        try {
+            PedidoRegrasNegocio regras = new PedidoRegrasNegocio();
+            LinkedList<PedidoResult> lista = regras.listaPedidoMin();
+            panel.montaTabelaPedido(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_add_certificadoActionPerformed
+
+    private void nav_consulta_certificadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_consulta_certificadoActionPerformed
+        setTitle("Consultar Certificados");
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        ConsultaCertificado panel = new ConsultaCertificado(this);
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+
+        try {
+            CertificadoRegrasNegocio regras = new CertificadoRegrasNegocio();
+            LinkedList<CertificadoResult> lista = regras.listaCertificado();
+            panel.montaTabelaCertificado(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_consulta_certificadoActionPerformed
 
     public JPanel lastPanel;
 
@@ -457,14 +529,14 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem nav_add_certificado;
     private javax.swing.JMenuItem nav_add_cliente;
     private javax.swing.JMenuItem nav_add_contabilidade;
     private javax.swing.JMenuItem nav_add_contador;
     private javax.swing.JMenu nav_administrativo;
+    private javax.swing.JMenuItem nav_consulta_certificado;
     private javax.swing.JMenuItem nav_consulta_cliente;
     private javax.swing.JMenuItem nav_consulta_contabilidade;
     private javax.swing.JMenuItem nav_contador_consultar;
