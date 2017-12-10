@@ -11,6 +11,8 @@ public interface EstadoDao {
     public void alteraEstado(Estado e) throws BancoException;
 
     public Estado selecionaEstado(int cod) throws BancoException;
+    
+    public int selecionaCodEstado(String sigla) throws BancoException;
 
     public LinkedList<Estado> listaEstado() throws BancoException;
 
