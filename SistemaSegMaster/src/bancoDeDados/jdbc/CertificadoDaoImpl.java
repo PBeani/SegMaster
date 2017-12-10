@@ -98,7 +98,7 @@ public class CertificadoDaoImpl extends ConectorJDBC implements CertificadoDao {
             pstmt.setInt(4, certificado.getCod_hardware());
             pstmt.setInt(5, certificado.getCod_hierarquia());
             pstmt.setInt(6, certificado.getCod_pedido());
-           // pstmt.setDate(7, certificado.getData_validade());
+            pstmt.setDate(7, java.sql.Date.valueOf(certificado.getData_validade()));
             pstmt.setInt(8, certificado.getId_certificado());           
             pstmt.execute();
         } catch (SQLException e) {

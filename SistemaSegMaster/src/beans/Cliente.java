@@ -12,6 +12,10 @@ public class Cliente {
         this.nome_cliente = nome_cliente;
         this.cod_tipo_cliente = cod_tipo_cliente;
     }
+    
+    public Cliente(int codCliente, String nome_cliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     public int getId_cliente() {
         return id_cliente;

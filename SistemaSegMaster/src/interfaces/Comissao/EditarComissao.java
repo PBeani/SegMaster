@@ -285,7 +285,7 @@ public class EditarComissao extends javax.swing.JPanel {
             Comissao comissao  = new Comissao(cod, s.getId_status_comissao(), p.getId_forma_pagamento(), valor1, porcentagem1);
             if (c.altera(comissao)) {
                 JOptionPane.showMessageDialog(null, "Editado com sucesso");
-                retornarLista();
+                //retornarLista();
             }
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
