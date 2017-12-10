@@ -29,5 +29,8 @@ public class StatusComissao {
 		this.desc_status_comissao = desc_status_comissao;
 	}
 	
-
+        @Override
+        public String toString(){
+            return this.getDesc_status_comissao();
+        }
 }

@@ -8,6 +8,7 @@ package regrasDeNegocio;
 import bancoDeDados.BancoException;
 import bancoDeDados.jdbc.ComissaoDaoImpl;
 import beans.Comissao;
+import beans.ComissaoResult;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
@@ -57,10 +58,19 @@ public class ComissaoRegrasNegocio {
         }
     }
 
-    public LinkedList<Comissao> listaComissao() throws Exception {
+    public LinkedList<ComissaoResult> listaComissao() throws Exception {
         try {
 
             return comissaoDaoImpl.listaComissao();
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public LinkedList<ComissaoResult> listaComissaoFiltro(int i) throws Exception {
+        try {
+
+            return comissaoDaoImpl.listaComissaoFiltro(i);
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }

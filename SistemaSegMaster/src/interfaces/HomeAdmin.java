@@ -8,6 +8,7 @@ package interfaces;
 import bancoDeDados.BancoException;
 import beans.CertificadoResult;
 import beans.ClientResult;
+import beans.ComissaoResult;
 import beans.Hierarquia;
 import beans.PedidoResult;
 import interfaces.Administrativo.PainelAdministrativo;
@@ -15,6 +16,8 @@ import interfaces.Certificado.AdicionarCertificado;
 import interfaces.Certificado.ConsultaCertificado;
 import interfaces.Cliente.AdicionarCliente;
 import interfaces.Cliente.ConsultaCliente;
+import interfaces.Comissao.AdicionarComissao;
+import interfaces.Comissao.ConsultaComissao;
 import interfaces.Contabilidade.AdicionarContabilidade;
 import interfaces.Contabilidade.ConsultaContabilidade;
 import interfaces.Contador.AdicionarContador;
@@ -26,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import regrasDeNegocio.CertificadoRegrasNegocio;
 import regrasDeNegocio.ClienteRegrasNegocio;
+import regrasDeNegocio.ComissaoRegrasNegocio;
 import regrasDeNegocio.HierarquiaRegrasNegocio;
 import regrasDeNegocio.PedidoRegrasNegocio;
 
@@ -71,8 +75,8 @@ public class HomeAdmin extends javax.swing.JFrame {
         nav_consulta_certificado = new javax.swing.JMenuItem();
         nav_add_certificado = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        nav_consulta_comissao = new javax.swing.JMenuItem();
+        nav_adiciona_comissao = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -240,13 +244,23 @@ public class HomeAdmin extends javax.swing.JFrame {
         jMenu6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jMenu6.setMargin(new java.awt.Insets(10, 20, 10, 20));
 
-        jMenuItem7.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jMenuItem7.setText("Consultar Comissões");
-        jMenu6.add(jMenuItem7);
+        nav_consulta_comissao.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nav_consulta_comissao.setText("Consultar Comissões");
+        nav_consulta_comissao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nav_consulta_comissaoActionPerformed(evt);
+            }
+        });
+        jMenu6.add(nav_consulta_comissao);
 
-        jMenuItem8.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jMenuItem8.setText("Adicionar Comissão");
-        jMenu6.add(jMenuItem8);
+        nav_adiciona_comissao.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nav_adiciona_comissao.setText("Adicionar Comissão");
+        nav_adiciona_comissao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nav_adiciona_comissaoActionPerformed(evt);
+            }
+        });
+        jMenu6.add(nav_adiciona_comissao);
 
         jMenuBar1.add(jMenu6);
 
@@ -474,6 +488,62 @@ public class HomeAdmin extends javax.swing.JFrame {
         setLastPanel(content);
     }//GEN-LAST:event_nav_consulta_certificadoActionPerformed
 
+    private void nav_adiciona_comissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_adiciona_comissaoActionPerformed
+        setTitle("Adicionar Comissao");
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        AdicionarComissao panel = new AdicionarComissao(this);
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+        
+        try {
+            PedidoRegrasNegocio regras = new PedidoRegrasNegocio();
+            LinkedList<PedidoResult> lista = regras.listaPedidoMin();
+            panel.montaTabelaPedido(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_adiciona_comissaoActionPerformed
+
+    private void nav_consulta_comissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_consulta_comissaoActionPerformed
+        setTitle("Consultar Comissões");
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        ConsultaComissao panel = new ConsultaComissao(this);
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+
+        try {
+            ComissaoRegrasNegocio regras = new ComissaoRegrasNegocio();
+            LinkedList<ComissaoResult> lista = regras.listaComissao();
+            panel.montaTabelaComissao(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_consulta_comissaoActionPerformed
+
     public JPanel lastPanel;
 
     public JPanel getLastPanel() {
@@ -529,15 +599,15 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem nav_add_certificado;
     private javax.swing.JMenuItem nav_add_cliente;
     private javax.swing.JMenuItem nav_add_contabilidade;
     private javax.swing.JMenuItem nav_add_contador;
+    private javax.swing.JMenuItem nav_adiciona_comissao;
     private javax.swing.JMenu nav_administrativo;
     private javax.swing.JMenuItem nav_consulta_certificado;
     private javax.swing.JMenuItem nav_consulta_cliente;
+    private javax.swing.JMenuItem nav_consulta_comissao;
     private javax.swing.JMenuItem nav_consulta_contabilidade;
     private javax.swing.JMenuItem nav_contador_consultar;
     public javax.swing.JPanel paineldeconteudo;
