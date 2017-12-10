@@ -171,7 +171,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         } else {
             paineldeconteudo.revalidate();
         }
-        ConsultaContabilidade panel = new ConsultaContabilidade();
+        ConsultaContabilidade panel = new ConsultaContabilidade(this);
         JPanel content = panel;
         content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
         content.setVisible(true);
@@ -292,7 +292,7 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JMenu nav_administrativo;
     private javax.swing.JMenuItem nav_consulta_contabilidade;
     private javax.swing.JMenuItem nav_contador_consultar;
-    private javax.swing.JPanel paineldeconteudo;
+    public javax.swing.JPanel paineldeconteudo;
     // End of variables declaration//GEN-END:variables
 
 }
