@@ -37,6 +37,9 @@ public class DadosContatoRegrasNegocio {
     public void cadastroCliente(ContatoCliente c) throws Exception {
         dados.insereCliente(c);
     }
+    public void cadastroContador(ContatoCliente c)throws BancoException{
+        dados.insereContador(c);
+    }
     
     public LinkedList<DadosContato> listaContatosCliente(int cod) throws BancoException {
         return dados.listaContatosCliente(cod);

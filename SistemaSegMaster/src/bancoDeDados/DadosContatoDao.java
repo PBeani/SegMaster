@@ -20,4 +20,6 @@ public interface DadosContatoDao {
     public void insereCliente(ContatoCliente e) throws BancoException;
     
     public LinkedList<DadosContato> listaContatosCliente(int cod) throws BancoException;
+    
+    public void insereContador(ContatoCliente e)throws BancoException;
 }

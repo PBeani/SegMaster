@@ -350,7 +350,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         } else {
             paineldeconteudo.revalidate();
         }
-        AdicionarContador panel = new AdicionarContador();
+        AdicionarContador panel = new AdicionarContador(this);
         JPanel content = panel;
         content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
         content.setVisible(true);

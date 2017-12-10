@@ -11,6 +11,7 @@ import beans.Contador;
 import beans.ContatoCliente;
 import beans.DadosContato;
 import beans.TipoContato;
+import interfaces.HomeAdmin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -27,10 +28,13 @@ import regrasDeNegocio.TipoContatoRegrasNegocio;
  */
 public class AdicionarContador extends javax.swing.JPanel {
 
+    
+    HomeAdmin home;
     /**
      * Creates new form AdicionarContador
      */
-    public AdicionarContador() {
+    public AdicionarContador(HomeAdmin a) {
+        home=a;
         initComponents();
     }
 
@@ -322,16 +326,23 @@ public class AdicionarContador extends javax.swing.JPanel {
 
             Contador contador = new Contador(cod_contabilidade, name);
             ContadorRegrasNegocio contR = new ContadorRegrasNegocio();
+            
+            int r=contR.insereContador(contador);
 
             DadosContato emal = new DadosContato(tc.getId_tipo_contato(), mail);
             DadosContato tele = new DadosContato(tc2.getId_tipo_contato(), tel);
 
             DadosContatoRegrasNegocio d = new DadosContatoRegrasNegocio();
+            
             int idDados2 = d.cadastro(tele);
             int idDados = d.cadastro(emal);
-            int idContador = contR.insereContador(contador);
-            contR.insereContatoContador(idContador, idDados);
-            contR.insereContatoContador(idContador, idDados2);
+            
+            ContatoCliente cPhone = new ContatoCliente(r, idDados);
+            ContatoCliente cMail = new ContatoCliente(r,idDados2);
+            
+            d.cadastroContador(cMail);
+            d.cadastroContador(cPhone);
+            
 
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no banco de dados");
