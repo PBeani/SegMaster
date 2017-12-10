@@ -8,6 +8,7 @@ package interfaces.Pedido;
 import bancoDeDados.BancoException;
 import beans.Pedido;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import regrasDeNegocio.PedidoRegrasNegocio;
 
@@ -38,7 +39,7 @@ public class EditarPedido extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        data = new javax.swing.JTextField<>();
+        data = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -51,7 +52,7 @@ public class EditarPedido extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         cliente = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        valor = new javax.swing.JTextField<>();
+        valor = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         contador = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -346,13 +347,14 @@ public class EditarPedido extends javax.swing.JPanel {
         try {
             String textoCliente = cliente.getText();
             String textoContador = contador.getText();
-            LocalDate textoData = data.getText();
-            double textoValor = valor.getText();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate textoData = LocalDate.parse(data.getText(),formatter);
+            double textoValor = Double.parseDouble(valor.getText());
             PedidoRegrasNegocio p = new PedidoRegrasNegocio();
             Pedido pedido = new Pedido(cod, textoCliente, textoContador, textoData, textoValor);
             if (p.altera(pedido)) {
                 JOptionPane.showMessageDialog(null, "Editado com sucesso");
-                retornarLista();
+                //retornarLista();
             }
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
@@ -361,17 +363,17 @@ public class EditarPedido extends javax.swing.JPanel {
     }                                   
 
     private void cancelarMouseClicked(java.awt.event.MouseEvent evt) {                                      
-        retornarLista();
+        //retornarLista();
     }                                     
 
     public Pedido dados(int codigo) {
         try {
             PedidoRegrasNegocio regra = new PedidoRegrasNegocio();
             Pedido pedido = regra.seleciona(codigo);
-            cliente.setText(pedido.getCodCliente());
-            sigla.setText(estado.getSigla());
+            cliente.setText(Integer.toString(pedido.getCodCliente()));
+            //sigla.setText(estado.getSigla());
             cod = codigo;
-            return estado;
+            return pedido;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -382,7 +384,7 @@ public class EditarPedido extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cliente;
     private javax.swing.JTextField contador;
-    private javax.swing.JTextField<LocalDate> data;
+    private javax.swing.JTextField data;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -405,6 +407,6 @@ public class EditarPedido extends javax.swing.JPanel {
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField<double> valor;
+    private javax.swing.JTextField valor;
     // End of variables declaration//GEN-END:variables
 }

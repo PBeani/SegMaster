@@ -35,6 +35,7 @@ public class EnderecoRegrasNegocio {
     public int cadastroEndereco(Endereco endereco) throws BancoException {
 
         if (end.existeEndereco(endereco)) {
+            System.out.println("existe endereco");
             return -1;
         }
         return end.insereEndereco(endereco);

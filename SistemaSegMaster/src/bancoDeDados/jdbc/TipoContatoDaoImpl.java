@@ -12,6 +12,8 @@ public class TipoContatoDaoImpl extends ConectorJDBC implements TipoContatoDao {
         super();
     }
 
+    
+    
     @Override
     public void insereTipoContato(TipoContato tipo) throws BancoException {
         abreConexao();
@@ -128,6 +130,30 @@ public class TipoContatoDaoImpl extends ConectorJDBC implements TipoContatoDao {
         }        
         fechaConexao();        
         return resp;
+    }
+
+    @Override
+    public TipoContato selecionaTipoContato(String s) throws BancoException {
+        abreConexao();
+        TipoContato categoria = null;
+        preparaComandoSQL("select * from tipo_contato where desc_tipo_contato = ?");
+        try {
+            pstmt.setString(1, s);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int codigo = rs.getInt(1);
+                String desc = rs.getString(2);
+
+                categoria = new TipoContato(codigo, desc);
+            }
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção de tipo de contato.");
+        }
+        
+        fechaConexao();
+        return categoria;
     }
 
 }

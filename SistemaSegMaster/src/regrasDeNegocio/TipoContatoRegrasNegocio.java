@@ -73,4 +73,7 @@ public class TipoContatoRegrasNegocio {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
     }
+    public TipoContato seleciona(String s)throws BancoException{
+        return tipoContatoDaoImpl.selecionaTipoContato(s);
+    }
 }

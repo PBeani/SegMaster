@@ -10,6 +10,7 @@ import beans.Cliente;
 import beans.Contador;
 import beans.Pedido;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import regrasDeNegocio.PedidoRegrasNegocio;
 
@@ -40,7 +41,7 @@ public class AdicionarPedido extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        data = new javax.swing.JTextField<>();
+        data = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -53,7 +54,7 @@ public class AdicionarPedido extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         cliente = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        valor = new javax.swing.JTextField<>();
+        valor = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         contador = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -351,14 +352,15 @@ public class AdicionarPedido extends javax.swing.JPanel {
         try {
             Cliente cliente1 = new Cliente (cod, cliente.getText());
             Contador contador1 = new Contador (cod, contador.getText());
-            LocalDate data1 = data.getText();
-            double valor1 = valor.getText();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate data1 = LocalDate.parse(data.getText(),formatter);
+            double valor1 = Double.parseDouble(valor.getText());
             PedidoRegrasNegocio e = new PedidoRegrasNegocio();
 
             Pedido pedido = new Pedido(cliente1.getId_cliente(), contador1.getId_contador(), data1, valor1);
             if (e.cadastroPedido(pedido)) {
                 JOptionPane.showMessageDialog(null, "Novo Pedido salvo com sucesso");
-                retornarLista();
+                //retornarLista();
             }
 
         } catch (BancoException ex) {
@@ -370,7 +372,7 @@ public class AdicionarPedido extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cliente;
     private javax.swing.JTextField contador;
-    private javax.swing.JTextField<LocalDate> data;
+    private javax.swing.JTextField data;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -393,6 +395,6 @@ public class AdicionarPedido extends javax.swing.JPanel {
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField<double> valor;
+    private javax.swing.JTextField valor;
     // End of variables declaration//GEN-END:variables
 }

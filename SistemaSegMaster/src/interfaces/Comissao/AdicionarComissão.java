@@ -291,8 +291,8 @@ public class AdicionarComissão extends javax.swing.JPanel {
         try {
             StatusComissao sta = (StatusComissao)status.getSelectedItem();
             FormaPagamento pag = (FormaPagamento)formaPagamento.getSelectedItem(); 
-            double valor1 = valor.getText();
-            double porcentagem1 = porcentagem.getText();
+            double valor1 = Double.parseDouble(valor.getText());
+            double porcentagem1 =Double.parseDouble( porcentagem.getText());
             ComissaoRegrasNegocio comissao = new ComissaoRegrasNegocio();
             Comissao c = new Comissao(sta.getId_status_comissao(), pag.getId_forma_pagamento(), valor1, porcentagem1);
             if(comissao.cadastroComissao(c))

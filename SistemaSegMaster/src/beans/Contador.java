@@ -14,7 +14,8 @@ public class Contador {
 	}
 
     public Contador(int cod, String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        nomeContador=text;
+        cod_contabilidade=cod;
     }
 	
 	public int getId_contador() {

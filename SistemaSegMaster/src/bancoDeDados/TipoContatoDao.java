@@ -16,4 +16,6 @@ public interface TipoContatoDao {
     public void removeTipoContato(int cod) throws BancoException;
     
     public boolean existe (String s)throws BancoException;
+    
+    public TipoContato selecionaTipoContato(String s) throws BancoException;
 }

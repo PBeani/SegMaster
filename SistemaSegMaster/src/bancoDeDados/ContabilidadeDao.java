@@ -22,6 +22,7 @@ public interface ContabilidadeDao {
     public LinkedList<Contabilidade> listaContabilidade() throws BancoException;
     public void alteraContabilidade (Contabilidade c) throws BancoException;
     public Contabilidade seleciona(int cod)throws BancoException;
+    public LinkedList<Contabilidade> listaContabilidade(String nome) throws BancoException;
     
     public boolean excluir(Contabilidade c)throws BancoException;
 }
