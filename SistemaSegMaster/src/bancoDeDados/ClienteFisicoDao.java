@@ -6,7 +6,9 @@ import beans.ClienteFisico;
 
 public interface ClienteFisicoDao {
 
-    public void insereClienteFisico(ClienteFisico cliente) throws BancoException;
+    public int insereClienteFisico(ClienteFisico cliente) throws BancoException;
+    
+    public void atualizaFisico(ClienteFisico cliente) throws BancoException;
     
     public ClienteFisico selecionaClienteFisico(int cod) throws BancoException;
     
