@@ -81,7 +81,6 @@ public class ConsultaCertificado extends javax.swing.JPanel {
                             ex.printStackTrace();
                         }
                     }
-
                 }
             }
         });

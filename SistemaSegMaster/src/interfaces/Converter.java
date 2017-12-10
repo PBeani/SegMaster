@@ -15,4 +15,10 @@ public class Converter {
             return date;
 	}
         
+        public static String dateToString(LocalDate data) {
+            String date = data.toString();
+            String[] parts = date.split("-");
+            date = parts[2] + "/" + parts[1] + "/" + parts[0];
+            return date;
+        }
 }

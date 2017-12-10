@@ -10,6 +10,7 @@ package beans;
  * @author pedro
  */
 public class CertificadoResult {
+
     private int cod;
     private String numero;
     private String cliente;
@@ -21,6 +22,7 @@ public class CertificadoResult {
         cliente = cli;
         dataValidade = d;
     }
+
     /**
      * @return the cod
      */
@@ -67,7 +69,9 @@ public class CertificadoResult {
      * @return the dataValidade
      */
     public String getDataValidade() {
-        return dataValidade;
+        String[] parts = dataValidade.split("-");
+        String date = parts[2] + "/" + parts[1] + "/" + parts[0];
+        return date;
     }
 
     /**
@@ -76,5 +80,5 @@ public class CertificadoResult {
     public void setDataValidade(String dataValidade) {
         this.dataValidade = dataValidade;
     }
-    
+
 }

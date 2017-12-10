@@ -48,6 +48,7 @@ public class Certificado {
         this.cod_pedido = codPedido;
         this.num_certificado = num;
         this.data_validade = data.toLocalDate();
+        
     }
 
     public Certificado(int id_tipo_certificado, int id_tipo_certificado0, int id_hardware, int id_hierarquia, String numero1, LocalDate validade1) {

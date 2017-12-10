@@ -8,20 +8,28 @@ package interfaces.Certificado;
 import bancoDeDados.BancoException;
 import beans.CategoriaCertificado;
 import beans.Certificado;
+import beans.CertificadoResult;
 import beans.Hardware;
 import beans.Hierarquia;
+import beans.PedidoResult;
 import beans.TipoCertificado;
 import interfaces.Converter;
 import interfaces.HomeAdmin;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import regrasDeNegocio.CertificadoRegrasNegocio;
 import regrasDeNegocio.Categoria_certificadoRegrasNegocio;
 import regrasDeNegocio.HardwareRegrasNegocio;
 import regrasDeNegocio.HierarquiaRegrasNegocio;
+import regrasDeNegocio.PedidoRegrasNegocio;
 import regrasDeNegocio.TipoCertificadoRegrasNegocio;
 
 /**
@@ -35,9 +43,23 @@ public class EditarCertificado extends javax.swing.JPanel {
      */
     int cod;
     HomeAdmin home;
+    int codPedido;
+    
     public EditarCertificado(HomeAdmin h) {
         home = h;
         initComponents();
+        jTable1.addMouseListener(new MouseAdapter() {
+            private int linha;
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    linha = jTable1.getSelectedRow();
+                    codPedido = Integer.parseInt(String.valueOf(jTable1.getValueAt(linha, 0)));
+                    JOptionPane.showMessageDialog(null, "Pedido " + codPedido + " selecionado!");
+                }
+            }
+        });
     }
 
     /**
@@ -68,7 +90,7 @@ public class EditarCertificado extends javax.swing.JPanel {
         hierarquia = new javax.swing.JComboBox<>();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel19 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        filter = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -117,6 +139,11 @@ public class EditarCertificado extends javax.swing.JPanel {
         jLabel2.setText("Salvar");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.setOpaque(true);
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         jLabel3.setBackground(new java.awt.Color(204, 0, 0));
         jLabel3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -125,6 +152,11 @@ public class EditarCertificado extends javax.swing.JPanel {
         jLabel3.setText("Cancelar");
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel3.setOpaque(true);
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         validade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,9 +193,9 @@ public class EditarCertificado extends javax.swing.JPanel {
         jLabel19.setForeground(new java.awt.Color(255, 153, 0));
         jLabel19.setText("Selecionar Pedido");
 
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
+        filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
+                filterActionPerformed(evt);
             }
         });
 
@@ -177,6 +209,11 @@ public class EditarCertificado extends javax.swing.JPanel {
         jLabel21.setText("Pesquisar");
         jLabel21.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel21.setOpaque(true);
+        jLabel21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel21MouseClicked(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -185,7 +222,15 @@ public class EditarCertificado extends javax.swing.JPanel {
             new String [] {
                 "Código", "Cliente", "Contador"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -240,7 +285,7 @@ public class EditarCertificado extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator2))
@@ -287,7 +332,7 @@ public class EditarCertificado extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -344,11 +389,32 @@ public class EditarCertificado extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_hierarquiaActionPerformed
 
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
+    private void filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
+    }//GEN-LAST:event_filterActionPerformed
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {                                     
+    private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
+        try {
+            PedidoRegrasNegocio regras = new PedidoRegrasNegocio();
+            LinkedList<PedidoResult> lista = null;
+            if (!"".equals(filter.getText())) {
+                lista = regras.listaPedidoMinFilter(filter.getText());
+            } else {
+                lista = regras.listaPedidoMin();
+            }
+            this.montaTabelaPedido(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(HomeAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel21MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        retornaLista();
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         try {
             String numero1 = numero.getText(); 
             LocalDate validade1 = Converter.toLocalDate(validade.getText());
@@ -357,23 +423,23 @@ public class EditarCertificado extends javax.swing.JPanel {
             TipoCertificado tip = (TipoCertificado)tipo.getSelectedItem();
             Hardware har = (Hardware)hardware.getSelectedItem();
             Hierarquia hie = (Hierarquia)hierarquia.getSelectedItem();
-            Certificado certificado  = new Certificado(cod, cat.getId_tipo_certificado(), tip.getId_tipo_certificado(), har.getId_hardware(), hie.getId_hierarquia(), numero1, validade1);
+            Certificado certificado  = new Certificado(cod, tip.getId_tipo_certificado(), cat.getId_tipo_certificado(),  har.getId_hardware(), hie.getId_hierarquia(), codPedido, numero1, validade1);
             if (c.altera(certificado)) {
                 JOptionPane.showMessageDialog(null, "Editado com sucesso");
-                //retornarLista();
+                retornaLista();
             }
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
         } catch (Exception ex) {
         }
-    }    
+    }//GEN-LAST:event_jLabel2MouseClicked
     
     public Certificado dados(int codigo) throws BancoException {
         try{
             CertificadoRegrasNegocio regra = new CertificadoRegrasNegocio();
             Certificado certificado = regra.seleciona(codigo);
             numero.setText(certificado.getNum_certificado());
-            validade.setText(certificado.getData_validade().toString());
+            validade.setText(Converter.dateToString(certificado.getData_validade()));
             cod = codigo;
             try {
                 Categoria_certificadoRegrasNegocio cat = new Categoria_certificadoRegrasNegocio();
@@ -427,6 +493,11 @@ public class EditarCertificado extends javax.swing.JPanel {
                     }
                     
                 }
+                
+                PedidoRegrasNegocio regras = new PedidoRegrasNegocio();
+                montaTabelaPedido(regras.listaPedidoMin());
+                codPedido = certificado.getCod_pedido();
+                    
             } catch (BancoException ex) {
                 Logger.getLogger(AdicionarCertificado.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
@@ -439,9 +510,49 @@ public class EditarCertificado extends javax.swing.JPanel {
         return null;
     }
     
+    public void montaTabelaPedido(LinkedList<PedidoResult> lista) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        for (PedidoResult p : lista) {
+            model.addRow(new Object[]{p.getCod(), p.getCliente(), p.getContador()});
+
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+    }
+    
+    public void retornaLista() {
+        home.setTitle("Consultar Clientes");
+        if (home.lastPanel != null) {
+            home.lastPanel.setVisible(false);
+            this.revalidate();
+        } else {
+            this.revalidate();
+        }
+        ConsultaCertificado panel = new ConsultaCertificado(home);
+        javax.swing.JPanel content = panel;
+        content.setBounds(0, 0, home.paineldeconteudo.getSize().width, home.paineldeconteudo.getSize().height);
+        content.setVisible(true);
+
+        try {
+            CertificadoRegrasNegocio regras = new CertificadoRegrasNegocio();
+            LinkedList<CertificadoResult> lista = regras.listaCertificado();
+            panel.montaTabelaCertificado(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(HomeAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        home.paineldeconteudo.add(content);
+        home.add(home.paineldeconteudo);
+        home.setLastPanel(content);
+    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Object> categoria;
+    private javax.swing.JTextField filter;
     private javax.swing.JComboBox<Object> hardware;
     private javax.swing.JComboBox<Object> hierarquia;
     private javax.swing.JLabel jLabel1;
@@ -461,7 +572,6 @@ public class EditarCertificado extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField numero;
     private javax.swing.JComboBox<Object> tipo;
     private javax.swing.JTextField validade;
