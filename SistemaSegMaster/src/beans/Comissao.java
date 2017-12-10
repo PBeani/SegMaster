@@ -24,8 +24,21 @@ public class Comissao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Comissao(int cod, int id_status_comissao, int id_forma_pagamento, double valor1, double porcentagem1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Comissao(int status, int pedido, int pag, double valor, double prc) {
+        this.cod_status_comissao = status;
+        this.cod_pedido = pedido;
+        this.cod_forma_pagamento = pag;
+        this.valor_comissao = valor;
+        this.porcentagem_comissao = prc;
+    }
+    
+    public Comissao(int cod, int status, int pedido, int pag, double valor, double prc) {
+        this.id_comissao = cod;
+        this.cod_status_comissao = status;
+        this.cod_pedido = pedido;
+        this.cod_forma_pagamento = pag;
+        this.valor_comissao = valor;
+        this.porcentagem_comissao = prc;
     }
 
 	public int getId_comissao() {
