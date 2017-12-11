@@ -118,4 +118,58 @@ public class ContadorDaoImpl extends ConectorJDBC implements ContadorDao {
         
         
     }
+
+    /*@Override
+    public Contador seleciona(int cod) throws BancoException {
+        abreConexao();
+        preparaComandoSQL("select * from contador where id_contador=? ");
+        try {
+            pstmt.setInt(1, cod);            
+            rs=pstmt.executeQuery();
+           if(rs.next()){
+               
+           }
+            
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema ao cadastrar contador");
+        }
+        fechaConexao();
+        return new Contador(cod, "");
+        
+    }*/
+
+    @Override
+    public boolean excluiContador(Contador contador) throws BancoException {
+        boolean resp = true;
+        abreConexao();
+        preparaComandoSQL("delete from contador where id_contador = ?");
+        try {
+            pstmt.setInt(1, contador.getId_contador());
+            pstmt.execute();
+        } catch (SQLException e) {
+            resp=false;
+            fechaConexao();
+            throw new BancoException("Problema na remoção de contador.");
+        }
+        fechaConexao();
+        return resp;
+    }
+
+    @Override
+    public int altera(Contador contador) throws BancoException {
+         abreConexao();
+        preparaComandoSQL("update contador set nome_contador = ? where id_contador=? ");
+
+        try {
+            pstmt.setString(1, contador.getNomeContador());
+            pstmt.setInt(2, contador.getId_contador());            
+            pstmt.execute();
+        } catch (SQLException ex) {
+            fechaConexao();
+        }
+        fechaConexao();
+        return 1;
+        
+    }
 }

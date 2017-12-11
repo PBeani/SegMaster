@@ -6,11 +6,20 @@
 package interfaces.Contador;
 
 import bancoDeDados.BancoException;
+import beans.Contabilidade;
 import beans.Contador;
+import interfaces.HomeAdmin;
+import interfaces.ItemSelecionado;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import regrasDeNegocio.ContabilidadeRegrasNegocio;
 import regrasDeNegocio.ContadorRegrasNegocio;
 
 /**
@@ -19,13 +28,99 @@ import regrasDeNegocio.ContadorRegrasNegocio;
  */
 public class ConsultarContador extends javax.swing.JPanel {
 
+    
+    HomeAdmin home;
     /**
      * Creates new form ConsultarContador
      */
-    public ConsultarContador() {
+    public ConsultarContador(HomeAdmin h) {
         initComponents();
-    }
+        home=h;
+        jTable1.addMouseListener(new MouseAdapter() {
+            private int linha;
+            private String opcoes[] = new String[]{"Alterar", "Excluir"};
 
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int i = JOptionPane.showOptionDialog(null, "O que deseja fazer?", "Alerta", -1, -1, null, opcoes, 0);
+                    linha = jTable1.getSelectedRow();
+                    int cod = Integer.parseInt(String.valueOf(jTable1.getValueAt(linha, 0)));
+                    if (i == 0) { // Atualizar
+                        ItemSelecionado.getInstance().setID(cod);
+                        JPanel lastPanel = home.getLastPanel();
+                        JPanel painelConsultas = home.paineldeconteudo;
+                        if (lastPanel != null) {
+                            lastPanel.setVisible(false);
+                            painelConsultas.revalidate();
+                        } else {
+                            painelConsultas.revalidate();
+                        }
+                        ContadorRegrasNegocio end;
+                        try {
+                            ContabilidadeRegrasNegocio cont = new ContabilidadeRegrasNegocio();                            
+                            String nome_contador= (String)jTable1.getValueAt(linha,1);
+                            String nome_contabilidade = (String)jTable1.getValueAt(linha,2);
+                            Contabilidade c = cont.listaContabilidade(nome_contabilidade).get(0);
+                            end = new ContadorRegrasNegocio();
+                            Contador contador = new Contador(cod, nome_contador);
+                            EditarContador editar = new EditarContador(home,contador, c);
+                            JPanel content = editar;
+                            //editar.dados(cod);
+                            content.setBounds(0, 0, painelConsultas.getSize().width, painelConsultas.getSize().height);
+                            content.setVisible(true);
+
+                            painelConsultas.add(content);
+                            home.add(painelConsultas);
+                            home.setLastPanel(content);
+                        } catch (BancoException ex) {
+                        }
+                    }
+                    if (i == 1) {
+                        try {
+                            ContabilidadeRegrasNegocio cont = new ContabilidadeRegrasNegocio(); 
+                            Contabilidade c = cont.listaContabilidade(nome.getText()).get(linha);                          
+                            
+                            Contador contador = new Contador(cod,jTable1.getValueAt(linha,1).toString());
+                            ContadorRegrasNegocio con = new ContadorRegrasNegocio();
+                            EditarContador editar = new EditarContador(home, contador, c);
+
+                            if (cont.excluir(c)) {
+                                if (con.excluiContador(contador)) {
+                                    JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                                }
+                            }
+                            editar.remove(cod);
+                            constroiJTable(contador);
+
+                        }catch (BancoException ex) {
+                        }
+                    }
+
+                }
+            }
+        });
+    }
+    public void constroiJTable(Contador cont) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        try {
+            ContadorRegrasNegocio conta = new ContadorRegrasNegocio();
+            LinkedList<Contador> lista = conta.listaContadores(cont.getNomeContador());
+            
+            
+            for (Contador conts : lista) {
+                model.addRow(new Object[]{
+                    conts.getId_contador(),
+                    conts.getNome_contabilidade(),
+                    conts.getNome_contabilidade()
+                });
+            }
+            jTable1.setRowSorter(new TableRowSorter(model));
+        } catch (BancoException ex) {
+            JOptionPane.showMessageDialog(null, "problema na consulta da tabela de contabilidade");
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,7 +148,15 @@ public class ConsultarContador extends javax.swing.JPanel {
             new String [] {
                 "Código", "Nome", "Contabilidade"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));

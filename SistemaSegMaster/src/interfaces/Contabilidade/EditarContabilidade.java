@@ -47,8 +47,8 @@ public class EditarContabilidade extends javax.swing.JPanel {
     }
 
     public EditarContabilidade(HomeAdmin home, Endereco e, Contabilidade c) {
-        this.home = home;
-
+        this.home = home;   
+        
         try {
             cont = new ContabilidadeRegrasNegocio();
             ende = new EnderecoRegrasNegocio();
@@ -63,7 +63,6 @@ public class EditarContabilidade extends javax.swing.JPanel {
 
     public Contabilidade dados(int codigo) {
         try {
-
             cpf.setText(c.getCnpj());
             nome.setText(c.getNome_contabilidade());
             codParceria.setText(Integer.toString(c.getCod_parceria()));

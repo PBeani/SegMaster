@@ -44,4 +44,15 @@ public class ContadorRegrasNegocio {
     public LinkedList<Contador> listaContadores(String nome) throws BancoException {
         return cont.listaContador(nome);
     }
+    /*public Contador seleciona(int cod){
+        return cont.seleciona(cod);
+    }*/
+    public boolean excluiContador(Contador contador)throws BancoException{
+        return cont.excluiContador(contador);
+    }
+
+    public int altera(Contador contador)throws BancoException{
+        return cont.altera(contador);
+        
+    }
 }

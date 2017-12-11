@@ -52,6 +52,7 @@ public class ContabilidadeRegrasNegocio {
     public Contabilidade seleciona(int cod)throws BancoException{
         return cat.seleciona(cod);
     }
+    
     public LinkedList<Contabilidade> listaContabilidade()throws BancoException{
         return cat.listaContabilidade();
         
