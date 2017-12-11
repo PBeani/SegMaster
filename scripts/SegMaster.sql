@@ -9,7 +9,9 @@ CREATE TABLE estados (
 	desc_estado VARCHAR(100),
 	sigla VARCHAR(2),
 	PRIMARY KEY (id_estado));
-
+INSERT INTO estados values (null,'Sao Paulo','SP');
+INSERT INTO estados values (null,'Rio de Janeiro','RJ');
+INSERT INTO estados values (null,'Minas Gerais','MG');
 -- -----------------------------------------------------
 -- Tabela Municipios
 -- -----------------------------------------------------
@@ -24,7 +26,9 @@ CREATE TABLE municipios (
 		REFERENCES estados (id_estado)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE);
-
+INSERT INTO municipios values (null,(SELECT id_estado from estados where sigla LIKE 'SP'),'Sao Paulo');
+INSERT INTO municipios values (null,(SELECT id_estado from estados where sigla LIKE 'RJ'),'Rio de Janeiro');
+INSERT INTO municipios values (null,3,'Ouro Preto');
 -- -----------------------------------------------------
 -- Tabela Endereco
 -- -----------------------------------------------------
@@ -50,6 +54,8 @@ CREATE TABLE endereco (
 		REFERENCES municipios(id_municipio)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE);
+INSERT INTO endereco values (null,1,1,'Liberdade','','111','','12344544');
+INSERT INTO endereco values (null,2,2,'Copacabana','','222','','41234123');
 
 -- -----------------------------------------------------
 -- Tabela Contabilidade
@@ -68,7 +74,7 @@ CREATE TABLE contabilidade (
 		REFERENCES endereco(id_endereco)
 		ON DELETE NO ACTION
 		ON UPDATE CASCADE);
-
+INSERT INTO contabilidade values (null,'Manense','424515123',1,1,1);
 -- -----------------------------------------------------
 -- Tabela Contador
 -- -----------------------------------------------------
@@ -76,6 +82,8 @@ CREATE TABLE contador (
 	id_contador INT NOT NULL AUTO_INCREMENT,
 	nome_contador VARCHAR(200),
 	PRIMARY KEY (id_contador));
+INSERT INTO contador values (null,'Maria');
+INSERT INTO contador values (null,'Jose');
 
 -- -----------------------------------------------------
 -- Tabela Tipo Cliente
@@ -84,6 +92,9 @@ CREATE TABLE tipo_cliente (
 	id_tipo_cliente INT NOT NULL AUTO_INCREMENT,
 	desc_tipo_cliente VARCHAR(100),
 	PRIMARY KEY (id_tipo_cliente));
+    
+INSERT INTO tipo_cliente values (null,'Especial');
+INSERT INTO tipo_cliente values (null,'Vip');
 
 -- -----------------------------------------------------
 -- Tabela Cliente
@@ -99,6 +110,9 @@ CREATE TABLE cliente (
 		REFERENCES tipo_cliente(id_tipo_cliente)
 		ON DELETE NO ACTION
 		ON UPDATE CASCADE);
+ INSERT INTO cliente values (null,'Fabricio',1);     
+ INSERT INTO cliente values (null,'Monica',2);   
+ INSERT INTO cliente values (null,'Eduardo',2);
 
 -- -----------------------------------------------------
 -- Tabela Pedido
@@ -122,8 +136,8 @@ CREATE TABLE pedido (
 		REFERENCES contador(id_contador)
 		ON DELETE NO ACTION
 		ON UPDATE CASCADE);
-
-
+INSERT INTO pedido values (null,1,'2017-12-25',1,100.00);
+INSERT INTO pedido values (null,2,'2017-10-25',2,130.00);
 -- -----------------------------------------------------
 -- Tabela Tipo Certificado
 -- -----------------------------------------------------
@@ -131,7 +145,8 @@ CREATE TABLE tipo_certificado (
 	id_tipo_certificado INT NOT NULL AUTO_INCREMENT,
 	desc_tipo_certificado VARCHAR(100),
 	PRIMARY KEY (id_tipo_certificado));
-
+INSERT INTO tipo_certificado values (null,'Virtual');
+INSERT INTO tipo_certificado values (null,'Real');
 -- -----------------------------------------------------
 -- Table Categoria Certificado
 -- -----------------------------------------------------
@@ -139,6 +154,8 @@ CREATE TABLE categoria_certificado (
 	id_categoria_certificado INT NOT NULL AUTO_INCREMENT,
 	desc_categoria_certificado VARCHAR(100),
 	PRIMARY KEY (id_categoria_certificado));
+INSERT INTO categoria_certificado values (null,'Temporario');
+INSERT INTO categoria_certificado values (null,'Definitivo');
 
 -- -----------------------------------------------------
 -- Tabela Hardware
@@ -147,6 +164,10 @@ CREATE TABLE hardware (
 	id_hardware INT NOT NULL AUTO_INCREMENT,
 	desc_hardware VARCHAR(100),
 	PRIMARY KEY (id_hardware));
+    
+INSERT INTO hardware values (null, 'PenDrive');
+INSERT INTO hardware values (null, 'Token');
+
 
 -- -----------------------------------------------------
 -- Tabela Hierarquia
@@ -155,6 +176,9 @@ CREATE TABLE hierarquia (
 	id_hierarquia INT NOT NULL AUTO_INCREMENT,
 	desc_hierarquia VARCHAR(100),
 	PRIMARY KEY (id_hierarquia));
+    
+INSERT INTO hierarquia values (null,'Prioritario');
+INSERT INTO hierarquia values (null,'Secundario');
 
 -- -----------------------------------------------------
 -- Tablela Certificado
@@ -199,6 +223,8 @@ CREATE TABLE certificado (
 		REFERENCES hierarquia(id_hierarquia)
 		ON DELETE NO ACTION
 		ON UPDATE CASCADE);
+INSERT INTO certificado values (null,1,1,1,1,1,'001','2050-12-25');
+INSERT INTO certificado values (null,2,2,2,2,2,'002','2020-01-01');
 
 -- -----------------------------------------------------
 -- Tabela Status Comissao
@@ -207,6 +233,8 @@ CREATE TABLE status_comissao (
 	id_status_comissao INT NOT NULL AUTO_INCREMENT,
 	desc_status_comissao VARCHAR(100),
 	PRIMARY KEY (id_status_comissao));
+INSERT INTO status_comissao values (null,'Atrasada');
+INSERT INTO status_comissao values (null,'Confirmada');
 
 -- -----------------------------------------------------
 -- Tabela Forma Pagamento
@@ -215,6 +243,8 @@ CREATE TABLE forma_pagamento (
 	id_forma_pagamento INT NOT NULL AUTO_INCREMENT,
 	desc_forma_pagamento VARCHAR(100),
 	PRIMARY KEY (id_forma_pagamento));
+INSERT INTO forma_pagamento values (null,'Credito');
+INSERT INTO forma_pagamento values (null,'Debito');
 
 -- -----------------------------------------------------
 -- Tabela Comissao
@@ -245,6 +275,9 @@ CREATE TABLE comissao (
 		REFERENCES forma_pagamento(id_forma_pagamento)
 		ON DELETE NO ACTION
 		ON UPDATE CASCADE);
+        
+INSERT INTO comissao values (null,1,50.00,1,1,0.38);
+INSERT INTO comissao values (null,2,74.00,2,2,0.75);
 
 -- -----------------------------------------------------
 -- Tabela Renovacao
@@ -266,6 +299,8 @@ CREATE TABLE renovacao (
 		REFERENCES pedido(id_pedido)
 		ON DELETE NO ACTION
 		ON UPDATE CASCADE);
+        
+INSERT INTO renovacao values (null,1,2);
 
 -- -----------------------------------------------------
 -- Tabela Cliente Fisico
@@ -281,6 +316,8 @@ CREATE TABLE cliente_fisico (
 		REFERENCES cliente(id_cliente)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE);
+        
+INSERT INTO cliente_fisico values (null,1,'45854114');
 
 -- -----------------------------------------------------
 -- Tabela Cliente Juridico
@@ -297,6 +334,9 @@ CREATE TABLE cliente_juridico(
 		REFERENCES cliente(id_cliente)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE);
+        
+INSERT INTO cliente_juridico values (null,2,'125369859','Vem Bem');
+INSERT INTO cliente_juridico values (null,3,'465784468','Vitoria Certa');
 
 -- -----------------------------------------------------
 -- Tabela Tipo Contato
@@ -305,6 +345,9 @@ CREATE TABLE tipo_contato (
 	id_tipo_contato INT NOT NULL AUTO_INCREMENT,
 	desc_tipo_contato VARCHAR(100),
 	PRIMARY KEY (id_tipo_contato));
+    
+INSERT INTO tipo_contato values (null,'tel');
+INSERT INTO tipo_contato values (null,'email');
 
 -- -----------------------------------------------------
 -- Tabela Dados Contato
@@ -320,6 +363,9 @@ CREATE TABLE dados_contato (
 		REFERENCES tipo_contato(id_tipo_contato)
 		ON DELETE NO ACTION
 		ON UPDATE CASCADE);
+        
+INSERT INTO dados_contato values (null,1,'11998585555');
+INSERT INTO dados_contato values (null,2,'m.maria@gmail.com');
 
 -- -----------------------------------------------------
 -- Tabela Contato Cliente
@@ -341,7 +387,9 @@ CREATE TABLE contato_cliente (
 		REFERENCES cliente(id_cliente)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE);
-
+        
+INSERT INTO contato_cliente values (null,1,1);
+INSERT INTO contato_cliente values (null,2,2);
 
 -- -----------------------------------------------------
 -- Tabela Contato Contador
@@ -363,6 +411,9 @@ CREATE TABLE contato_contador (
 		REFERENCES contador(id_contador)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE);
+        
+INSERT INTO contato_contador values (null,1,1);
+INSERT INTO contato_contador values (null,2,2);
 
 -- -----------------------------------------------------
 -- Tabela Contato Contabilidade
@@ -384,6 +435,8 @@ CREATE TABLE contato_contabilidade (
 		REFERENCES contabilidade(id_contabilidade)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE);
+        
+INSERT INTO contato_contabilidade values (null,1,1);
 
 -- -----------------------------------------------------
 -- Tabela Contabilidade Contador
@@ -405,3 +458,5 @@ CREATE TABLE contabilidade_contador (
 		REFERENCES contabilidade(id_contabilidade)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE);
+
+INSERT INTO contabilidade_contador values (null,1,1);
