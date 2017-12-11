@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -74,13 +74,13 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextField1" max="32767" attributes="0"/>
+                              <Component id="nome" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jTextField9" min="-2" pref="153" max="-2" attributes="0"/>
+                                  <Component id="telefone" min="-2" pref="153" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel16" min="-2" pref="41" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jTextField10" min="-2" pref="567" max="-2" attributes="0"/>
+                                  <Component id="email" min="-2" pref="567" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -88,15 +88,15 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel17" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField11" min="-2" pref="466" max="-2" attributes="0"/>
+                          <Component id="filtrarNome" min="-2" pref="466" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jLabel2" min="-2" pref="305" max="-2" attributes="0"/>
+                          <Component id="pesquisar" min="-2" pref="305" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="jLabel6" min="-2" pref="305" max="-2" attributes="0"/>
+                          <Component id="cancelar" min="-2" pref="305" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jLabel3" min="-2" pref="305" max="-2" attributes="0"/>
+                          <Component id="salvar" min="-2" pref="305" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -113,14 +113,14 @@
                   <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jTextField1" alignment="0" pref="35" max="32767" attributes="0"/>
+                      <Component id="nome" alignment="0" pref="35" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel15" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="jTextField9" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="telefone" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="jLabel16" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="jTextField10" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="email" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
@@ -129,15 +129,15 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel17" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="jTextField11" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="jLabel2" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="filtrarNome" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="pesquisar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="221" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel3" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="jLabel6" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="salvar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="cancelar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="239" max="32767" attributes="0"/>
               </Group>
@@ -176,9 +176,9 @@
             <Property name="text" type="java.lang.String" value="Adicionar Contador"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="nome">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nomeActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
@@ -189,9 +189,9 @@
             <Property name="text" type="java.lang.String" value="Nome:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField9">
+        <Component class="javax.swing.JTextField" name="telefone">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField9ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="telefoneActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel15">
@@ -210,12 +210,12 @@
             <Property name="text" type="java.lang.String" value="e-mail:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField10">
+        <Component class="javax.swing.JTextField" name="email">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField10ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emailActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel2">
+        <Component class="javax.swing.JLabel" name="pesquisar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="0" type="rgb"/>
@@ -233,6 +233,9 @@
             </Property>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pesquisarMouseClicked"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>
@@ -245,17 +248,40 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="2" rowCount="0">
-                    <Column editable="true" title="C&#xf3;digo" type="java.lang.Object"/>
-                    <Column editable="true" title="Nome" type="java.lang.Object"/>
+                    <Column editable="false" title="C&#xf3;digo" type="java.lang.Object"/>
+                    <Column editable="false" title="Nome" type="java.lang.Object"/>
                   </Table>
                 </Property>
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                  <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                  </TableColumnModel>
+                </Property>
+                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MouseClicked"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JTextField" name="jTextField11">
+        <Component class="javax.swing.JTextField" name="filtrarNome">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField11ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filtrarNomeActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel17">
@@ -266,7 +292,7 @@
             <Property name="text" type="java.lang.String" value="Filtrar Nome:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel3">
+        <Component class="javax.swing.JLabel" name="salvar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="cc" red="0" type="rgb"/>
@@ -284,6 +310,9 @@
             </Property>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="salvarMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator2">
         </Component>
@@ -301,7 +330,7 @@
             <Property name="text" type="java.lang.String" value="Selecionar Contabilidade"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel6">
+        <Component class="javax.swing.JLabel" name="cancelar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="cc" type="rgb"/>
@@ -319,6 +348,9 @@
             </Property>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cancelarMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

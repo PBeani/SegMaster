@@ -545,8 +545,6 @@ public class AdicionarPedido extends javax.swing.JPanel {
     private javax.swing.JTextField cliente;
     private javax.swing.JTextField contador;
     private javax.swing.JTextField data;
-    protected javax.swing.JTextField filter;
-    private javax.swing.JTextField filter2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -567,6 +565,8 @@ public class AdicionarPedido extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    protected javax.swing.JTextField filter;
+    private javax.swing.JTextField filter2;
     private javax.swing.JTextField valor;
     // End of variables declaration//GEN-END:variables
 }

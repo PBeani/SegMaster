@@ -491,17 +491,22 @@ public class AdicionarContabilidade extends javax.swing.JPanel {
             ContabilidadeRegrasNegocio cont = new ContabilidadeRegrasNegocio();         
                 
             EnderecoRegrasNegocio ende = new EnderecoRegrasNegocio();            
-            Endereco endereco = new Endereco(estado.getId_estado(),municipio.getId_municipio(), bairrro, ceep, comple, logradoro, num);
+            Endereco endereco = new Endereco(estado.getId_estado(),municipio.getId_municipio(), bairrro, logradoro,num, comple, ceep);
             int codEndereco = ende.cadastroEndereco(endereco);
             Contato contato = new Contato(emails, tel);///alterar aqui
             Contabilidade contabilidade = new Contabilidade(name, cnpj, 1, codEndereco);
-            boolean con= cont.cadastroContabilidade(contabilidade);
-           if(!con&&codEndereco==1){
-               JOptionPane.showMessageDialog(null, "Contabilidade e endereco ja cadastrados");return;
-           }if(codEndereco==-1&&!con){
-               JOptionPane.showMessageDialog(null, "Endereco ja cadastrado");return;
-           }if(con||codEndereco!=-1)
-            JOptionPane.showMessageDialog(null, "cadastrado com sucesso");
+            if(codEndereco!=-1){
+                boolean con= cont.cadastroContabilidade(contabilidade);
+                if(con){
+                    JOptionPane.showMessageDialog(null, "cadastrado com sucesso");                    
+                }else{
+                    endereco.setId_endereco(codEndereco);
+                    ende.excluiEndereco(endereco);
+                    JOptionPane.showMessageDialog(null,"nome de contabilidade em uso");
+                } 
+            }else{
+                JOptionPane.showMessageDialog(null, "Endereco ja cadastrado");
+            }       
         } catch (BancoException ex) {
         JOptionPane.showMessageDialog(null, "Problema de conexao com o banco");
         }      

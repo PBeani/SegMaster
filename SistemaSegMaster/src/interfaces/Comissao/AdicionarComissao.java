@@ -437,6 +437,7 @@ public class AdicionarComissao extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
+
     private javax.swing.JTextField porcentagem;
     private javax.swing.JComboBox<Object> status;
     private javax.swing.JTextField valor;

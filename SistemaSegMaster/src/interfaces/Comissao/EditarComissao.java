@@ -381,7 +381,7 @@ public class EditarComissao extends javax.swing.JPanel {
                 for (StatusComissao s : st.listaStatusComissao()) {
                     status.addItem(s);
                 }
-                StatusComissao s;
+                StatusComissao s = null;
                 for (int i = 0; i < status.getItemCount(); i++) {
                     s = (StatusComissao) status.getItemAt(i);
                     if (s.getId_status_comissao() == comissao.getCod_status_comissao()) {

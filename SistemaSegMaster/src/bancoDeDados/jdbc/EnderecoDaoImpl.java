@@ -52,6 +52,7 @@ public class EnderecoDaoImpl extends ConectorJDBC implements EnderecoDao {
 
         }
         fechaConexao();
+        System.out.println(chave);
         return chave;
     }
 
@@ -91,10 +92,11 @@ public class EnderecoDaoImpl extends ConectorJDBC implements EnderecoDao {
         boolean resp = false;
         try {
             abreConexao();
+            System.out.println(end.getCep());
             preparaComandoSQL("select * from endereco where cep = ? and numero = ?");
             pstmt.setString(1, end.getCep());
             pstmt.setString(2, end.getNumero());
-            pstmt.execute();
+            
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 resp = true;

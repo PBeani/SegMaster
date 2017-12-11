@@ -74,13 +74,13 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextField1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="nome" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jTextField9" min="-2" pref="153" max="-2" attributes="0"/>
+                                  <Component id="telefone" min="-2" pref="153" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel16" min="-2" pref="41" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jTextField10" min="-2" pref="567" max="-2" attributes="0"/>
+                                  <Component id="email" min="-2" pref="567" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -88,7 +88,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel17" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField11" min="-2" pref="466" max="-2" attributes="0"/>
+                          <Component id="filtrarNome" min="-2" pref="466" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" pref="305" max="-2" attributes="0"/>
                       </Group>
@@ -96,7 +96,7 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="jLabel6" min="-2" pref="305" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jLabel3" min="-2" pref="305" max="-2" attributes="0"/>
+                          <Component id="salvar" min="-2" pref="305" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -113,14 +113,14 @@
                   <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jTextField1" alignment="0" pref="35" max="32767" attributes="0"/>
+                      <Component id="nome" alignment="0" pref="35" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel15" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="jTextField9" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="telefone" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="jLabel16" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="jTextField10" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="email" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
@@ -129,14 +129,14 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel17" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="jTextField11" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="filtrarNome" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="221" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel3" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="salvar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="jLabel6" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="21" max="32767" attributes="0"/>
@@ -176,9 +176,9 @@
             <Property name="text" type="java.lang.String" value="Editar Contador"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="nome">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nomeActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
@@ -189,9 +189,9 @@
             <Property name="text" type="java.lang.String" value="Nome:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField9">
+        <Component class="javax.swing.JTextField" name="telefone">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField9ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="telefoneActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel15">
@@ -210,9 +210,9 @@
             <Property name="text" type="java.lang.String" value="e-mail:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField10">
+        <Component class="javax.swing.JTextField" name="email">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField10ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emailActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -253,9 +253,9 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JTextField" name="jTextField11">
+        <Component class="javax.swing.JTextField" name="filtrarNome">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField11ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filtrarNomeActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel17">
@@ -266,7 +266,7 @@
             <Property name="text" type="java.lang.String" value="Filtrar Nome:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel3">
+        <Component class="javax.swing.JLabel" name="salvar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="cc" red="0" type="rgb"/>
@@ -284,6 +284,9 @@
             </Property>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="salvarMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator2">
         </Component>

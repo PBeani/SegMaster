@@ -39,7 +39,6 @@ public class ContabilidadeDaoImpl extends ConectorJDBC implements ContabilidadeD
             }
 
         } catch (SQLException ex) {
-            System.out.println("funcao existeContabilidade");
             fechaConexao();
             throw new BancoException("Problema na seleção do estado.");
         }
@@ -60,7 +59,6 @@ public class ContabilidadeDaoImpl extends ConectorJDBC implements ContabilidadeD
             pstmt.execute();
 
         } catch (SQLException e) {
-            System.out.println("funçao insereContabilidade");
             throw new BancoException("Problema ao cadastrar contabilidade");
         }
         fechaConexao();
@@ -183,6 +181,32 @@ public class ContabilidadeDaoImpl extends ConectorJDBC implements ContabilidadeD
         }
         fechaConexao();
         return resp;
+    }
+
+    @Override
+    public LinkedList<Contabilidade> listaContabilidade(String nomes) throws BancoException {
+        LinkedList<Contabilidade> cont = new LinkedList<>();
+        try {
+            abreConexao();
+            preparaComandoSQL("select * from contabilidade where nome_contabilidade=?");
+            pstmt.setString(1, nomes);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int cod = rs.getInt(1);
+                String nome = rs.getString(2);
+                String cnpj = rs.getString(3);
+                int cod_parceria = rs.getInt(4);
+                Contabilidade conta = new Contabilidade(cod, nome, cnpj, cod_parceria);
+                cont.add(conta);
+            }
+        } catch (SQLException ex) {
+            fechaConexao();
+            throw new BancoException("Problemas ao gerar lista Contabilidade");
+        }
+        fechaConexao();
+        return cont;
+        
+        
     }
 
 }
