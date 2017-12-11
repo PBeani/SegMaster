@@ -21,14 +21,21 @@ public class Pedido {
 	}
 
     public Pedido(int codigo, int codCliente, java.sql.Date dtExpedicao, int codContador, double valorBruto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       this.idPedido = codigo;
+       this.codCliente = codCliente;
+       this.codContador = codContador;
+       this.dtExpedicao = dtExpedicao.toLocalDate();
+       this.valorBruto = valorBruto;
     }
 
     public Pedido(int cod, String textoCliente, String textoContador, LocalDate textoData, double textoValor) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     public Pedido(int codCliente, int codContador,LocalDate textoData, double textoValor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.codCliente = codCliente;
+        this.codContador = codContador;
+        this.dtExpedicao = textoData;
+        this.valorBruto = textoValor;
     }
 	
 	public int getIdPedido() {

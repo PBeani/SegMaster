@@ -11,6 +11,7 @@ import beans.ClientResult;
 import beans.ComissaoResult;
 import beans.Hierarquia;
 import beans.PedidoResult;
+import beans.SimpleObject;
 import interfaces.Administrativo.PainelAdministrativo;
 import interfaces.Certificado.AdicionarCertificado;
 import interfaces.Certificado.ConsultaCertificado;
@@ -22,6 +23,8 @@ import interfaces.Contabilidade.AdicionarContabilidade;
 import interfaces.Contabilidade.ConsultaContabilidade;
 import interfaces.Contador.AdicionarContador;
 import interfaces.Contador.ConsultarContador;
+import interfaces.Pedido.AdicionarPedido;
+import interfaces.Pedido.ConsultaPedido;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -69,8 +72,8 @@ public class HomeAdmin extends javax.swing.JFrame {
         nav_consulta_cliente = new javax.swing.JMenuItem();
         nav_add_cliente = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        nav_consulta_pedido = new javax.swing.JMenuItem();
+        nav_add_pedido = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         nav_consulta_certificado = new javax.swing.JMenuItem();
         nav_add_certificado = new javax.swing.JMenuItem();
@@ -196,23 +199,23 @@ public class HomeAdmin extends javax.swing.JFrame {
         jMenu4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jMenu4.setMargin(new java.awt.Insets(10, 20, 10, 20));
 
-        jMenuItem3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jMenuItem3.setText("Consultar Pedidos");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        nav_consulta_pedido.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nav_consulta_pedido.setText("Consultar Pedidos");
+        nav_consulta_pedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                nav_consulta_pedidoActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem3);
+        jMenu4.add(nav_consulta_pedido);
 
-        jMenuItem4.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jMenuItem4.setText("Adicionar Pedido");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        nav_add_pedido.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nav_add_pedido.setText("Adicionar Pedido");
+        nav_add_pedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                nav_add_pedidoActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem4);
+        jMenu4.add(nav_add_pedido);
 
         jMenuBar1.add(jMenu4);
 
@@ -392,13 +395,73 @@ public class HomeAdmin extends javax.swing.JFrame {
         setLastPanel(content);
     }//GEN-LAST:event_nav_add_clienteActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    private void nav_consulta_pedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_consulta_pedidoActionPerformed
+        setTitle("Consultar Pedidos");
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        ConsultaPedido panel = new ConsultaPedido(this);
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+        try {
+            PedidoRegrasNegocio regras = new PedidoRegrasNegocio();
+            LinkedList<PedidoResult> lista = regras.listaPedidoMin();
+            panel.montaTabelaPedido(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_consulta_pedidoActionPerformed
+
+    private void nav_add_pedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nav_add_pedidoActionPerformed
+        setTitle("Adicionar Pedido");
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        AdicionarPedido panel = new AdicionarPedido(this);
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+        
+        try {
+            ClienteRegrasNegocio clienteRegras = new ClienteRegrasNegocio();
+            LinkedList<ClientResult> lista = clienteRegras.listaClientes();
+            panel.montaTabelaCliente(lista);
+            
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            PedidoRegrasNegocio contadorRegras = new PedidoRegrasNegocio();
+            LinkedList<SimpleObject> lista2 = contadorRegras.listaContadores();
+            panel.montaTabelaContador(lista2);
+            
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_nav_add_pedidoActionPerformed
 
     private void nav_consulta_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_consulta_clienteMouseClicked
 
@@ -597,18 +660,18 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem nav_add_certificado;
     private javax.swing.JMenuItem nav_add_cliente;
     private javax.swing.JMenuItem nav_add_contabilidade;
     private javax.swing.JMenuItem nav_add_contador;
+    private javax.swing.JMenuItem nav_add_pedido;
     private javax.swing.JMenuItem nav_adiciona_comissao;
     private javax.swing.JMenu nav_administrativo;
     private javax.swing.JMenuItem nav_consulta_certificado;
     private javax.swing.JMenuItem nav_consulta_cliente;
     private javax.swing.JMenuItem nav_consulta_comissao;
     private javax.swing.JMenuItem nav_consulta_contabilidade;
+    private javax.swing.JMenuItem nav_consulta_pedido;
     private javax.swing.JMenuItem nav_contador_consultar;
     public javax.swing.JPanel paineldeconteudo;
     // End of variables declaration//GEN-END:variables
