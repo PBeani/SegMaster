@@ -70,12 +70,9 @@ public class ConsultaContabilidade extends javax.swing.JPanel {
                         }
                         EnderecoRegrasNegocio end;
                         try {
-                            System.out.println(linha);
                             Contabilidade c = listaContabilidade.get(linha);
-                            System.out.println(c.getCod_endereco());
                             end = new EnderecoRegrasNegocio();
                             Endereco endereco = end.selecionaEndereco(c.getCod_endereco());
-                            System.out.println(endereco.getBairro());
                             EditarContabilidade editar = new EditarContabilidade(home, endereco, c);
                             JPanel content = editar;
                             editar.dados(cod);

@@ -5,6 +5,13 @@ public class Contador {
 	private int id_contador;
 	private String nomeContador;
 	private int cod_contabilidade;
+        private String nome_contabilidade;
+        
+        public Contador(String nome, int cod, String nomeContabilidade){
+            nomeContador=nome;
+            id_contador=cod;
+            nome_contabilidade=nomeContabilidade;
+        }
 	
 	public Contador(int id_contador, String nomeContador, int cod_contabilidade) {
 		super();
@@ -12,10 +19,16 @@ public class Contador {
 		this.nomeContador = nomeContador;
 		this.cod_contabilidade = cod_contabilidade;
 	}
+        
+        
 
     public Contador(int cod, String text) {
         nomeContador=text;
         cod_contabilidade=cod;
+    }
+
+    public String getNome_contabilidade() {
+        return nome_contabilidade;
     }
 	
 	public int getId_contador() {

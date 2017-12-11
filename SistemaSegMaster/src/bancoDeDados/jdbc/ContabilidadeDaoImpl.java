@@ -39,7 +39,6 @@ public class ContabilidadeDaoImpl extends ConectorJDBC implements ContabilidadeD
             }
 
         } catch (SQLException ex) {
-            System.out.println("funcao existeContabilidade");
             fechaConexao();
             throw new BancoException("Problema na seleção do estado.");
         }
@@ -60,7 +59,6 @@ public class ContabilidadeDaoImpl extends ConectorJDBC implements ContabilidadeD
             pstmt.execute();
 
         } catch (SQLException e) {
-            System.out.println("funçao insereContabilidade");
             throw new BancoException("Problema ao cadastrar contabilidade");
         }
         fechaConexao();

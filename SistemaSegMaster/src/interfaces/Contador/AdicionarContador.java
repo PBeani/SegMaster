@@ -196,6 +196,11 @@ public class AdicionarContador extends javax.swing.JPanel {
         cancelar.setText("Cancelar");
         cancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelar.setOpaque(true);
+        cancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -315,22 +320,18 @@ public class AdicionarContador extends javax.swing.JPanel {
 
         String mail = email.getText();
         int linha = jTable1.getSelectedRow();
-        int cod_contabilidade = Integer.parseInt(String.valueOf(jTable1.getValueAt(linha, 0)));
+        int cod_contabilidade = Integer.parseInt(String.valueOf(jTable1.getValueAt(linha, 0)));        
         String nome = String.valueOf(jTable1.getValueAt(linha, 1));
 
-        try {
-
-            TipoContatoRegrasNegocio tipoContato = new TipoContatoRegrasNegocio();
-            TipoContato tc = tipoContato.seleciona("email");
-            TipoContato tc2 = tipoContato.seleciona("telefone");
+        try {           
 
             Contador contador = new Contador(cod_contabilidade, name);
             ContadorRegrasNegocio contR = new ContadorRegrasNegocio();
             
             int r=contR.insereContador(contador);
 
-            DadosContato emal = new DadosContato(tc.getId_tipo_contato(), mail);
-            DadosContato tele = new DadosContato(tc2.getId_tipo_contato(), tel);
+            DadosContato emal = new DadosContato(2, mail);
+            DadosContato tele = new DadosContato(1, tel);
 
             DadosContatoRegrasNegocio d = new DadosContatoRegrasNegocio();
             
@@ -342,7 +343,7 @@ public class AdicionarContador extends javax.swing.JPanel {
             
             d.cadastroContador(cMail);
             d.cadastroContador(cPhone);
-            
+            JOptionPane.showMessageDialog(null, "cadastrado com sucesso");
 
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no banco de dados");
@@ -366,6 +367,18 @@ public class AdicionarContador extends javax.swing.JPanel {
         
         
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarMouseClicked
+        // TODO add your handling code here:
+        nome.setText("");
+        telefone.setText("");
+        email.setText("");
+        filtrarNome.setText("");
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        
+        
+    }//GEN-LAST:event_cancelarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

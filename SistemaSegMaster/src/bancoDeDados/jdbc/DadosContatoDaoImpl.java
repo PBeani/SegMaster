@@ -40,7 +40,7 @@ public class DadosContatoDaoImpl extends ConectorJDBC implements DadosContatoDao
             if (rs.next()) {
                 chave = rs.getInt(1);
             }
-
+            
         } catch (SQLException i) {
             throw new BancoException("Problema ao cadastrar Contato.");
         }
@@ -120,6 +120,5 @@ public class DadosContatoDaoImpl extends ConectorJDBC implements DadosContatoDao
             throw new BancoException("Problema ao cadastrar Contato.");
         }
         fechaConexao();
-        
     }
 }
