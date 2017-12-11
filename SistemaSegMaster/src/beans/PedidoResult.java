@@ -13,11 +13,17 @@ public class PedidoResult {
     int cod;
     String cliente;
     String contador;
+    double val;
     
     public PedidoResult(int c, String cli, String con) {
         cod = c;
         cliente = cli;
         contador = con;
+    }
+    
+    public PedidoResult(int c, double v) {
+        cod = c;
+        val = v;
     }
     
     public void setCliente(String c){
@@ -42,5 +48,9 @@ public class PedidoResult {
     
     public int getCod(){
         return cod;
+    }
+    
+    public double getVal() {
+        return val;
     }
 }

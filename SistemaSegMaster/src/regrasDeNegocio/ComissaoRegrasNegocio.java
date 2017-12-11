@@ -67,6 +67,15 @@ public class ComissaoRegrasNegocio {
         }
     }
     
+    public LinkedList<ComissaoResult> listaComissaoMedia() throws Exception {
+        try {
+
+            return comissaoDaoImpl.listaComissaoMedia();
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
     public LinkedList<ComissaoResult> listaComissaoFiltro(int i) throws Exception {
         try {
 

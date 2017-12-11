@@ -21,6 +21,11 @@ public class ComissaoResult {
         valor = v;
     }
     
+    public ComissaoResult(int c, double v) {
+        cod = c;
+        valor = v;
+    }
+    
     public int getCod() {
         return cod;
     }

@@ -141,6 +141,64 @@ public class CertificadoDaoImpl extends ConectorJDBC implements CertificadoDao {
         return lista;
     }
     
+    public LinkedList<CertificadoResult> listaCertificadoCat() throws BancoException {
+        LinkedList<CertificadoResult> lista = new LinkedList<>();
+        CertificadoResult item = null;
+        
+        abreConexao();
+
+        preparaComandoSQL("SELECT categoria_certificado.desc_categoria_certificado, "
+                + "COUNT(certificado.id_certificado) FROM certificado "
+                + "LEFT JOIN categoria_certificado "
+                + "ON certificado.id_categoria_certificado = categoria_certificado.id_categoria_certificado " 
+                + "GROUP BY desc_categoria_certificado;");
+        try {
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String cat = rs.getString(1);
+                int qtd = rs.getInt(2);
+
+                item = new CertificadoResult(qtd, cat);
+                lista.add(item);
+            }
+        } catch (SQLException e) {
+            throw new BancoException("Problema na geração da lista de Certificados.");
+        }
+
+        fechaConexao();
+        return lista;
+    }
+    
+    public LinkedList<CertificadoResult> listaCertificadoTipo() throws BancoException {
+        LinkedList<CertificadoResult> lista = new LinkedList<>();
+        CertificadoResult item = null;
+        
+        abreConexao();
+
+        preparaComandoSQL("SELECT tipo_certificado.desc_tipo_certificado, "
+                + "COUNT(certificado.id_certificado) FROM certificado "
+                + "LEFT JOIN tipo_certificado "
+                + "ON certificado.id_tipo_certificado = tipo_certificado.id_tipo_certificado " 
+                + "GROUP BY desc_tipo_certificado;");
+        try {
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String cat = rs.getString(1);
+                int qtd = rs.getInt(2);
+
+                item = new CertificadoResult(qtd, cat);
+                lista.add(item);
+            }
+        } catch (SQLException e) {
+            throw new BancoException("Problema na geração da lista de Certificados.");
+        }
+
+        fechaConexao();
+        return lista;
+    }
+    
     public LinkedList<CertificadoResult> listaCertificadoFiltro(String s) throws BancoException {
         LinkedList<CertificadoResult> lista = new LinkedList<>();
         CertificadoResult item = null;

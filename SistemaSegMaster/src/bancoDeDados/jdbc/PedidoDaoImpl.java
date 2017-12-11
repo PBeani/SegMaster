@@ -133,6 +133,30 @@ public class PedidoDaoImpl extends ConectorJDBC implements PedidoDao {
         return lista;
     }
     
+    public LinkedList<PedidoResult> listaPedidoMedia() throws BancoException {
+        LinkedList<PedidoResult> lista = new LinkedList<>();
+        PedidoResult item = null;
+        abreConexao();
+        
+        preparaComandoSQL("SELECT id_pedido, valor_bruto FROM pedido WHERE valor_bruto> (select AVG(valor_bruto) from pedido)");
+        try {
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt(1);
+                double valor = rs.getDouble(2);
+
+                item = new PedidoResult(codigo, valor);
+                lista.add(item);
+            }
+        } catch (SQLException e) {
+            throw new BancoException("Problema na geração da lista de Comissoes.");
+        }
+
+        fechaConexao();
+        return lista;
+    }
+    
     public LinkedList<SimpleObject> listaContadores() throws BancoException {
         LinkedList<SimpleObject> lista = new LinkedList<>();
         SimpleObject item = null;

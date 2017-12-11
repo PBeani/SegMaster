@@ -5,7 +5,12 @@
  */
 package interfaces.Dados;
 
+import beans.CertificadoResult;
+import beans.ComissaoResult;
 import interfaces.HomeAdmin;
+import java.util.LinkedList;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -138,7 +143,27 @@ public class CertificadoDados extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+    public void montaTabelaCat(LinkedList<CertificadoResult> lista) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
 
+        for (CertificadoResult result : lista) {
+            model.addRow(new Object[]{result.getCat(), result.getQtd()});
+
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+    }
+    
+    public void montaTabelaTipo(LinkedList<CertificadoResult> lista) {
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+
+        for (CertificadoResult result : lista) {
+            model.addRow(new Object[]{result.getCat(), result.getQtd()});
+
+        }
+        jTable2.setRowSorter(new TableRowSorter(model));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

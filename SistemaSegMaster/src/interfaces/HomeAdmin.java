@@ -653,9 +653,9 @@ public class HomeAdmin extends javax.swing.JFrame {
         // das duas telas novas. é só isso, a tela la não faz nada, então é só fazer essa listagem na regra de
         // negocio nova e a função montaTabelaAlgumaCoisa na interface da tela
         try {
-            ComissaoRegrasNegocio regras = new ComissaoRegrasNegocio();
-            LinkedList<ComissaoResult> lista = regras.listaComissao();
-            panel.montaTabelaComissao(lista);
+            CertificadoRegrasNegocio regras = new CertificadoRegrasNegocio();
+            LinkedList<CertificadoResult> lista = regras.listaCertificadoCat();
+            panel.montaTabelaCat(lista);
         } catch (BancoException e) {
             JOptionPane.showMessageDialog(null, "problema no banco de dados");
         } catch (Exception ex) {
@@ -663,9 +663,9 @@ public class HomeAdmin extends javax.swing.JFrame {
         }
         
         try {
-            ComissaoRegrasNegocio regras = new ComissaoRegrasNegocio();
-            LinkedList<ComissaoResult> lista = regras.listaComissao();
-            panel.montaTabelaComissao(lista);
+            CertificadoRegrasNegocio regras2 = new CertificadoRegrasNegocio();
+            LinkedList<CertificadoResult> lista = regras2.listaCertificadoTipo();
+            panel.montaTabelaTipo(lista);
         } catch (BancoException e) {
             JOptionPane.showMessageDialog(null, "problema no banco de dados");
         } catch (Exception ex) {
@@ -690,12 +690,9 @@ public class HomeAdmin extends javax.swing.JFrame {
         content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
         content.setVisible(true);
 
-        // fazer essa duas funções, uma pra cada tabela. Criar um dados regra negocio que vai ter as consultas
-        // das duas telas novas. é só isso, a tela la não faz nada, então é só fazer essa listagem na regra de
-        // negocio nova e a função montaTabelaAlgumaCoisa na interface da tela
         try {
             ComissaoRegrasNegocio regras = new ComissaoRegrasNegocio();
-            LinkedList<ComissaoResult> lista = regras.listaComissao();
+            LinkedList<ComissaoResult> lista = regras.listaComissaoMedia();
             panel.montaTabelaComissao(lista);
         } catch (BancoException e) {
             JOptionPane.showMessageDialog(null, "problema no banco de dados");
@@ -704,9 +701,9 @@ public class HomeAdmin extends javax.swing.JFrame {
         }
         
         try {
-            ComissaoRegrasNegocio regras = new ComissaoRegrasNegocio();
-            LinkedList<ComissaoResult> lista = regras.listaComissao();
-            panel.montaTabelaComissao(lista);
+            PedidoRegrasNegocio regras2 = new PedidoRegrasNegocio();
+            LinkedList<PedidoResult> lista2 = regras2.listaPedidoMedia();
+            panel.montaTabelaPedido(lista2);
         } catch (BancoException e) {
             JOptionPane.showMessageDialog(null, "problema no banco de dados");
         } catch (Exception ex) {

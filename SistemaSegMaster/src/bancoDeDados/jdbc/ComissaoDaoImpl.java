@@ -112,6 +112,30 @@ public class ComissaoDaoImpl extends ConectorJDBC{
         return lista;
     }
     
+    public LinkedList<ComissaoResult> listaComissaoMedia() throws BancoException {
+        LinkedList<ComissaoResult> lista = new LinkedList<>();
+        ComissaoResult item = null;
+        abreConexao();
+        
+        preparaComandoSQL("SELECT id_comissao, valor_comissao FROM comissao WHERE valor_comissao > (select AVG(valor_comissao) from comissao)");
+        try {
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt(1);
+                double valor = rs.getDouble(2);
+
+                item = new ComissaoResult(codigo, valor);
+                lista.add(item);
+            }
+        } catch (SQLException e) {
+            throw new BancoException("Problema na geração da lista de Comissoes.");
+        }
+
+        fechaConexao();
+        return lista;
+    }
+    
     public LinkedList<ComissaoResult> listaComissaoFiltro(int i) throws BancoException {
         LinkedList<ComissaoResult> lista = new LinkedList<>();
         ComissaoResult item = null;
