@@ -23,6 +23,8 @@ import interfaces.Contabilidade.AdicionarContabilidade;
 import interfaces.Contabilidade.ConsultaContabilidade;
 import interfaces.Contador.AdicionarContador;
 import interfaces.Contador.ConsultarContador;
+import interfaces.Dados.CertificadoDados;
+import interfaces.Dados.ComissaoDados;
 import interfaces.Pedido.AdicionarPedido;
 import interfaces.Pedido.ConsultaPedido;
 import java.util.LinkedList;
@@ -80,6 +82,9 @@ public class HomeAdmin extends javax.swing.JFrame {
         jMenu6 = new javax.swing.JMenu();
         nav_consulta_comissao = new javax.swing.JMenuItem();
         nav_adiciona_comissao = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -266,6 +271,30 @@ public class HomeAdmin extends javax.swing.JFrame {
         jMenu6.add(nav_adiciona_comissao);
 
         jMenuBar1.add(jMenu6);
+
+        jMenu7.setText("Dados");
+        jMenu7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jMenu7.setMargin(new java.awt.Insets(0, 20, 0, 20));
+
+        jMenuItem1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jMenuItem1.setText("Certificado");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem1);
+
+        jMenuItem2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jMenuItem2.setText("Comissão e Pedido");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu7);
 
         setJMenuBar(jMenuBar1);
 
@@ -607,6 +636,88 @@ public class HomeAdmin extends javax.swing.JFrame {
         setLastPanel(content);
     }//GEN-LAST:event_nav_consulta_comissaoActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        setTitle("Certificados");
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        CertificadoDados panel = new CertificadoDados(this);
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+
+        // fazer essa duas funções, uma pra cada tabela. Criar um dados regra negocio que vai ter as consultas
+        // das duas telas novas. é só isso, a tela la não faz nada, então é só fazer essa listagem na regra de
+        // negocio nova e a função montaTabelaAlgumaCoisa na interface da tela
+        try {
+            ComissaoRegrasNegocio regras = new ComissaoRegrasNegocio();
+            LinkedList<ComissaoResult> lista = regras.listaComissao();
+            panel.montaTabelaComissao(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            ComissaoRegrasNegocio regras = new ComissaoRegrasNegocio();
+            LinkedList<ComissaoResult> lista = regras.listaComissao();
+            panel.montaTabelaComissao(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        setTitle("Dados Comissão e Pedido");
+        if (lastPanel != null) {
+            lastPanel.setVisible(false);
+            paineldeconteudo.revalidate();
+        } else {
+            paineldeconteudo.revalidate();
+        }
+        ComissaoDados panel = new ComissaoDados(this);
+        JPanel content = panel;
+        content.setBounds(0, 0, paineldeconteudo.getSize().width, paineldeconteudo.getSize().height);
+        content.setVisible(true);
+
+        // fazer essa duas funções, uma pra cada tabela. Criar um dados regra negocio que vai ter as consultas
+        // das duas telas novas. é só isso, a tela la não faz nada, então é só fazer essa listagem na regra de
+        // negocio nova e a função montaTabelaAlgumaCoisa na interface da tela
+        try {
+            ComissaoRegrasNegocio regras = new ComissaoRegrasNegocio();
+            LinkedList<ComissaoResult> lista = regras.listaComissao();
+            panel.montaTabelaComissao(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            ComissaoRegrasNegocio regras = new ComissaoRegrasNegocio();
+            LinkedList<ComissaoResult> lista = regras.listaComissao();
+            panel.montaTabelaComissao(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(PainelAdministrativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        paineldeconteudo.add(content);
+        this.add(paineldeconteudo);
+        setLastPanel(content);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     public JPanel lastPanel;
 
     public JPanel getLastPanel() {
@@ -659,7 +770,10 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem nav_add_certificado;
     private javax.swing.JMenuItem nav_add_cliente;
     private javax.swing.JMenuItem nav_add_contabilidade;
