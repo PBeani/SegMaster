@@ -177,7 +177,6 @@ public class ConsultaTipoContato extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         for(TipoContato contato : listaTipoContato){
-            model.setRowCount(0);
             model.addRow(new Object [] {contato.getId_tipo_contato(),contato.getDesc_tipo_contato()});
             
         }
