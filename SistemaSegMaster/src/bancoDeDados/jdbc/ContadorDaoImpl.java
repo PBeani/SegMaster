@@ -100,7 +100,7 @@ public class ContadorDaoImpl extends ConectorJDBC implements ContadorDao {
         try {
             abreConexao();
             preparaComandoSQL("select c.nome_contador,c.id_contador,contabilidade.nome_contabilidade from segmaster.contador as c inner join segmaster.contabilidade_contador as cc on cc.id_contador=c.id_contador inner join segmaster.contabilidade on cc.id_contabilidade=contabilidade.id_contabilidade where c.nome_contador LIKE (?)");
-            pstmt.setString(1, nome);
+            pstmt.setString(1, "%" + nome + "%");
             rs = pstmt.executeQuery();
             while (rs.next()) {                
                 String nomes = rs.getString(1);

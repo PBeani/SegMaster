@@ -180,6 +180,8 @@ public class EditarContabilidade extends javax.swing.JPanel {
         bairro = new javax.swing.JTextField();
         codParceria = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         estadoBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 estadoBoxActionPerformed(evt);
