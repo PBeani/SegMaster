@@ -8,6 +8,7 @@ package regrasDeNegocio;
 import bancoDeDados.BancoException;
 import bancoDeDados.jdbc.CertificadoDaoImpl;
 import beans.Certificado;
+import beans.CertificadoResult;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 /**
@@ -52,14 +53,24 @@ public class CertificadoRegrasNegocio {
             certificadoDaoImpl.alteraCertificado(certificado);
             return true;
         } catch (BancoException e) {
+            
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
     }
 
-    public LinkedList<Certificado> listaCertificado() throws Exception {
+    public LinkedList<CertificadoResult> listaCertificado() throws Exception {
         try {
 
             return certificadoDaoImpl.listaCertificado();
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public LinkedList<CertificadoResult> listaCertificadoFiltro(String s) throws Exception {
+        try {
+
+            return certificadoDaoImpl.listaCertificadoFiltro(s);
         } catch (BancoException e) {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }

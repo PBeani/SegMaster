@@ -4,6 +4,8 @@ import beans.Municipio;
 import java.util.LinkedList;
 
 public interface MunicipioDao {
+    
+    public int selecionaCodMunicipio(String desc) throws BancoException;
 
     public void insereMunicipio(Municipio m) throws BancoException;
 

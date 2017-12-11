@@ -60,6 +60,11 @@ public class MunicipioRegrasNegocio {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
     }
+    public LinkedList<Municipio> listaMunicipioEstado(String idEstado) throws Exception {
+        EstadoRegrasNegocio est = new EstadoRegrasNegocio();
+        int cod = est.selecionaCodEstado(idEstado);
+        return municipioDaoImpl.listaMunicipioEstado(cod);
+    }
 
     public LinkedList<Municipio> listaMunicipioEstado(int idEstado) throws Exception {
         return municipioDaoImpl.listaMunicipioEstado(idEstado);
@@ -72,4 +77,17 @@ public class MunicipioRegrasNegocio {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
     }
+    public int selecionaCodMunicipio(String descr)throws Exception{
+        int n=-1;
+             try{
+             n= municipioDaoImpl.selecionaCodMunicipio(descr);
+            
+        }catch(BancoException e){
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+
+        }
+        return n;
+    }
+
+   
 }

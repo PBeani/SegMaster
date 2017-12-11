@@ -8,6 +8,7 @@ package bancoDeDados.jdbc;
 import bancoDeDados.BancoException;
 import bancoDeDados.ConectorJDBC;
 import beans.Comissao;
+import beans.ComissaoResult;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
@@ -85,24 +86,49 @@ public class ComissaoDaoImpl extends ConectorJDBC{
         return comissao;
     }
 
-    public LinkedList<Comissao> listaComissao() throws BancoException {
-        LinkedList<Comissao> lista = new LinkedList<>();
-
+    public LinkedList<ComissaoResult> listaComissao() throws BancoException {
+        LinkedList<ComissaoResult> lista = new LinkedList<>();
+        ComissaoResult item = null;
         abreConexao();
-
-        preparaComandoSQL("select * from comissao");
+        
+        preparaComandoSQL("select id_comissao, id_pedido, valor_comissao" +
+        " from comissao");
         try {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 int codigo = rs.getInt(1);
-                int codPedido = rs.getInt(2);
-                double codValor = rs.getInt(3);
-                int codStatus = rs.getInt(4);
-                int codPagamento = rs.getInt(5);
-                double codPorcentagem = rs.getInt(6);
+                int pedido = rs.getInt(2);
+                double valor = rs.getDouble(3);
 
-                Comissao item = new Comissao(codigo, codPedido, codValor, codStatus, codPagamento, codPorcentagem);
+                item = new ComissaoResult(codigo, pedido, valor);
+                lista.add(item);
+            }
+        } catch (SQLException e) {
+            throw new BancoException("Problema na geração da lista de Comissoes.");
+        }
+
+        fechaConexao();
+        return lista;
+    }
+    
+    public LinkedList<ComissaoResult> listaComissaoFiltro(int i) throws BancoException {
+        LinkedList<ComissaoResult> lista = new LinkedList<>();
+        ComissaoResult item = null;
+        abreConexao();
+        
+        preparaComandoSQL("select id_comissao, id_pedido, valor_comissao" +
+        " from comissao where id_pedido = ?");
+        try {
+            pstmt.setInt(1, i);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt(1);
+                int pedido = rs.getInt(2);
+                double valor = rs.getDouble(3);
+
+                item = new ComissaoResult(codigo, pedido, valor);
                 lista.add(item);
             }
         } catch (SQLException e) {

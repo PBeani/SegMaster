@@ -6,6 +6,8 @@ import java.util.LinkedList;
 
 import bancoDeDados.*;
 import beans.Pedido;
+import beans.PedidoResult;
+import beans.SimpleObject;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -19,7 +21,7 @@ public class PedidoDaoImpl extends ConectorJDBC implements PedidoDao {
     public void inserePedido(Pedido pedido) throws BancoException {
         abreConexao();
         preparaComandoSQL(
-                "insert into pedido (cod_cliente,dt_expedicao,cod_contador,valor_bruto) values (?,?,?,?) ");
+                "insert into pedido (id_cliente, dt_expedicao, id_contador, valor_bruto) values (?,?,?,?)");
         try {
             pstmt.setInt(1, pedido.getCodCliente());
             pstmt.setDate(2, java.sql.Date.valueOf(pedido.getDtExpedicao()));
@@ -36,7 +38,7 @@ public class PedidoDaoImpl extends ConectorJDBC implements PedidoDao {
         abreConexao();
 
         preparaComandoSQL(
-                "update pedido set cod_cliente = ?, dt_expedicao = ?, cod_contador = ?, valor_bruto = ? where id_pedido = ?");
+                "update pedido set id_cliente = ?, dt_expedicao = ?, id_contador = ?, valor_bruto = ? where id_pedido = ?");
         try {
             pstmt.setInt(1, pedido.getCodCliente());
             pstmt.setDate(2, java.sql.Date.valueOf(pedido.getDtExpedicao()));
@@ -67,7 +69,7 @@ public class PedidoDaoImpl extends ConectorJDBC implements PedidoDao {
                 int codContador = rs.getInt(4);
                 double valorBruto = rs.getDouble(5);
                 
-                pedido = new Pedido(codigo, codCliente, dtExpedicao, codContador,valorBruto );
+                pedido = new Pedido(codigo, codCliente, dtExpedicao, codContador, valorBruto);
             }
         } catch (SQLException e) {
             fechaConexao();
@@ -77,24 +79,139 @@ public class PedidoDaoImpl extends ConectorJDBC implements PedidoDao {
         fechaConexao();
         return pedido;
     }
-
-    public LinkedList<Pedido> listaPedido() throws BancoException {
-        LinkedList<Pedido> lista = new LinkedList<>();
-
+    
+    public SimpleObject selecionaContador(int cod) throws BancoException {
         abreConexao();
 
-        preparaComandoSQL("select * from pedido");
+        SimpleObject s = null;
+        preparaComandoSQL("select * from contador where id_contador = ?");
+        try {
+            pstmt.setInt(1, cod);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int codigo = rs.getInt(1);
+                String desc = rs.getString(2);
+                
+                s = new SimpleObject(desc, codigo);
+            }
+        } catch (SQLException e) {
+            fechaConexao();
+            throw new BancoException("Problema na seleção de Pedido.");
+        }
+        
+        fechaConexao();
+        return s;
+    }
+    
+    @Override
+    public LinkedList<PedidoResult> listaPedidoMin() throws BancoException {
+        LinkedList<PedidoResult> lista = new LinkedList<>();
+
+        abreConexao();
+        PedidoResult item = null;
+        preparaComandoSQL("select pedido.id_pedido, cliente.nome_cliente, contador.nome_contador"
+                + " from pedido"
+                + " left join cliente on pedido.id_cliente = cliente.id_cliente"
+                + " left join contador on pedido.id_contador = contador.id_contador");
         try {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 int codigo = rs.getInt(1);
-                int codCliente = rs.getInt(2);
-                Date dtExpedicao = rs.getDate(3);
-                int codContador = rs.getInt(4);
-                double valorBruto = rs.getDouble(5);
+                String cli = rs.getString(2);
+                String con = rs.getString(3);
 
-                Pedido item = new Pedido(codigo, codCliente, dtExpedicao, codContador,valorBruto);
+                item = new PedidoResult(codigo, cli, con);
+                lista.add(item);
+            }
+        } catch (SQLException e) {
+            throw new BancoException("Problema na geração da lista de Pedidos.");
+        }
+
+        fechaConexao();
+        return lista;
+    }
+    
+    public LinkedList<SimpleObject> listaContadores() throws BancoException {
+        LinkedList<SimpleObject> lista = new LinkedList<>();
+        SimpleObject item = null;
+
+        abreConexao();
+        
+        preparaComandoSQL("select * from contador");
+        try {
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt(1);
+                String desc = rs.getString(2);
+
+                item = new SimpleObject(desc, codigo);
+                lista.add(item);
+            }
+        } catch (SQLException e) {
+            throw new BancoException("Problema na geração da lista de Contadores.");
+        }
+
+        fechaConexao();
+        return lista;
+    }
+    
+    public LinkedList<SimpleObject> listaContadorFilter(String s) throws BancoException {
+        LinkedList<SimpleObject> lista = new LinkedList<>();
+        SimpleObject item = null;
+
+        abreConexao();
+        
+        preparaComandoSQL("select * from contador where nome_contador LIKE ?");
+        try {
+            pstmt.setString(1,"%" + s + "%");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt(1);
+                String desc = rs.getString(2);
+
+                item = new SimpleObject(desc, codigo);
+                lista.add(item);
+            }
+        } catch (SQLException e) {
+            throw new BancoException("Problema na geração da lista de Contadores.");
+        }
+
+        fechaConexao();
+        return lista;
+    }
+    
+    @Override
+    public LinkedList<PedidoResult> listaPedidoMinFilter(String s) throws BancoException {
+        LinkedList<PedidoResult> lista = new LinkedList<>();
+
+        abreConexao();
+        PedidoResult item = null;
+        preparaComandoSQL("select pedido.id_pedido, cliente.nome_cliente, contador.nome_contador"
+                + " from pedido"
+                + " left join cliente on pedido.id_cliente = cliente.id_cliente"
+                + " left join contador on pedido.id_contador = contador.id_contador"
+                + " where cliente.nome_cliente LIKE ?"
+                + " UNION"
+                + " select pedido.id_pedido, cliente.nome_cliente, contador.nome_contador"
+                + " from pedido"
+                + " left join cliente on pedido.id_cliente = cliente.id_cliente"
+                + " left join contador on pedido.id_contador = contador.id_contador"
+                + " where contador.nome_contador LIKE ?");
+        try {
+            pstmt.setString(1, "%" + s + "%");
+            pstmt.setString(2, "%" + s + "%");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt(1);
+                String cli = rs.getString(2);
+                String con = rs.getString(3);
+
+                item = new PedidoResult(codigo, cli, con);
                 lista.add(item);
             }
         } catch (SQLException e) {

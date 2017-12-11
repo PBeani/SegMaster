@@ -8,13 +8,22 @@ package interfaces.Comissao;
 import bancoDeDados.BancoException;
 import beans.FormaPagamento;
 import beans.Comissao;
+import beans.ComissaoResult;
+import beans.PedidoResult;
 import beans.StatusComissao;
+import interfaces.HomeAdmin;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import regrasDeNegocio.ComissaoRegrasNegocio;
 import regrasDeNegocio.StatusRegrasNegocio;
 import regrasDeNegocio.Forma_pagamentoRegrasNegocio;
+import regrasDeNegocio.PedidoRegrasNegocio;
 
 /**
  *
@@ -25,11 +34,26 @@ public class EditarComissao extends javax.swing.JPanel {
     /**
      * Creates new form EditarComissao
      */
-    
+    HomeAdmin home;
     int cod;
-    
-    public EditarComissao() {
+    int codPedido;
+
+    public EditarComissao(HomeAdmin h) {
+        home = h;
         initComponents();
+
+        jTable1.addMouseListener(new MouseAdapter() {
+            private int linha;
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    linha = jTable1.getSelectedRow();
+                    codPedido = Integer.parseInt(String.valueOf(jTable1.getValueAt(linha, 0)));
+                    JOptionPane.showMessageDialog(null, "Pedido " + codPedido + " selecionado!");
+                }
+            }
+        });
     }
 
     /**
@@ -44,19 +68,19 @@ public class EditarComissao extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        valor = new javax.swing.JTextField<>();
+        valor = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField11 = new javax.swing.JTextField();
+        filter = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        porcentagem = new javax.swing.JTextField<>();
+        porcentagem = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         status = new javax.swing.JComboBox<>();
@@ -90,6 +114,11 @@ public class EditarComissao extends javax.swing.JPanel {
         jLabel2.setText("Pesquisar");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.setOpaque(true);
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -98,12 +127,20 @@ public class EditarComissao extends javax.swing.JPanel {
             new String [] {
                 "Código", "Cliente", "Contador"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
+        filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
+                filterActionPerformed(evt);
             }
         });
 
@@ -117,6 +154,11 @@ public class EditarComissao extends javax.swing.JPanel {
         jLabel3.setText("Salvar");
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel3.setOpaque(true);
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
@@ -130,6 +172,11 @@ public class EditarComissao extends javax.swing.JPanel {
         jLabel6.setText("Cancelar");
         jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel6.setOpaque(true);
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel7.setText("Status:");
@@ -170,41 +217,47 @@ public class EditarComissao extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 9, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(754, 754, 754))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jScrollPane1)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(39, 39, 39))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(valor)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(12, 12, 12)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(valor)
+                                    .addComponent(porcentagem, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(status, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(porcentagem, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, Short.MAX_VALUE)
-                                .addComponent(pagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(status, 0, 309, Short.MAX_VALUE)
+                                    .addComponent(pagamento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(37, 37, 37))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,7 +285,7 @@ public class EditarComissao extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -259,9 +312,9 @@ public class EditarComissao extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_valorActionPerformed
 
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
+    private void filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
+    }//GEN-LAST:event_filterActionPerformed
 
     private void porcentagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_porcentagemActionPerformed
         // TODO add your handling code here:
@@ -275,30 +328,54 @@ public class EditarComissao extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_pagamentoActionPerformed
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {                                     
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         try {
-            double valor1  = valor.getText(); 
-            double porcentagem1  = porcentagem.getText();
+            PedidoRegrasNegocio regras = new PedidoRegrasNegocio();
+            LinkedList<PedidoResult> lista = null;
+            if (!"".equals(filter.getText())) {
+                lista = regras.listaPedidoMinFilter(filter.getText());
+            } else {
+                lista = regras.listaPedidoMin();
+            }
+            this.montaTabelaPedido(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(HomeAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        retornaLista();
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        try {
+            double valor1 = Double.parseDouble(valor.getText());
+            double porcentagem1 = Double.parseDouble(porcentagem.getText());
             ComissaoRegrasNegocio c = new ComissaoRegrasNegocio();
-            StatusComissao s = (StatusComissao)status.getSelectedItem();
-            FormaPagamento p = (FormaPagamento)pagamento.getSelectedItem();
-            Comissao comissao  = new Comissao(cod, s.getId_status_comissao(), p.getId_forma_pagamento(), valor1, porcentagem1);
+            StatusComissao s = (StatusComissao) status.getSelectedItem();
+            FormaPagamento p = (FormaPagamento) pagamento.getSelectedItem();
+            Comissao comissao = new Comissao(cod, s.getId_status_comissao(), codPedido, p.getId_forma_pagamento(), valor1, porcentagem1);
             if (c.altera(comissao)) {
                 JOptionPane.showMessageDialog(null, "Editado com sucesso");
-                //retornarLista();
+                retornaLista();
             }
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no acesso ao banco de dados");
         } catch (Exception ex) {
         }
-    }                                    
+    }//GEN-LAST:event_jLabel3MouseClicked
+          
     public Comissao dados(int codigo) {
         try {
             ComissaoRegrasNegocio regra = new ComissaoRegrasNegocio();
             Comissao comissao = regra.seleciona(codigo);
-            valor.setText(comissao.getValor_comissao());
-            porcentagem.setText(comissao.getPorcentagem_comissao());
+            valor.setText(String.valueOf(comissao.getValor_comissao()));
+            porcentagem.setText(String.valueOf(comissao.getPorcentagem_comissao()));
             cod = codigo;
+            codPedido = comissao.getCod_pedido();
+
             try {
                 StatusRegrasNegocio st = new StatusRegrasNegocio();
                 for (StatusComissao s : st.listaStatusComissao()) {
@@ -306,29 +383,33 @@ public class EditarComissao extends javax.swing.JPanel {
                 }
                 StatusComissao s;
                 for (int i = 0; i < status.getItemCount(); i++) {
-                    s = (StatusComissao)status.getItemAt(i);
+                    s = (StatusComissao) status.getItemAt(i);
                     if (s.getId_status_comissao() == comissao.getCod_status_comissao()) {
                         status.setSelectedIndex(i);
                         break;
                     }
                 }
-                
+
                 Forma_pagamentoRegrasNegocio pg = new Forma_pagamentoRegrasNegocio();
                 for (FormaPagamento p : pg.listaFormaPagamento()) {
-                    pagamento.addItem(s);
+                    pagamento.addItem(p);
                 }
                 FormaPagamento p;
                 for (int i = 0; i < pagamento.getItemCount(); i++) {
-                    p = (FormaPagamento)pagamento.getItemAt(i);
+                    p = (FormaPagamento) pagamento.getItemAt(i);
                     if (p.getId_forma_pagamento() == comissao.getCod_forma_pagamento()) {
                         pagamento.setSelectedIndex(i);
                         break;
                     }
                 }
+
+                PedidoRegrasNegocio regras = new PedidoRegrasNegocio();
+                montaTabelaPedido(regras.listaPedidoMin());
+
             } catch (BancoException ex) {
-                Logger.getLogger(AdicionarComissão.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AdicionarComissao.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(AdicionarComissão.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AdicionarComissao.class.getName()).log(Level.SEVERE, null, ex);
             }
             return comissao;
         } catch (Exception ex) {
@@ -337,7 +418,47 @@ public class EditarComissao extends javax.swing.JPanel {
         return null;
     }
 
+    public void montaTabelaPedido(LinkedList<PedidoResult> lista) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        for (PedidoResult p : lista) {
+            model.addRow(new Object[]{p.getCod(), p.getCliente(), p.getContador()});
+
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+    }
+    
+    public void retornaLista() {
+        home.setTitle("Consultar Comissões");
+        if (home.lastPanel != null) {
+            home.lastPanel.setVisible(false);
+            this.revalidate();
+        } else {
+            this.revalidate();
+        }
+        ConsultaComissao panel = new ConsultaComissao(home);
+        javax.swing.JPanel content = panel;
+        content.setBounds(0, 0, home.paineldeconteudo.getSize().width, home.paineldeconteudo.getSize().height);
+        content.setVisible(true);
+
+        try {
+            ComissaoRegrasNegocio regras = new ComissaoRegrasNegocio();
+            LinkedList<ComissaoResult> lista = regras.listaComissao();
+            panel.montaTabelaComissao(lista);
+        } catch (BancoException e) {
+            JOptionPane.showMessageDialog(null, "problema no banco de dados");
+        } catch (Exception ex) {
+            Logger.getLogger(HomeAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        home.paineldeconteudo.add(content);
+        home.add(home.paineldeconteudo);
+        home.setLastPanel(content);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField filter;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
@@ -353,10 +474,9 @@ public class EditarComissao extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField11;
     private javax.swing.JComboBox<Object> pagamento;
-    private javax.swing.JTextField<double> porcentagem;
+    private javax.swing.JTextField porcentagem;
     private javax.swing.JComboBox<Object> status;
-    private javax.swing.JTextField<double> valor;
+    private javax.swing.JTextField valor;
     // End of variables declaration//GEN-END:variables
 }

@@ -33,7 +33,9 @@ public class FormaPagamento {
 		this.desc_forma_pagamento = desc_forma_pagamento;
 	}
 	
-	
-	
+	@Override
+	public String toString() {
+            return this.getDesc_forma_pagamento();
+        }
 
 }
