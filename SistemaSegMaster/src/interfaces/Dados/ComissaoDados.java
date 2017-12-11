@@ -5,7 +5,12 @@
  */
 package interfaces.Dados;
 
+import beans.ComissaoResult;
+import beans.PedidoResult;
 import interfaces.HomeAdmin;
+import java.util.LinkedList;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -160,7 +165,27 @@ public class ComissaoDados extends javax.swing.JPanel {
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
+    public void montaTabelaComissao(LinkedList<ComissaoResult> lista) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
 
+        for (ComissaoResult result : lista) {
+            model.addRow(new Object[]{result.getCod(), result.getValor()});
+
+        }
+        jTable1.setRowSorter(new TableRowSorter(model));
+    }
+    
+    public void montaTabelaPedido(LinkedList<PedidoResult> lista) {
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+
+        for (PedidoResult result : lista) {
+            model.addRow(new Object[]{result.getCod(), result.getVal()});
+
+        }
+        jTable2.setRowSorter(new TableRowSorter(model));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

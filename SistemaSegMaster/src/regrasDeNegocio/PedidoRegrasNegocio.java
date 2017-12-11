@@ -74,6 +74,14 @@ public class PedidoRegrasNegocio {
             throw new Exception("Nao foi possivel acessar o banco de dados.");
         }
     }
+    
+    public LinkedList<PedidoResult> listaPedidoMedia() throws Exception {
+        try {
+            return pedidoDao.listaPedidoMedia();
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
 
     public LinkedList<PedidoResult> listaPedidoMinFilter(String name) throws Exception {
         try {

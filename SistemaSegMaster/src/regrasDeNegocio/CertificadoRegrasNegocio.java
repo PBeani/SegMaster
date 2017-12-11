@@ -67,6 +67,24 @@ public class CertificadoRegrasNegocio {
         }
     }
     
+    public LinkedList<CertificadoResult> listaCertificadoCat() throws Exception {
+        try {
+
+            return certificadoDaoImpl.listaCertificadoCat();
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
+    public LinkedList<CertificadoResult> listaCertificadoTipo() throws Exception {
+        try {
+
+            return certificadoDaoImpl.listaCertificadoTipo();
+        } catch (BancoException e) {
+            throw new Exception("Nao foi possivel acessar o banco de dados.");
+        }
+    }
+    
     public LinkedList<CertificadoResult> listaCertificadoFiltro(String s) throws Exception {
         try {
 

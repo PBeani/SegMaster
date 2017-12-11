@@ -15,6 +15,8 @@ public class CertificadoResult {
     private String numero;
     private String cliente;
     private String dataValidade;
+    String cat;
+    int qtd;
 
     public CertificadoResult(int c, String n, String cli, String d) {
         cod = c;
@@ -22,7 +24,11 @@ public class CertificadoResult {
         cliente = cli;
         dataValidade = d;
     }
-
+    
+    public CertificadoResult(int q, String c) {
+        cat = c;
+        qtd = q;
+    }
     /**
      * @return the cod
      */
@@ -80,5 +86,12 @@ public class CertificadoResult {
     public void setDataValidade(String dataValidade) {
         this.dataValidade = dataValidade;
     }
-
+    
+    public String getCat() {
+        return cat;
+    }
+    
+    public int getQtd() {
+        return qtd;
+    }
 }
