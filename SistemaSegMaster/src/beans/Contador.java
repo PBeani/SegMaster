@@ -19,7 +19,10 @@ public class Contador {
 		this.nomeContador = nomeContador;
 		this.cod_contabilidade = cod_contabilidade;
 	}
-        
+        public Contador(String s, int cod){
+            nomeContador=s;
+            id_contador=cod;
+        }
         
 
     public Contador(int cod, String text) {

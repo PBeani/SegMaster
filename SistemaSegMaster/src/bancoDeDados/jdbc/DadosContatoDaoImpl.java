@@ -121,4 +121,24 @@ public class DadosContatoDaoImpl extends ConectorJDBC implements DadosContatoDao
         }
         fechaConexao();
     }
+    
+    public String selecionaDados(int cod_contador, int tipoContato)throws BancoException{
+        abreConexao();
+        String s=null;
+        preparaComandoSQL(
+                "SELECT desc_dados_contato FROM segmaster.dados_contato inner join segmaster.contato_contador where id_tipo_contato=? and id_contador=?;");
+        try {
+            
+            pstmt.setInt(1, tipoContato);
+            pstmt.setInt(2, cod_contador);
+           rs=pstmt.executeQuery();
+           if(rs.next()){
+               s=rs.getString(1);
+           }
+        } catch (SQLException i) {
+            throw new BancoException("Problema ao cadastrar Contato.");
+        }
+        fechaConexao();
+        return s;
+    }
 }

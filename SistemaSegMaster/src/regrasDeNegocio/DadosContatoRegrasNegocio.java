@@ -44,4 +44,8 @@ public class DadosContatoRegrasNegocio {
     public LinkedList<DadosContato> listaContatosCliente(int cod) throws BancoException {
         return dados.listaContatosCliente(cod);
     }
+    public String selecionaDado (int cod_contador, int tipoContato)throws BancoException{
+        return dados.selecionaDados(cod_contador,tipoContato);
+    }
+    
 }

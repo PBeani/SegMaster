@@ -28,7 +28,6 @@ import regrasDeNegocio.ContadorRegrasNegocio;
  */
 public class ConsultarContador extends javax.swing.JPanel {
 
-    
     HomeAdmin home;
     /**
      * Creates new form ConsultarContador
@@ -63,7 +62,8 @@ public class ConsultarContador extends javax.swing.JPanel {
                             String nome_contabilidade = (String)jTable1.getValueAt(linha,2);
                             Contabilidade c = cont.listaContabilidade(nome_contabilidade).get(0);
                             end = new ContadorRegrasNegocio();
-                            Contador contador = new Contador(cod, nome_contador);
+                            
+                            Contador contador = new Contador( nome_contador,cod);
                             EditarContador editar = new EditarContador(home,contador, c);
                             JPanel content = editar;
                             //editar.dados(cod);

@@ -11,6 +11,8 @@ import beans.Contador;
 import beans.ContatoCliente;
 import beans.DadosContato;
 import interfaces.HomeAdmin;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -34,6 +36,20 @@ Contabilidade contabilidade;
         this.cont=con;
         this.contabilidade=contabilidade;
         initComponents();
+        nome.setText(con.getNomeContador());
+        
+        
+    try {
+        DadosContatoRegrasNegocio dados = new DadosContatoRegrasNegocio();
+        String tl= dados.selecionaDado(con.getId_contador(),1);
+        String t2= dados.selecionaDado(con.getId_contador(),2);
+        telefone.setText(tl);
+        
+        email.setText(t2);
+        filtrarNome.setText(contabilidade.getNome_contabilidade());
+    } catch (BancoException ex) {
+        Logger.getLogger(EditarContador.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
     
      public void montaTabelaContabilidades() {
@@ -131,6 +147,11 @@ Contabilidade contabilidade;
         jLabel2.setText("Pesquisar");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.setOpaque(true);
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -317,13 +338,19 @@ Contabilidade contabilidade;
             d.atualiza(tele);
             d.atualiza(emal);
            
-            JOptionPane.showMessageDialog(null, "cadastrado com sucesso");
+            JOptionPane.showMessageDialog(null, "atualizado com sucesso");
 
         } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, "problema no banco de dados");
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_salvarMouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        
+        montaTabelaContabilidades();
+    }//GEN-LAST:event_jLabel2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
